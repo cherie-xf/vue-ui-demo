@@ -18,16 +18,22 @@ module.exports = {
   ],
   // check if imports actually resolve
   'settings': {
+    // disable iview invalid-end-tag error
+    "vetur.validation.template": false,
     'import/resolver': {
       'webpack': {
         'config': 'build/webpack.base.conf.js'
       }
-    }
+    },
   },
   // add your custom rules here
   //rules: { // allow async-await 'generator-star-spacing': 'off', // allow debugger during development 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off' }
   //it is base on https://github.com/vuejs/eslint-config-vue
   'rules': {
+    // disable iview invalid-end-tag error
+    "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }],
+    "vue/html-self-closing": "off",
+    /*
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
       'before': true,
@@ -197,5 +203,6 @@ module.exports = {
       objectsInObjects: false
     }],
     'array-bracket-spacing': [2, 'never']
+    */
   } // end of rules
 }

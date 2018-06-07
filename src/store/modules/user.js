@@ -1,8 +1,8 @@
 const user = {
   state: {
-    name: '',
+    name: 'admin',
     avatar: '',
-    roles: []
+    roles: ['superAdmin']
   },
 
   mutations: {
