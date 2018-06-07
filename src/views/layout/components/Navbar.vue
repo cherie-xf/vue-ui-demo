@@ -1,11 +1,7 @@
 <template>
-  <Menu mode="horizontal" :theme="theme1" active-name="1">
+  <Menu mode="horizontal" :theme="theme1" active-name="1" class="navbar">
   <myhamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></myhamburger>
   <breadcrumb></breadcrumb>
-    <MenuItem name="1">
-      <Icon type="ios-paper"></Icon>
-      test menu item
-    </MenuItem>
   </Menu>
 </template>
 <script>
@@ -49,8 +45,8 @@ export default {
   border-radius: 0px !important;
   .hamburger-container {
     line-height: 58px;
+    display: inline-block;
     height: 50px;
-    float: left;
     padding: 0 10px;
   }
   .screenfull {

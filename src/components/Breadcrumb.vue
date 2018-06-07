@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .app-breadcrumb.el-breadcrumb {
+  .app-breadcrumb {
     display: inline-block;
     font-size: 14px;
     line-height: 50px;
