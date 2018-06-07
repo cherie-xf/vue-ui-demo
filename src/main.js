@@ -5,12 +5,16 @@ import App from './App'
 import router from './router'
 import store from './store'
 import iView from 'iview';
+import Vuetify from 'vuetify'
 
-import 'iview/dist/styles/iview.css';
+import 'iview/dist/styles/iview.css';// index.js or main.js
+import 'vuetify/dist/vuetify.min.css' 
+
 import '@/styles/index.less' // global css
 
 Vue.config.productionTip = false
 Vue.use(iView);
+Vue.use(Vuetify);
 
 /* eslint-disable no-new */
 new Vue({
