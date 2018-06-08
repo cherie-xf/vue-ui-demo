@@ -1,62 +1,59 @@
 <template>
-  <div class="app-wrapper" :class="classObj">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
-    <sidebar class="sidebar-container"></sidebar>
-    <div class="main-container">
-      <navbar></navbar>
-      <app-main></app-main>
-    </div>
-  </div>
+    <v-app>
+        <v-navigation-drawer :mini-variant.sync="isSideBarOpen" stateless hide-overlay class="sidebar" :value="true">
+            <v-list dense>
+                <v-list-tile @click.stop="toggleLeftDrawer">
+                <v-list-tile-action>
+                    <v-icon>exit_to_app</v-icon>
+                </v-list-tile-action>
+            </v-list-tile>
+            </v-list>
+        </v-navigation-drawer>
+        <v-navigation-drawer temporary :value="isLeftDrawerOpen" fixed ></v-navigation-drawer>
+        <v-toolbar color="" dark fixed app clipped-right >
+            <v-toolbar-side-icon @click.stop="toggleSideBar"></v-toolbar-side-icon>
+            <v-toolbar-title>Toolbar</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-side-icon @click.stop="toggleRightDrawer"></v-toolbar-side-icon>
+        </v-toolbar>
+    </v-app>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
-import ResizeMixin from './mixin/ResizeHandler'
+import { mapGetters } from 'vuex'
+//import SidebarItem from './SidebarItem'
 
 export default {
-  name: 'layout',
-  components: {
-    Navbar,
-    Sidebar,
-    AppMain
-  },
-  mixins: [ResizeMixin],
+  //components: { SidebarItem },
   computed: {
-    sidebar() {
-      return this.$store.state.app.sidebar
+    ...mapGetters([
+      'sidebar',
+      'leftdrawer',
+      'rightdrawer'
+    ]),
+    routes() {
+      return this.$router.options.routes
     },
-    device() {
-      return this.$store.state.app.device
+    isSideBarOpen() {
+      return this.sidebar.opened
     },
-    classObj() {
-      return {
-        hideSidebar: !this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
-      }
-    }
+    isLeftDrawerOpen() {
+      return !this.leftdrawer.opened
+    },
+    isRightDrawerOpen() {
+      return !this.rightdrawer.opened
+    },
   },
   methods: {
-    handleClickOutside() {
-      this.$store.dispatch('CloseSideBar', { withoutAnimation: false })
-    }
+    toggleSideBar() {
+      this.$store.dispatch('ToggleSideBar')
+    },
+    toggleLeftDrawer() {
+      this.$store.dispatch('ToggleLeftDrawer')
+    },
+    toggleRightDrawer() {
+      this.$store.dispatch('ToggleRightDrawer')
+    },
   }
 }
 </script>
-
-<style lang="less" scoped>
-  .app-wrapper {
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
-  .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
-  }
-</style>
