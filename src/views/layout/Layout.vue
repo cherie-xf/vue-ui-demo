@@ -6,18 +6,13 @@
       :mini-variant-width="40"  
       class="sidebar" 
       :value="true" app>
-        <v-toolbar flat class="transparent">
-          <v-list class="pa-0">
-            <v-list-tile avatar @click.stop="toggleLeftDrawer">
-              <v-list-tile-avatar>
-                <img src="https://randomuser.me/api/portraits/men/85.jpg" >
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>John Leider</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-toolbar>
+      <div class="nav-title">
+      <span class="setting-icon" @click.stop="toggleLeftDrawer">
+        <svg-icon :icon-class="`fortiview`" :class-name="'fortiview'" ></svg-icon>
+      </span>
+      <span class="title-text">Fortiview</span>
+
+      </div>
         <v-list class="pt-0" dense>
           <v-divider></v-divider>
           <v-list-tile v-for="item in items" :key="item.title" >
@@ -71,13 +66,8 @@ export default {
       return this.$router.options.routes
     },
     isSideBarOpen() {
+      console.log('side bar', !this.sidebar.opened);
       return !this.sidebar.opened
-    },
-    isLeftDrawerOpen() {
-      return !this.leftdrawer.opened
-    },
-    isRightDrawerOpen() {
-      return !this.rightdrawer.opened
     },
   },
   methods: {
@@ -96,23 +86,19 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-    .svn-icon{
-        &.settings{
-            animation: fa-spin 2s infinite linear;
-        }
-    }
     .setting-icon {
         cursor: pointer;
     }
-    @keyframes fa-spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg)
-    }
+    .sidebar {
+      .nav-title{
+        height: 50px;
+        &:extend(.flex-center);
+      }
+      &.navigation-drawer--mini-variant {
+        .title-text {
+          display: none;
+        }
 
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg)
+      }
     }
-}
 </style>
