@@ -37,7 +37,9 @@
       <myhamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></myhamburger>
       <v-toolbar-title>Toolbar</v-toolbar-title>
       <v-spacer></v-spacer>
-      <svg-icon :icon-class="`settings`" :class-name="'settings'" @click.stop="toggleRightDrawer"></svg-icon>
+      <span class="setting-icon" @click.stop="toggleRightDrawer">
+        <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
+      </span>
     </v-toolbar>
   </v-app>
 </template>
@@ -96,8 +98,11 @@ export default {
 <style lang="less" scoped>
     .svn-icon{
         &.settings{
-            animation: fa-spin 2s infinite linear 
+            animation: fa-spin 2s infinite linear;
         }
+    }
+    .setting-icon {
+        cursor: pointer;
     }
     @keyframes fa-spin {
     0% {
