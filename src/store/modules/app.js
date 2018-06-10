@@ -6,6 +6,8 @@ const app = {
       opened: !+Cookies.get('sidebarStatus'),
       withoutAnimation: false
     },
+    leftdrawer: false,
+    rightdrawer: false,
     device: 'desktop'
   },
   mutations: {
@@ -25,6 +27,14 @@ const app = {
     },
     TOGGLE_DEVICE: (state, device) => {
       state.device = device
+    },
+    TOGGLE_LEFT: (state) => {
+      state.leftdrawer = !state.leftdrawer
+      console.log('left ', state.leftdrawer);
+    },
+    TOGGLE_RIGHT: (state) => {
+      state.rightdrawer = !state.rightdrawer
+      console.log('right ', state.rightdrawer);
     }
   },
   actions: {
@@ -36,7 +46,13 @@ const app = {
     },
     ToggleDevice({ commit }, device) {
       commit('TOGGLE_DEVICE', device)
-    }
+    },
+    ToggleLeft({commit}) {
+      commit('TOGGLE_LEFT')
+    },
+    ToggleRight({commit}) {
+      commit('TOGGLE_RIGHT')
+    },
   }
 }
 

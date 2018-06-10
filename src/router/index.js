@@ -32,6 +32,28 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
     }]
   },
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/table',
+    name: 'Example',
+    meta: { title: 'Example', icon: 'fortiview' },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: 'Table', icon: 'fortiview' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: 'Tree', icon: 'fortiview' }
+      }
+    ]
+  },
+
   { path: '*', redirect: '/404', hidden: true }
 ]
 

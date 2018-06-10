@@ -1,33 +1,43 @@
 <template>
-  <Menu mode="horizontal" :theme="theme1" active-name="1" class="navbar">
-  <myhamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></myhamburger>
-  <breadcrumb></breadcrumb>
-  </Menu>
+    <v-toolbar color="" height="50" light fixed app>
+      <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+      <my-breadcrumb></my-breadcrumb>
+      <v-toolbar-title>Toolbar</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <span class="setting-icon" @click.stop="toggleRightDrawer">
+        <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
+      </span>
+    </v-toolbar>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb.vue'
-import Myhamburger from '@/components/Hamburger.vue'
+import MyBreadcrumb from '@/components/Breadcrumb.vue'
+import Hamburger from '@/components/Hamburger.vue'
 
 export default {
+  name: 'NavBar',
   data () {
     return {
         theme1: 'light'
     }
   },
   components: {
-    Breadcrumb,
-    Myhamburger
+    MyBreadcrumb,
+    Hamburger
   },
   computed: {
     ...mapGetters([
       'sidebar',
+      'rightdrawer',
       'avatar'
     ])
   },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('ToggleSideBar')
+    },
+    toggleRightDrawer() {
+      this.$store.dispatch('ToggleRight')
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
@@ -37,45 +47,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less" scoped>
-.navbar {
-  height: 50px;
-  line-height: 50px;
-  border-radius: 0px !important;
-  .hamburger-container {
-    line-height: 58px;
-    display: inline-block;
-    height: 50px;
-    padding: 0 10px;
-  }
-  .screenfull {
-    position: absolute;
-    right: 90px;
-    top: 16px;
-    color: red;
-  }
-  .avatar-container {
-    height: 50px;
-    display: inline-block;
-    position: absolute;
-    right: 35px;
-    .avatar-wrapper {
-      cursor: pointer;
-      margin-top: 5px;
-      position: relative;
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-      }
-      .el-icon-caret-bottom {
-        position: absolute;
-        right: -20px;
-        top: 25px;
-        font-size: 12px;
-      }
-    }
-  }
-}
-</style>

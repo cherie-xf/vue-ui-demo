@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'Mybreadcrumb',
+  name: 'MyBreadcrumb',
   created() {
     this.getBreadcrumb()
   },
