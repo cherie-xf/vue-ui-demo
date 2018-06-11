@@ -13,8 +13,8 @@
       </div>
         <v-list class="pt-0" dense>
           <v-divider></v-divider>
-            <Menu ref="side_menu" mode="vertical" width="auto" :open-names="openMenuIndxs"
-             :on-select="this.test = true" :on-open-change="this.test=true">
+            <Menu ref="side_menu" mode="vertical" width="auto" :open-names="openMenuIndxs" :active-name="activeMenuName" :accordion="true"
+             @on-select="select" :on-open-change="this.test=true">
                 <sidebar-item :routes="routes"></sidebar-item>
             </Menu>
         </v-list>
@@ -31,6 +31,7 @@ export default {
   data(){
       return {
           openMenuIndxs: [],
+          activeMenuName: null,
       }
   },
   computed: {
@@ -45,16 +46,28 @@ export default {
       return !this.sidebar.opened
     }
   },
+  methods:{
+    select (name){
+      console.log('name', name);
+      //this.activeMenuName = name;
+      this.updateMenu();
+    },
+    updateMenu(){
+      this.$nextTick(() => {
+          this.$refs.side_menu.updateOpened()
+          this.$refs.side_menu.updateActiveName()
+      })
+
+    }
+  },
   watch:{
       isCollapse(nv){
         if(nv){
             console.log(this.$refs);
+            $(this.$el).find('.ivu-menu-submenu .ivu-menu-item').css('padding-left', '20%');
             //this.$refs.side_menu.open_names=[];
-            this.openMenuIndxs=[];
-            this.$nextTick(() => {
-                this.$refs.side_menu.updateOpened()
-                this.$refs.side_menu.updateActiveName()
-            })
+            //this.openMenuIndxs=[];
+            //this.updateMenu();
         }
       }
   }

@@ -26,6 +26,10 @@ module.exports = {
       }
     },
   },
+  globals: {
+    "$": true,
+    "jQuery": true
+  },
   // add your custom rules here
   //rules: { // allow async-await 'generator-star-spacing': 'off', // allow debugger during development 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off' }
   //it is base on https://github.com/vuejs/eslint-config-vue

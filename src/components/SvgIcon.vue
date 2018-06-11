@@ -33,13 +33,20 @@ export default {
 
 <style lang="less" scoped>
 .svg-icon {
-  width: 2em;
-  height: 2em;
+  width: 2.1em;
+  height: 2.1em;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
+  &.small{
+    width: 1.5em;
+    height: 1.5em;
+  }
   &.settings {
     animation: icon-spin 2s infinite linear;
+  }
+  &.sidebar {
+    animation: zoomIn 1s;
   }
 }
 @keyframes icon-spin {
@@ -52,5 +59,16 @@ export default {
         -webkit-transform: rotate(359deg);
         transform: rotate(359deg)
     }
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 </style>
