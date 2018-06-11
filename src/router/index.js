@@ -33,23 +33,23 @@ export const constantRouterMap = [
     }]
   },
   {
-    path: '/example',
+    path: '/threat',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'fortiview' },
+    redirect: '/example/top_threat',
+    name: 'threat',
+    meta: { title: 'Threat', icon: 'user-r-o' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
+        path: 'top_threat',
+        name: 'top_threat',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: 'Table', icon: 'fortiview' }
+        meta: { title: 'Top Threat', icon: '' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
+        path: 'ioc',
+        name: 'ioc',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: 'Tree', icon: 'fortiview' }
+        meta: { title: 'IOC', icon: '' }
       }
     ]
   },

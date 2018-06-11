@@ -2,7 +2,6 @@
     <v-toolbar color="" height="50" light fixed app>
       <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
       <my-breadcrumb></my-breadcrumb>
-      <v-toolbar-title>Toolbar</v-toolbar-title>
       <v-spacer></v-spacer>
       <span class="setting-icon" @click.stop="toggleRightDrawer">
         <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>

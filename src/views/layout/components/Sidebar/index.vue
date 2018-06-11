@@ -13,7 +13,8 @@
       </div>
         <v-list class="pt-0" dense>
           <v-divider></v-divider>
-            <Menu mode="vertical">
+            <Menu ref="side_menu" mode="vertical" width="auto" :open-names="openMenuIndxs"
+             :on-select="this.test = true" :on-open-change="this.test=true">
                 <sidebar-item :routes="routes"></sidebar-item>
             </Menu>
         </v-list>
@@ -27,6 +28,11 @@ import SidebarItem from './SidebarItem'
 
 export default {
   components: { SidebarItem },
+  data(){
+      return {
+          openMenuIndxs: [],
+      }
+  },
   computed: {
     ...mapGetters([
       'sidebar'
@@ -38,12 +44,25 @@ export default {
     isCollapse() {
       return !this.sidebar.opened
     }
+  },
+  watch:{
+      isCollapse(nv){
+        if(nv){
+            console.log(this.$refs);
+            //this.$refs.side_menu.open_names=[];
+            this.openMenuIndxs=[];
+            this.$nextTick(() => {
+                this.$refs.side_menu.updateOpened()
+                this.$refs.side_menu.updateActiveName()
+            })
+        }
+      }
   }
 }
 </script>
 <style lang="less">
 .flex-center {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
