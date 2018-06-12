@@ -57,8 +57,11 @@ export default {
           this.$refs.side_menu.updateOpened()
           this.$refs.side_menu.updateActiveName()
       })
-
-    }
+    },
+    toggleLeftDrawer() {
+      this.$store.dispatch('ToggleLeft')
+      //this.leftdrawer = ! this.leftdrawer;
+    },
   },
   watch:{
       isCollapse(nv){
@@ -81,6 +84,7 @@ export default {
 }
     .sidebar {
       .nav-title{
+        width: 100%;
         &:extend(.flex-center);
         justify-content: flex-start;
         cursor: pointer;

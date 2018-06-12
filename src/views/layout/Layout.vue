@@ -4,6 +4,11 @@
     <navbar></navbar>
     <v-navigation-drawer temporary :value="leftdrawer" fixed></v-navigation-drawer>
     <v-navigation-drawer temporary :value="rightdrawer" right fixed></v-navigation-drawer>
+    <v-content>
+      <v-container fluid fill-height>
+        <app-main></app-main>
+      </v-container>
+    </v-content>
   </v-app>
 </template>
 
@@ -14,7 +19,7 @@ import SvgIcon from '@/components/SvgIcon.vue'// svg组件
 
 export default {
   name:'Layout',
-  components: { Navbar,Sidebar, 'svg-icon': SvgIcon },
+  components: { Navbar,Sidebar,AppMain, 'svg-icon': SvgIcon },
   data:() => ({
     items: [
         { title: 'Home', icon: 'dashboard' },
@@ -32,10 +37,6 @@ export default {
     },
   },
   methods: {
-    toggleLeftDrawer() {
-      this.$store.dispatch('ToggleLeft')
-      //this.leftdrawer = ! this.leftdrawer;
-    },
   }
 }
 </script>
