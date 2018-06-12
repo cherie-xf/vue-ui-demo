@@ -17,3 +17,8 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+.app-main{
+  width: 100%;
+}
+</style>
