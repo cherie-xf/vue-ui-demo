@@ -5,7 +5,7 @@
       <router-link v-if="hasOneShowingChildren(item.children) && !item.children[0].children&&!item.alwaysShow" :to="item.path+item.children[0].path "
         :key="item.children[0].name">
         <MenuItem 
-          :name="item.name || item.children[0].name"
+          :name="item.name || item.name+'-'+item.children[0].name"
           :index="item.path+'/'+item.children[0].path" :class="{'submenu-title-noDropdown':!isNest}">
           <div class="my-content my-content-title">
             <svg-icon v-if="item.children[0].meta&&item.children[0].meta.icon" :icon-class="item.children[0].meta.icon" :class-name="'sidebar'" ></svg-icon>
@@ -26,7 +26,7 @@
           <sidebar-item :is-nest="true" class="nest-menu" v-if="child.children&&child.children.length>0" :routes="[child]" :key="child.path"></sidebar-item>
 
           <router-link v-else :to="item.path+'/'+child.path" :key="child.name">
-            <MenuItem :name="item.name" :index="item.path+'/'+child.path">
+            <MenuItem :name="item.name+'-'+child.name" :index="item.path+'/'+child.path">
               <div class="my-content my-content-subtitle">
                 <svg-icon v-if="child.meta&&child.meta.icon" :icon-class="child.meta.icon" :class-name="'sidebar small'"></svg-icon>
                 <span class="my-text" v-if="child.meta&&child.meta.title">{{child.meta.title}}</span>
@@ -66,16 +66,27 @@ export default {
 }
 </script>
 <style lang="less" >
+@sbarSelectBg: #A2D4C1;
+@sbarSelectBg2: #54b896;
+
+@sbarSelectBg4: #5897a5;
+@sbarSelectBg5: #3b7a89;
+
+@sbarSelectBg3: #00bcd4;
+
+
+@sbarOpenBg: #e8eaed;
+@sbarFontColor: #495060;
 a{
-  color: #495060;
+  color: @sbarFontColor;
   &.router-link-active{
     li{
-      background-color: #00bcd4;
+      background-color: @sbarSelectBg2;
       &.ivu-menu-item:hover, &.ivu-menu-submenu-title:hover{
-        background-color: #00bcd4;
+        background-color: @sbarSelectBg2;
       }
       .my-content-subtitle, .my-content-title{
-        color:white;
+        color: white;
       }
     }
   }
@@ -92,7 +103,7 @@ a{
   padding:0px;
 }
   .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-    color: #495060;
+    color: @sbarFontColor;
     border: none;
   }
 
@@ -101,8 +112,8 @@ a{
     border-color: transparent;
 
   &.ivu-menu-opened{
-    background-color: #e8eaed;
-    border-color: #00bcd4;
+    background-color: @sbarOpenBg;
+    border-color: @sbarSelectBg2;
   }
 
 }
@@ -114,7 +125,7 @@ a{
     width: 100%;
     padding: 0 5%;
     .selected{
-      background-color: #e8eaed
+      background-color: @sbarOpenBg
     }
     &:hover{
       //background-color: #f1f3f4;
@@ -133,24 +144,11 @@ a{
     font-size: 0.9em;
     width: 18px;
     height: 18px;
-    border: 1px solid #495060;
+    border: 1px solid @sbarFontColor;
     border-radius: 50%;
   }
 }
   &.navigation-drawer--mini-variant {
-    .ivu-menu-vertical {
-      /*
-      .ivu-menu-item{
-        display: none;
-      }
-      .ivu-menu-submenu-title{
-        padding-left: 5%;
-      }
-      */
-    }
-    .my-content {
-      //justify-content: center;
-    }
     .my-text {
       display: none;
     }

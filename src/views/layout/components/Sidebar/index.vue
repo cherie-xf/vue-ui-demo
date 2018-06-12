@@ -43,6 +43,7 @@ export default {
       return this.$router.options.routes
     },
     isCollapse() {
+      
       return !this.sidebar.opened
     }
   },
@@ -50,6 +51,7 @@ export default {
     select (name){
       console.log('name', name);
       //this.activeMenuName = name;
+      //var routerItem = this.getRouteItem(name);
       this.updateMenu();
     },
     updateMenu(){
@@ -62,6 +64,21 @@ export default {
       this.$store.dispatch('ToggleLeft')
       //this.leftdrawer = ! this.leftdrawer;
     },
+    getRouteItem(name){
+      var names = name.split('-');
+      var resItem = null;
+      if (name.length > 1){
+        var parentName = names[0];
+        var childName = names[1];
+        var parent = this.$router.find(item => item.name === parentName)
+        if(parent && parent.children){
+          resItem = parent.children.find(item => item.name === childName)
+        }
+      } else if(names[0]){
+        resItem = this.$router.find(item => item.name === names[0])
+      }
+      return resItem;
+    },
   },
   watch:{
       isCollapse(nv){
@@ -73,6 +90,11 @@ export default {
             //this.updateMenu();
         }
       }
+  },
+  mounted(){
+    if(this.isCollapse){
+      $(this.$el).find('.ivu-menu-submenu .ivu-menu-item').css('padding-left', '20%');
+    }      
   }
 }
 </script>
