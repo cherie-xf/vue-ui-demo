@@ -87,6 +87,9 @@ a{
       }
       .my-content-subtitle, .my-content-title{
         color: white;
+        .svg-icon{
+          box-shadow: initial;
+        }
       }
     }
   }
@@ -123,7 +126,7 @@ a{
   &.my-content-title {
     height: 30px;
     width: 100%;
-    padding: 0 5%;
+    padding: 0 6%;
     .selected{
       background-color: @sbarOpenBg
     }
@@ -144,8 +147,11 @@ a{
     font-size: 0.9em;
     width: 18px;
     height: 18px;
-    border: 1px solid @sbarFontColor;
+    background-color: @sbarSelectBg3;
+    color:white;
+    //border: 1px solid @sbarFontColor;
     border-radius: 50%;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
   }
 }
   &.navigation-drawer--mini-variant {

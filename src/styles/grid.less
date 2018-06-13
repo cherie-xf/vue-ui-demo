@@ -2,7 +2,7 @@
 .vue-grid-layout {
     background: #eee;
 }
-
+/*
 .layoutJSON {
     background: #ddd;
     border: 1px solid black;
@@ -18,10 +18,9 @@
     height: 100px;
     overflow-y: scroll;
 }
+*/
 
 .columns {
-    -moz-columns: 120px;
-    -webkit-columns: 120px;
     columns: 120px;
 }
 .vue-resizable-handle {
@@ -41,8 +40,12 @@
 }
 
 .vue-grid-item:not(.vue-grid-placeholder) {
-    background: #ccc;
-    border: 1px solid black;
+    //background: #ccc;
+    background-color: white;
+    //border: 1px solid black;
+    border-radius: 3px;
+    //box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
 }
 
 .vue-grid-item.resizing {

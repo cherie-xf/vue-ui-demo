@@ -6,7 +6,7 @@
       :value="true" app>
       <div class="nav-title" @click.stop="toggleLeftDrawer">
       <span class="setting-icon">
-        <svg-icon :icon-class="`fortiview2`" :class-name="'fortiview'" ></svg-icon>
+        <svg-icon :icon-class="`fortiview2`" :class-name="'fortiview'" class="big"></svg-icon>
       </span>
       <span class="title-text">Fortiview</span>
 
