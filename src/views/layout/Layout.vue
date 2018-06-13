@@ -1,10 +1,10 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <sidebar></sidebar>
     <navbar></navbar>
     <v-navigation-drawer temporary :value="leftdrawer" fixed></v-navigation-drawer>
     <v-navigation-drawer temporary :value="rightdrawer" right fixed></v-navigation-drawer>
-    <v-content>
+    <v-content class="content">
       <v-container fluid fill-height>
         <app-main></app-main>
       </v-container>
@@ -41,5 +41,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+  .container {
+    overflow-y: auto;
+  }
 
 </style>

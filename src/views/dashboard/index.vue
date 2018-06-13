@@ -47,7 +47,7 @@
       <grid-layout
             :layout="layout"
             :col-num="12"
-            :row-height="30"
+            :row-height="gridRowHeight"
             :is-draggable="true"
             :is-resizable="true"
             :is-mirrored="false"
@@ -74,17 +74,15 @@ import VueGridLayout from 'vue-grid-layout'
 const GridLayout = VueGridLayout.GridLayout;
 const GridItem = VueGridLayout.GridItem;
 var testLayout = [
-	    {"x":0,"y":0,"w":2,"h":2,"i":"0"},
-	    {"x":2,"y":0,"w":2,"h":4,"i":"1"},
-	    {"x":4,"y":0,"w":2,"h":5,"i":"2"},
-	    {"x":6,"y":0,"w":2,"h":3,"i":"3"},
-	    {"x":8,"y":0,"w":2,"h":3,"i":"4"},
-	    {"x":10,"y":0,"w":2,"h":3,"i":"5"},
-	    {"x":0,"y":5,"w":2,"h":5,"i":"6"},
-	    {"x":2,"y":5,"w":2,"h":5,"i":"7"},
-	    {"x":4,"y":5,"w":2,"h":5,"i":"8"},
-	    {"x":6,"y":4,"w":2,"h":4,"i":"9"},
-	    {"x":8,"y":4,"w":2,"h":4,"i":"10"},
+	    {"x":0,"y":0,"w":4,"h":4,"i":"0"},
+	    {"x":4,"y":0,"w":4,"h":4,"i":"1"},
+	    {"x":8,"y":0,"w":4,"h":4,"i":"2"},
+	    {"x":0,"y":4,"w":4,"h":4,"i":"3"},
+	    {"x":4,"y":4,"w":4,"h":4,"i":"4"},
+	    {"x":8,"y":4,"w":4,"h":4,"i":"5"},
+	    {"x":0,"y":8,"w":4,"h":4,"i":"6"},
+	    {"x":4,"y":8,"w":4,"h":4,"i":"7"},
+	    {"x":8,"y":8,"w":4,"h":4,"i":"8"},
 	];
 
 export default {
@@ -92,6 +90,7 @@ export default {
   components: { GridLayout, GridItem },
   data: () => ({
     layout: testLayout,
+    gridRowHeight: 30,//default value
     cards: [
       { title: 'Pre-fab homes', src: 'https://vuetifyjs.com/static/doc-images/cards/house.jpg', flex: 12 },
       { title: 'Favorite road trips', src: 'https://vuetifyjs.com/static/doc-images/cards/road.jpg', flex: 6 },
@@ -103,10 +102,18 @@ export default {
       'name',
       'roles'
     ])
+  },
+  mounted(){
+    var height = $(this.$el).closest('.app-main').height() - (10 * 5);// suppose 5 row 4 gap(10px)
+    console.log('height', height);
+    this.gridRowHeight = Math.floor(height/(4.5 * 3)); // 3 row of each height 4.5 times of set height px
   }
 }
 </script>
 
 <style lang="less" scoped>
+  .dashboard-container{
+    height: 100%;
+  }
 
 </style>
