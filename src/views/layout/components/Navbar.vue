@@ -1,11 +1,15 @@
 <template>
     <v-toolbar color="" height="50" light fixed app>
-      <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
-      <my-breadcrumb></my-breadcrumb>
-      <v-spacer></v-spacer>
-      <span class="setting-icon" @click.stop="toggleRightDrawer">
-        <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
-      </span>
+        <v-jumbotron :gradient="topBgColor" height="50px">
+          <div class="content">
+            <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+            <my-breadcrumb></my-breadcrumb>
+            <v-spacer></v-spacer>
+            <span class="setting-icon" @click.stop="toggleRightDrawer">
+              <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
+            </span>
+          </div>
+        </v-jumbotron>
     </v-toolbar>
 </template>
 <script>
@@ -28,6 +32,7 @@ export default {
     ...mapGetters([
       'sidebar',
       'rightdrawer',
+      'topBgColor',
       'avatar'
     ])
   },
@@ -46,3 +51,10 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+.content{
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+}
+</style>

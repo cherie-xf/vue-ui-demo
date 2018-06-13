@@ -4,10 +4,12 @@
     <navbar></navbar>
     <v-navigation-drawer temporary :value="leftdrawer" fixed></v-navigation-drawer>
     <v-navigation-drawer temporary :value="rightdrawer" right fixed></v-navigation-drawer>
-    <v-content class="content">
-      <v-container fluid fill-height>
-        <app-main></app-main>
-      </v-container>
+    <v-content>
+        <v-jumbotron :gradient="gradient" :height="`100%`">
+          <v-container fluid fill-height>
+              <app-main></app-main>
+          </v-container>
+        </v-jumbotron>
     </v-content>
   </v-app>
 </template>
@@ -21,16 +23,15 @@ export default {
   name:'Layout',
   components: { Navbar,Sidebar,AppMain, 'svg-icon': SvgIcon },
   data:() => ({
-    items: [
-        { title: 'Home', icon: 'dashboard' },
-        { title: 'About', icon: 'question_answer' }
-    ],
+    //gradient:'to top, #cfd9df 0%, #e2ebf0 100%',
+    //gradient:'to top, #a8edea 0%, #fed6e3 100%',
   }),
   computed: {
     ...mapGetters([
       'sidebar',
       'leftdrawer',
-      'rightdrawer'
+      'rightdrawer',
+      'gradient'
     ]),
     routes() {
       return this.$router.options.routes
@@ -42,7 +43,7 @@ export default {
 </script>
 <style lang="less" scoped>
   .container {
-    overflow-y: auto;
+    //overflow-y: auto;
   }
 
 </style>

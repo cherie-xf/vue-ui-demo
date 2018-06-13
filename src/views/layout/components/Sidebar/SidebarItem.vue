@@ -75,7 +75,8 @@ export default {
 @sbarSelectBg3: #00bcd4;
 
 
-@sbarOpenBg: #e8eaed;
+//@sbarOpenBg: #e8eaed;
+@sbarOpenBg: inherit;
 @sbarFontColor: #495060;
 a{
   color: @sbarFontColor;

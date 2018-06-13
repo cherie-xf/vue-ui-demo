@@ -8,6 +8,10 @@ const app = {
     },
     leftdrawer: false,
     rightdrawer: false,
+    gradient: {
+      from: '#ffffff',
+      to:'#ffffff',
+    },
     device: 'desktop'
   },
   mutations: {
@@ -35,7 +39,11 @@ const app = {
     TOGGLE_RIGHT: (state) => {
       state.rightdrawer = !state.rightdrawer
       console.log('right ', state.rightdrawer);
-    }
+    },
+    UPDATE_GRADIENT:(state,args)=>{
+      state.gradient.from = args.from;
+      state.gradient.to = args.to;
+    },
   },
   actions: {
     ToggleSideBar: ({ commit }) => {
@@ -53,6 +61,9 @@ const app = {
     ToggleRight({commit}) {
       commit('TOGGLE_RIGHT')
     },
+    UpdateGradient({commit}, args) {
+      commit('UPDATE_GRADIENT', args)
+    }
   }
 }
 
