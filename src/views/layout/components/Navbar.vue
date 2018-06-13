@@ -5,9 +5,11 @@
             <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
             <my-breadcrumb></my-breadcrumb>
             <v-spacer></v-spacer>
+            <!--
             <span class="setting-icon" @click.stop="toggleRightDrawer">
               <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
             </span>
+            -->
           </div>
         </v-jumbotron>
     </v-toolbar>
@@ -55,6 +57,6 @@ export default {
 .content{
   display: flex;
   align-items: center;
-  padding: 0px 10px;
+  padding: 0px 20px 0 10px;
 }
 </style>
