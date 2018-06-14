@@ -70,8 +70,6 @@ export default {
     },
     toggleLeftDrawer() {
       this.$store.dispatch('ToggleLeft')
-      this.$store.dispatch('UpdateGradient', {to:'#a8edea',from:'#fed6e3'})
-      //this.leftdrawer = ! this.leftdrawer;
     },
     getRouteItem(name){
       var names = name.split('-');
