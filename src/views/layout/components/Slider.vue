@@ -9,9 +9,75 @@
           </v-badge>
       </div>
       <v-list>
-        <v-subheader class="title">Themes</v-subheader>
+        <v-subheader class="title">System Information </v-subheader>
+        <div class="sys-info slide-content">
+          <div class="myrow">
+            <div class="mytitle">Platform Type</div>
+            <div class="mycontent">FAZVM64</div>
+          </div>
+          <div class="myrow">
+            <div class="mytitle">Firmware Version</div>
+            <div class="mycontent">
+              v6.00-build0162 180612(Interim)
+              <span class="setting-icon">
+                 <svg-icon :icon-class="`upload`" :class-name="'upload'"></svg-icon>
+              </span>
+              </div>
+          </div>
+          <div class="myrow">
+            <span class="mytitle">Administrative Domain:</span>
+            <i-switch v-model="enableAdom" @on-change="changeEnableAdom" size="small"></i-switch>
+          </div>
+        </div>
+        <v-subheader class="title">Explore</v-subheader>
+        <div class="slide-content explore-info"> 
+          <div class="myaction">
+            <svg-icon :icon-class="'user-o'" :class-name="'sidebar icon-shadow small'"></svg-icon>
+            <span class="my-text">Profile</span>
+          </div>
+          <div class="myaction">
+            <svg-icon :icon-class="'edit-o'" :class-name="'sidebar icon-shadow small'"></svg-icon>
+            <span class="my-text">Change Password</span>
+          </div>
+          <div class="myaction">
+            <svg-icon :icon-class="'logout-o'" :class-name="'sidebar icon-shadow small'"></svg-icon>
+            <span class="my-text">Logout</span>
+          </div>
+        </div>
+
+        <v-subheader class="title">Message<span class="my-content-number">3</span> </v-subheader>
+        <div class="slide-content message-info"> 
+          <Alert>515 unregistered device(s)</Alert>
+          <Alert type="warning">Analytic is using 0% of allocate disk space</Alert>
+          <Alert type="error">License will expert in 5 days</Alert>
+        </div>
+
+        <v-subheader class="title">Task Monitor<small>(Latest 3 tasks)</small></v-subheader>
+        <div class="slide-content message-info"> 
+          <div class="myalert myrunning">
+            <small>2 housrs ago</small>
+            <div class="mycontent">Delete devices</div>
+            <small>Running at Adom: <i>Corporate</i></small>
+          </div>
+          <div class="myalert mysuccess">
+            <small>12 housrs ago</small>
+            <div class="mycontent">dvmdb adom FGT_FCT object member</object></div>
+            <small>Success at Adom: <i>FGT_FCT</i></small>
+          </div>
+          <div class="myalert mydanger">
+            <small>2 days ago</small>
+            <div class="mycontent">Add/delete unregistered Devices</div>
+            <small>Failed at Adom: <i>FOS_QA</i></small>
+          </div>
+        </div>
+
+        <v-subheader class="title">Themes
+          <v-btn fab small class="current-btn">
+            <v-jumbotron :gradient="gradient" :height="`100%`"> </v-jumbotron>
+          </v-btn>
+        </v-subheader>
         <div class="text-xs-center theme-btns">
-          <v-btn fab small v-for="theme in themes" :key="theme" @click="changeTheme(theme.value)">
+          <v-btn fab small v-for="theme in themes" :key="theme.text" @click="changeTheme(theme.value)">
             <v-jumbotron :gradient="theme.text" :height="`100%`">
             </v-jumbotron>
           </v-btn>
@@ -21,41 +87,80 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-const Themes = [{
+const Themes = [
+{
+  value: {from:'#fdfbfb', to:'#ebedee'},
+  text: '#fdfbfb 0%, #ebedee 100%'
+},
+{
+  value: {from:'#FFFEFF', to:'#D7FFFE'},
+  text: '#FFFEFF 0%, #D7FFFE 100%'
+},
+{
+  value: {from:'#f5efef', to:'#feada6'},
+  text: '#f5efef 0%, #feada6 100%'
+},
+{
+  value: {from:'#e6dee9', to:'#bdc2e8'},
+  text: '#e6dee9 0%, #bdc2e8 100%'
+},
+{
   value: {from: '#ffecd2', to: '#fcb69f'},
   text: '#ffecd2 0%, #fcb69f 100%'
+},
+{
+  value: {from: '#FFE6FA', to: '#E3FDF5'},
+  text: '#FFE6FA 0%, #E3FDF5 100%'
 },
 {
   value: {from:'#fed6e3', to:'#a8edea'},
   text: '#fed6e3 0%, #a8edea 100%'
 },
 {
-  value: {from:'#e2ebf0', to:'#cfd9df'},
-  text: '#e2ebf0 0%, #cfd9df 100%'
-},
-{
-  value: {from:'#fdfbfb', to:'#ebedee'},
-  text: '#fdfbfb 0%, #ebedee 100%'
-},
-{
-  value: {from:'#f6f3ff', to:'#cd9cf2'},
-  text: '#f6f3ff 0%, #cd9cf2 100%'
-},
-{
   value: {from:'#fff1eb', to:'#ace0f9'},
   text: '#fff1eb 0%, #ace0f9 100%'
+},
+{
+  value: {from:'#e4efe9', to:'#93a5cf'},
+  text: '#e4efe9 0%, #93a5cf 100%'
+},
+{
+  value: {from:'#8baaaa', to:'#ae8b9c'},
+  text: '#8baaaa 0%, #ae8b9c 100%',
+  dark:true,
+},
+{
+  value: {from:'#517fa4', to:'#243949'},
+  text: '#517fa4 0%, #243949 100%',
+  dark:true,
+},
+{
+  value: {from:'#267985', to:'#0f384b'},
+  text: '#267985 0%, #0f384b 100%',
+  dark:true,
+},
+{
+  value: {from:'#282a4a', to:'#05060f'},
+  text: '#282a4a 0%, #05060f 100%',
+  dark:true,
+},
+{
+  value: {from:'#20282a', to:'#0d0d0d'},
+  text: '#20282a 0%, #0d0d0d 100%',
+  dark:true,
 },
 ]
 export default {
   data(){
     return{
       themes: Themes,
-
+      enableAdom: true,
     }
   },
   computed: {
     ...mapGetters([
       'rightdrawer',
+      'gradient',
     ]),
   },
   methods: {
@@ -64,6 +169,9 @@ export default {
     },
     changeTheme(value){
       this.$store.dispatch('UpdateGradient', value)
+    },
+    changeEnableAdom(){
+      console.log('change enable adom: ', this.enableAdom);
     }
   },
   mounted(){
@@ -73,12 +181,35 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.flex-center {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+  .myrow{
+    padding-bottom: 10px;
+    font-size: 1.1em;
+    .mytitle {
+      font-weight: 700;
+    }
+    .mycontent {
+      display: flex;
+      align-items: center;
+    }
+  }
   .theme-btns{
     button{
+      width: 22px;
+      height: 22px;
       border-radius: 100%;
       overflow: hidden;
-
     }
+  }
+  .current-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 100%;
+      overflow: hidden;
   }
   .right-drawer{
     overflow: initial;
@@ -95,5 +226,52 @@ export default {
     align-content: center;
     border-bottom-left-radius: 30px; 
     border-top-left-radius: 30px;
+  }
+  .slide-content{
+    padding: 0 16px;
+  }
+  .myalert{
+    color: white;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: 4px 0px;
+    &.myrunning{
+      border-left-width: 5px;
+      border-top-width: 0px;
+      border-bottom-width: 0px;
+      border-right-width: 0px;
+      border-style: solid;
+      border-color: #4caf50;
+    }
+    &.mysuccess{
+      background-color: #4caf50;
+    }
+    &.mywarning{
+      background-color: #e67e22;
+    }
+    &.mydanger{
+      background-color: #e74c3c;
+    }
+  }
+  .my-content-number:extend(.flex-center){
+    font-size: 0.8em;
+    width: 22px;
+    height: 22px;
+    background-color: #1976d2;
+    color:white;
+    //border: 1px solid @sbarFontColor;
+    border-radius: 50%;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  }
+  .myaction{
+    margin-bottom: 8px;
+    cursor: pointer;
+    &:hover{
+      background-color: #ccc;
+    }
+    .my-text{
+      margin-left: 15px;
+      color: #1976d2
+    }
   }
 </style>

@@ -9,8 +9,8 @@ const app = {
     leftdrawer: false,
     rightdrawer: false,
     gradient: {
-      from: '#ffffff',
-      to:'#ffffff',
+      from: '#fffeff',
+      to:'#d7fffe',
     },
     device: 'desktop'
   },
