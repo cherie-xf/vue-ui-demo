@@ -55,19 +55,19 @@
         <v-subheader class="title">Task Monitor<small>(Latest 3 tasks)</small></v-subheader>
         <div class="slide-content message-info"> 
           <div class="myalert myrunning">
-            <small>2 housrs ago</small>
+            <small><i>2 housrs ago</i></small>
             <div class="mycontent">Delete devices</div>
-            <small>Running at Adom: <i>Corporate</i></small>
+            <small>Running at Adom: <b>Corporate</b></small>
           </div>
           <div class="myalert mysuccess">
-            <small>12 housrs ago</small>
+            <small><i>12 housrs ag</i>o</small>
             <div class="mycontent">dvmdb adom FGT_FCT object member</object></div>
-            <small>Success at Adom: <i>FGT_FCT</i></small>
+            <small>Success at Adom: <b>FGT_FCT</b></small>
           </div>
           <div class="myalert mydanger">
-            <small>2 days ago</small>
+            <small><i>2 days ag</i>o</small>
             <div class="mycontent">Add/delete unregistered Devices</div>
-            <small>Failed at Adom: <i>FOS_QA</i></small>
+            <small>Failed at Adom: <b>FOS_QA</b></small>
           </div>
         </div>
 
