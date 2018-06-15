@@ -8,7 +8,7 @@
             </v-avatar>
           </v-badge>
       </div>
-      <v-list>
+      <v-list class="drawer-container">
         <v-subheader class="title">System Information </v-subheader>
         <div class="sys-info slide-content">
           <div class="myrow">
@@ -53,15 +53,17 @@
         </div>
 
         <v-subheader class="title">Task Monitor<small>(Latest 3 tasks)</small></v-subheader>
-        <div class="slide-content message-info"> 
-          <div class="myalert myrunning">
-            <small><i>2 housrs ago</i></small>
-            <div class="mycontent">Delete devices</div>
-            <small>Running at Adom: <b>Corporate</b></small>
-          </div>
+        <div class="slide-content task-info"> 
+          <tooltip content="10% completed" placement="top" class="mytooltip">
+            <div class="myalert myrunning">
+              <small><i>2 housrs ago</i></small>
+              <div class="mycontent">Delete devices</div>
+              <small>Running at Adom: <b>Corporate</b></small>
+            </div>
+          </tooltip>
           <div class="myalert mysuccess">
             <small><i>12 housrs ag</i>o</small>
-            <div class="mycontent">dvmdb adom FGT_FCT object member</object></div>
+            <div class="mycontent">dvmdb adom FGT_FCT object member</div>
             <small>Success at Adom: <b>FGT_FCT</b></small>
           </div>
           <div class="myalert mydanger">
@@ -186,6 +188,23 @@ export default {
   align-items: center;
   justify-content: center;
 }
+.right-drawer{
+  overflow: initial;
+  padding: 0px;
+  //overflow-y: auto;
+  .drawer-container{
+    max-height: 100%;
+    overflow-y: auto;
+    .ivu-tooltip-rel{
+      display: block;
+    }
+  }
+  .mytootip{
+    .mycontent{
+      width: 254px;
+    }
+  }
+}
   .myrow{
     padding-bottom: 10px;
     font-size: 1.1em;
@@ -211,9 +230,6 @@ export default {
       border-radius: 100%;
       overflow: hidden;
   }
-  .right-drawer{
-    overflow: initial;
-  }
   .user-avatar {
     cursor: pointer;
     background-color: rgba(204, 204, 204, 0.8);
@@ -236,7 +252,8 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     margin: 4px 0px;
     &.myrunning{
-      border-left-width: 5px;
+      width:268px;
+      border-left-width: 25px;
       border-top-width: 0px;
       border-bottom-width: 0px;
       border-right-width: 0px;
