@@ -17,6 +17,7 @@
     "clipboard": "^2.0.1",
     "iview": "^2.14.1",
     "js-cookie": "^2.2.0",
+    "npm": "^6.1.0",
     "vue": "^2.5.2",
     "vue-echarts": "^3.0.8",
     "vue-grid-layout": "^2.1.13",

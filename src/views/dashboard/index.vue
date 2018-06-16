@@ -24,7 +24,11 @@
           @move="moveEvent"
           @resized="resizedEvent"
           @moved="movedEvent">
-            <bar-chart v-if="isGridReady"></bar-chart>
+            <bar-chart v-if="isGridReady && item.type ==='bar'"></bar-chart>
+            <pie-chart v-if="isGridReady && item.type ==='pie'"></pie-chart>
+            <line-chart v-if="isGridReady && item.type ==='line'"></line-chart>
+            <bar-line v-if="isGridReady && item.type ==='barline'"></bar-line>
+            <map-chart v-if="isGridReady && item.type ==='map'"></map-chart>
         </grid-item>
     </grid-layout>
   </div>
@@ -34,15 +38,19 @@
 import { mapGetters } from 'vuex'
 import VueGridLayout from 'vue-grid-layout'
 import BarChart from '@/components/Charts/BarChart.vue'
+import PieChart from '@/components/Charts/PieChart.vue'
+import LineChart from '@/components/Charts/LineChart.vue'
+import BarLine from '@/components/Charts/BarLineChart.vue'
+import MapChart from '@/components/Charts/MapChart.vue'
 const GridLayout = VueGridLayout.GridLayout;
 const GridItem = VueGridLayout.GridItem;
 var testLayout = [
-	    {"x":0,"y":0,"w":4,"h":4,"i":"0"},
-	    {"x":4,"y":0,"w":4,"h":4,"i":"1"},
-	    {"x":8,"y":0,"w":4,"h":4,"i":"2"},
-	    {"x":0,"y":4,"w":4,"h":4,"i":"3"},
-	    {"x":4,"y":4,"w":4,"h":4,"i":"4"},
-	    {"x":8,"y":4,"w":4,"h":4,"i":"5"},
+	    {"x":0,"y":0,"w":4,"h":4,"i":"0", type:'bar'},
+	    {"x":4,"y":0,"w":4,"h":4,"i":"1", type:'pie'},
+	    {"x":8,"y":0,"w":4,"h":4,"i":"2", type:'line'},
+	    {"x":0,"y":4,"w":4,"h":4,"i":"3", type:'barline'},
+	    {"x":4,"y":4,"w":4,"h":4,"i":"4", type:'bar'},
+	    {"x":8,"y":4,"w":4,"h":4,"i":"5", type:'map'},
 	    {"x":0,"y":8,"w":4,"h":4,"i":"6"},
 	    {"x":4,"y":8,"w":4,"h":4,"i":"7"},
 	    {"x":8,"y":8,"w":4,"h":4,"i":"8"},
@@ -50,7 +58,7 @@ var testLayout = [
 
 export default {
   name: 'dashboard',
-  components: { GridLayout, GridItem, BarChart},
+  components: { GridLayout, GridItem, BarChart, PieChart, LineChart, BarLine, MapChart},
   data: () => ({
     layout: testLayout,
     gridRowHeight: 30,//default value

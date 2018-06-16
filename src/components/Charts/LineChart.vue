@@ -1,9 +1,9 @@
 <template>
       <figure class="chart-container">
         <chart 
-          :options="bar"
+          :options="line"
           :init-options="initOptions"
-          ref="bar"
+          ref="line"
           theme="ovilia-green"
           auto-resize
           class="mychart"
@@ -26,7 +26,7 @@ ECharts.registerTheme('ovilia-green', theme)
 ECharts.registerMap('china', chinaMap)
 
 export default {
-  name: 'BarChart',
+  name: 'LineChart',
   data(){
       let options = qs.parse(location.search, { ignoreQueryPrefix: true })
       return {
@@ -34,37 +34,28 @@ export default {
         initOptions: {
             renderer: options.renderer || 'canvas'
         },
-        bar: null,
+        line: null,
       }
   },
   mounted(){
       this.$nextTick(()=>{
-        this.bar = this.getBar();
+        this.line = this.getLine();
       });
   },
   methods:{
-    getBar(){
+    getLine(){
           return {
-            legend: {},
-            tooltip: {},
-            dataset: {
-            // Provide data.
-            source: [
-                ['Product', '2015', '2016', '2017'],
-                ['Matcha Latte', ...this.randomize()],
-                ['Milk Tea', ...this.randomize()],
-                ['Cheese Cocoa', ...this.randomize()],
-                ['Walnut Brownie', ...this.randomize()]
-            ]
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             },
-            // Declare X axis, which is a category axis, mapping
-            // to the first column by default.
-            xAxis: { type: 'category' },
-            // Declare Y axis, which is a value axis.
-            yAxis: {},
-            // Declare several series, each of them mapped to a
-            // column of the dataset by default.
-            series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line'
+            }]
         }
     },
     randomize(){
