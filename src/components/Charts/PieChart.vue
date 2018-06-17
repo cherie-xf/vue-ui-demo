@@ -46,7 +46,7 @@ export default {
     getPie(){
       return {
         title: {
-            text: 'pie chart',
+            //text: 'pie chart',
             x: 'center'
         },
         tooltip: {

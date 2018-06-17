@@ -46,7 +46,7 @@ export const constantRouterMap = [
       {
         path: 'top_threat',
         name: 'top_threat',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/list/index'),
         meta: { title: 'Top Threat', icon: 'sign' }
       },
       {

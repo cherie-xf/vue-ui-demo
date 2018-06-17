@@ -9,7 +9,7 @@
           </v-badge>
       </div>
       <v-list class="drawer-container">
-        <v-subheader class="title">System Information </v-subheader>
+        <v-subheader class="slider-title">System Information </v-subheader>
         <div class="sys-info slide-content">
           <div class="myrow">
             <div class="mytitle">Platform Type</div>
@@ -29,7 +29,7 @@
             <i-switch v-model="enableAdom" @on-change="changeEnableAdom" size="small"></i-switch>
           </div>
         </div>
-        <v-subheader class="title">Explore</v-subheader>
+        <v-subheader class="slider-title">Explore</v-subheader>
         <div class="slide-content explore-info"> 
           <div class="myaction">
             <svg-icon :icon-class="'user-o'" :class-name="'sidebar icon-shadow small'"></svg-icon>
@@ -45,14 +45,14 @@
           </div>
         </div>
 
-        <v-subheader class="title">Message<span class="my-content-number">3</span> </v-subheader>
+        <v-subheader class="slider-title">Message<span class="my-content-number">3</span> </v-subheader>
         <div class="slide-content message-info"> 
           <Alert>515 unregistered device(s)</Alert>
           <Alert type="warning">Analytic is using 0% of allocate disk space</Alert>
           <Alert type="error">License will expert in 5 days</Alert>
         </div>
 
-        <v-subheader class="title">Task Monitor<small>(Latest 3 tasks)</small></v-subheader>
+        <v-subheader class="slider-title">Task Monitor<small>(Latest 3 tasks)</small></v-subheader>
         <div class="slide-content task-info"> 
           <tooltip content="10% completed" placement="top" class="mytooltip">
             <div class="myalert myrunning">
@@ -73,13 +73,13 @@
           </div>
         </div>
 
-        <v-subheader class="title">Themes
+        <v-subheader class="slider-title">Themes
           <v-btn fab small class="current-btn">
             <v-jumbotron :gradient="gradient" :height="`100%`"> </v-jumbotron>
           </v-btn>
         </v-subheader>
         <div class="text-xs-center theme-btns">
-          <v-btn fab small v-for="theme in themes" :key="theme.text" @click="changeTheme(theme.value)">
+          <v-btn fab small v-for="theme in themes" :key="theme.text" @click="changeTheme(theme.value)" :title="theme.name">
             <v-jumbotron :gradient="theme.text" :height="`100%`">
             </v-jumbotron>
           </v-btn>
@@ -92,63 +92,77 @@ import { mapGetters } from 'vuex'
 const Themes = [
 {
   value: {from:'#fdfbfb', to:'#ebedee'},
-  text: '#fdfbfb 0%, #ebedee 100%'
+  text: '#fdfbfb 0%, #ebedee 100%',
+  name: 'Cloudy Knoxville' 
 },
 {
   value: {from:'#FFFEFF', to:'#D7FFFE'},
-  text: '#FFFEFF 0%, #D7FFFE 100%'
+  text: '#FFFEFF 0%, #D7FFFE 100%',
+  name: 'Salt Mountain - default' 
 },
 {
   value: {from:'#f5efef', to:'#feada6'},
-  text: '#f5efef 0%, #feada6 100%'
+  text: '#f5efef 0%, #feada6 100%',
+  name: 'Fresh Milk'
 },
 {
   value: {from:'#e6dee9', to:'#bdc2e8'},
-  text: '#e6dee9 0%, #bdc2e8 100%'
+  text: '#e6dee9 0%, #bdc2e8 100%',
+  name: 'Frozen Dreams'
 },
 {
   value: {from: '#ffecd2', to: '#fcb69f'},
-  text: '#ffecd2 0%, #fcb69f 100%'
+  text: '#ffecd2 0%, #fcb69f 100%',
+  name: 'Juicy Peach'
 },
 {
   value: {from: '#FFE6FA', to: '#E3FDF5'},
-  text: '#FFE6FA 0%, #E3FDF5 100%'
+  text: '#FFE6FA 0%, #E3FDF5 100%',
+  name: 'Perfect White'
 },
 {
   value: {from:'#fed6e3', to:'#a8edea'},
-  text: '#fed6e3 0%, #a8edea 100%'
+  text: '#fed6e3 0%, #a8edea 100%',
+  name: 'Rare Wind'
 },
 {
   value: {from:'#fff1eb', to:'#ace0f9'},
-  text: '#fff1eb 0%, #ace0f9 100%'
+  text: '#fff1eb 0%, #ace0f9 100%',
+  name: 'New York'
 },
 {
   value: {from:'#e4efe9', to:'#93a5cf'},
-  text: '#e4efe9 0%, #93a5cf 100%'
+  text: '#e4efe9 0%, #93a5cf 100%',
+  name: 'Cochiti Lake'
 },
 {
   value: {from:'#8baaaa', to:'#ae8b9c'},
   text: '#8baaaa 0%, #ae8b9c 100%',
+  name: 'Jungle Day',
   dark:true,
 },
 {
   value: {from:'#517fa4', to:'#243949'},
   text: '#517fa4 0%, #243949 100%',
+  name: 'Solid Stone',
   dark:true,
 },
 {
   value: {from:'#267985', to:'#0f384b'},
   text: '#267985 0%, #0f384b 100%',
+  name: "Arielle's Smile",
   dark:true,
 },
 {
   value: {from:'#282a4a', to:'#05060f'},
   text: '#282a4a 0%, #05060f 100%',
+  name: 'Eternal Constanc',
   dark:true,
 },
 {
   value: {from:'#20282a', to:'#0d0d0d'},
   text: '#20282a 0%, #0d0d0d 100%',
+  name: 'night',
   dark:true,
 },
 ]
@@ -191,6 +205,9 @@ export default {
 .right-drawer{
   overflow: initial;
   padding: 0px;
+  .slider-title{
+    //font-size: 0.8em;
+  }
   //overflow-y: auto;
   .drawer-container{
     max-height: 100%;

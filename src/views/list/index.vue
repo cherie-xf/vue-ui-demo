@@ -1,5 +1,6 @@
+
 <template>
-  <div class="dashboard-container">
+  <div class="list-container">
     <BackTop></BackTop>
       <grid-layout
             :layout="layout"
@@ -24,11 +25,7 @@
           @move="moveEvent"
           @resized="resizedEvent"
           @moved="movedEvent">
-            <bar-chart v-if="isGridReady && item.type ==='bar'"></bar-chart>
-            <pie-chart v-if="isGridReady && item.type ==='pie'"></pie-chart>
-            <line-chart v-if="isGridReady && item.type ==='line'"></line-chart>
-            <bar-line v-if="isGridReady && item.type ==='barline'"></bar-line>
-            <map-chart v-if="isGridReady && item.type ==='map'"></map-chart>
+
         </grid-item>
     </grid-layout>
   </div>
@@ -37,39 +34,22 @@
 <script>
 import { mapGetters } from 'vuex'
 import VueGridLayout from 'vue-grid-layout'
-import BarChart from '@/components/Charts/BarChart.vue'
-import PieChart from '@/components/Charts/PieChart.vue'
-import LineChart from '@/components/Charts/LineChart.vue'
-import BarLine from '@/components/Charts/BarLineChart.vue'
 import MapChart from '@/components/Charts/MapChart.vue'
 const GridLayout = VueGridLayout.GridLayout;
 const GridItem = VueGridLayout.GridItem;
 var testLayout = [
-	    {"x":0,"y":0,"w":4,"h":4,"i":"0", type:'bar'},
-	    {"x":4,"y":0,"w":4,"h":4,"i":"1", type:'pie'},
-	    {"x":8,"y":0,"w":4,"h":4,"i":"2", type:'line'},
-	    {"x":0,"y":4,"w":4,"h":4,"i":"3", type:'barline'},
-	    {"x":4,"y":4,"w":4,"h":4,"i":"4", type:'bar'},
-	    {"x":8,"y":4,"w":4,"h":4,"i":"5", type:'map'},
-	    {"x":0,"y":8,"w":4,"h":4,"i":"6"},
-	    {"x":4,"y":8,"w":4,"h":4,"i":"7"},
-	    {"x":8,"y":8,"w":4,"h":4,"i":"8"},
+	    {"x":0,"y":0,"w":12,"h":1,"i":"0", type:'search'},
+	    {"x":0,"y":1,"w":12,"h":3,"i":"1", type:'barline'},
+	    {"x":0,"y":4,"w":12,"h":4,"i":"2", type:'list_table'},
+	    {"x":0,"y":8,"w":12,"h":4,"i":"3", type:'drilldown_table'},
+	    {"x":4,"y":12,"w":12,"h":4,"i":"4", type:'logview_table'},
+	    {"x":8,"y":16,"w":12,"h":4,"i":"5", type:'logview_detail'},
   ];
-var testLayout2 = [
-	    {"x":0,"y":0,"w":4,"h":6,"i":"0", type:'bar'},
-	    {"x":4,"y":0,"w":4,"h":6,"i":"1", type:'pie'},
-	    {"x":8,"y":0,"w":4,"h":6,"i":"2", type:'line'},
-	    {"x":0,"y":6,"w":4,"h":6,"i":"3", type:'barline'},
-	    {"x":4,"y":6,"w":4,"h":6,"i":"4", type:'bar'},
-	    {"x":8,"y":6,"w":4,"h":6,"i":"5", type:'map'},
-
-];
-
 export default {
   name: 'dashboard',
-  components: { GridLayout, GridItem, BarChart, PieChart, LineChart, BarLine, MapChart},
+  components: { GridLayout, GridItem},
   data: () => ({
-    layout: testLayout2,
+    layout: testLayout,
     gridRowHeight: 30,//default value
     isGridReady: false,
   }),
@@ -108,7 +88,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .dashboard-container{
+  .list-container{
     height: 100%;
   }
 
