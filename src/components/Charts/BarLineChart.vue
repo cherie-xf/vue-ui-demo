@@ -29,7 +29,6 @@ export default {
   name: 'BarLineChart',
   data(){
       let options = qs.parse(location.search, { ignoreQueryPrefix: true })
-      console.log('bar line data');
       return {
         options,
         initOptions: {
@@ -41,7 +40,6 @@ export default {
   mounted(){
       this.$nextTick(()=>{
         this.bar = this.getBarLine();
-        console.log('bar line', this.barLine);
       });
   },
   methods:{

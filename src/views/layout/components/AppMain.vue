@@ -20,5 +20,8 @@ export default {
 <style lang="less" scoped>
 .app-main{
   width: 100%;
+  height: 100%;
+  padding: 10px;
+  overflow-y: auto;
 }
 </style>

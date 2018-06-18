@@ -191,7 +191,6 @@ export default {
     }
   },
   mounted(){
-    console.log(this.themes[0])
 
   }
 }

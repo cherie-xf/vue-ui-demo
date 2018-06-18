@@ -81,8 +81,8 @@ export default {
   },
   mounted(){
     var height = $(this.$el).closest('.app-main').height() - (10 * 5);// suppose 5 row 4 gap(10px)
-    console.log('height', height);
-    this.gridRowHeight = Math.floor(height/(4.5 * 3)); // 3 row of each height 4.5 times of set height px
+    this.gridRowHeight = Math.max(Math.floor(height/(4.5 * 3)), 35); // 3 row of each height 4.5 times of set height px , min-height 35px
+    console.log('container height', height, 'gride row height', this.gridRowHeight);
     this.$nextTick(()=>{
       this.isGridReady = true;
     });

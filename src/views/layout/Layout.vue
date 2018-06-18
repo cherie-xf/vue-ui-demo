@@ -4,11 +4,9 @@
     <navbar></navbar>
     <v-navigation-drawer temporary :value="leftdrawer" fixed></v-navigation-drawer>
     <slider></slider>
-    <v-content>
+    <v-content class="main-content">
         <v-jumbotron :gradient="gradient" :height="`100%`">
-          <v-container fluid fill-height>
               <app-main></app-main>
-          </v-container>
         </v-jumbotron>
     </v-content>
   </v-app>
@@ -40,4 +38,10 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.main-content{
+  height: 100%;
+}
+  .content--wrap{
+    overflow-y: auto;
+  }
 </style>
