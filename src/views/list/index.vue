@@ -66,6 +66,9 @@ export default {
     this.$nextTick(()=>{
       this.isGridReady = true;
     });
+    setTimeout(()=>{
+      this.layout[1].h = 1;
+    }, 5000);
   },
   methods:{
     layoutUpdatedEvent: function(newLayout){
