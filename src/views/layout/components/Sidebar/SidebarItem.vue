@@ -95,9 +95,6 @@ a{
     }
   }
 }
-.ivu-icon{
-  display: none;
-}
 .flex-center {
   display: inline-flex;
   align-items: center;
@@ -118,6 +115,12 @@ a{
   &.ivu-menu-opened{
     background-color: @sbarOpenBg;
     border-color: @sbarSelectBg2;
+  }
+
+}
+.menu-wrapper{
+  .ivu-icon{
+    display: none;
   }
 
 }

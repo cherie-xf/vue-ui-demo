@@ -53,6 +53,13 @@ export default {
             data2.push((Math.cos(i / 5) * (i / 5 -10) + i / 6) * 5);
         }
           return {
+            grid:{
+                left: '3%',
+                right: '3%',
+                top: '3%',
+                bottom: '3%',
+                show: false,
+            },
             title: {
                 text: ''
             },
@@ -69,6 +76,9 @@ export default {
                 }
             },
             yAxis: {
+                splitLine:{
+                    show: false
+                }
             },
             series: [{
                 name: 'bar',

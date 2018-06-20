@@ -250,9 +250,9 @@ export default {
     cursor: pointer;
     background-color: rgba(204, 204, 204, 0.8);
     position: absolute;
-    top: 15px;
-    left: -100px;
-    width:100px;
+    top: 10px;
+    left: -80px;
+    width: 80px;
     height: 50px;
     display: flex;
     align-content: center;
