@@ -1,6 +1,6 @@
 <template>
     <figure class="table-container">
-       <Table :columns="columns1" :data="data1" :height="tableHeight"></Table>
+       <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
     </figure>
 </template>
 
@@ -8,7 +8,7 @@
 
 export default {
   name: 'ListTable',
-  props:['item'],
+  props:['height'],
   data(){
       return {
           columns1: [
@@ -78,61 +78,18 @@ export default {
       }
   },
   mounted(){
-      this.$nextTick(()=>{
-        this.resize();
-      });
   },
   updated(){
-      this.$nextTick(()=>{
-        this.resize();
-      });
   },
   methods:{
-    resize(size){
-        if(size){
-            if(size.width){
-                this.tableWidth = $(this.$el).width();
-            }
-            if(size.height){
-                this.tableHeight = $(this.$el).height();
-            }
-        } else {
-            /*
-            this.tableHeight = $(this.$el).height();
-            this.tableWidth = $(this.$el).width();
-            this.item.height = this.tableHeight;
-            this.item.width = this.tableWidth;
-            */
-           this.item.height = $(this.$el).height();
-           this.item.width = $(this.$el).width();
-            console.log('init item height width', this.item);
-        }
-    }
   },
   computed:{
-      tableHeight: function(){
-          return this.item.height
-      },
-      tableWidth: function(){
-          return this.item.width
-      }
+     tableHeight: function(){
+          console.log('list table computed item height', this.height);
+         return this.height;
+     }
   },
   watch:{
-      tableHeight: function(nv){
-          console.log('list table watch height changed', nv);
-      },
-      tableWidth: function(nv){
-          console.log('list table watch width changed', nv);
-      }
-
-      /*
-      size:{
-          handler: function(nv){
-          console.log('list table watch size changed', nv);
-        },
-        deep: true,
-      }
-      */
   }
 }
 </script>

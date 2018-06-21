@@ -2,13 +2,13 @@
     <figure class="table-container">
     <Tabs value="name1">
         <TabPane label="table 1" name="name1" class="tab-pane">
-            <Table :columns="columns1" :data="data1" :height="tableHeight"></Table>
+            <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
         </TabPane>
         <TabPane label="table 2" name="name2">
-            <Table :columns="columns1" :data="data1" :height="tableHeight"></Table>
+            <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
         </TabPane>
         <TabPane label="table 3" name="name3">
-            <Table :columns="columns1" :data="data1" :height="tableHeight"></Table>
+            <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
         </TabPane>
     </Tabs>
     </figure>
@@ -18,10 +18,9 @@
 
 export default {
   name: 'DrilldownTable',
-  props:['item'],
+  props:['height'],
   data(){
       return {
-          tableHeight: '200',
           columns1: [
                     {
                         title: 'Name',
@@ -89,14 +88,13 @@ export default {
       }
   },
   mounted(){
-      this.$nextTick(()=>{
-        var tabContainerHeight = $(this.$el).find('.ivu-tabs').height()
-        var tabBarHeight = $(this.$el).find('.ivu-tabs-bar').height()
-        this.tableHeight = tabContainerHeight - tabBarHeight;
-        console.log('drilldown table height',tabContainerHeight, tabBarHeight, this.tableHeight);
-        console.log('drilldown item', this.item);
-
-      })
+  },
+  computed:{
+     tableHeight: function(){
+        console.log('drilldown computed item height', this.height);
+        var tabBarHeight = $(this.$el).find('.ivu-tabs-bar').height() || 37 // only available after mounted
+        return this.height - tabBarHeight;
+     }
   },
   methods:{
   }

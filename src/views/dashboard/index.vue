@@ -29,6 +29,7 @@
             <line-chart v-if="isGridReady && item.type ==='line'"></line-chart>
             <bar-line v-if="isGridReady && item.type ==='barline'"></bar-line>
             <map-chart v-if="isGridReady && item.type ==='map'"></map-chart>
+            <raddar-chart v-if="isGridReady && item.type ==='raddar'"></raddar-chart>
         </grid-item>
     </grid-layout>
   </div>
@@ -42,6 +43,7 @@ import PieChart from '@/components/Charts/PieChart.vue'
 import LineChart from '@/components/Charts/LineChart.vue'
 import BarLine from '@/components/Charts/BarLineChart.vue'
 import MapChart from '@/components/Charts/MapChart.vue'
+import RaddarChart from '@/components/Charts/RaddarChart.vue'
 const GridLayout = VueGridLayout.GridLayout;
 const GridItem = VueGridLayout.GridItem;
 var testLayout = [
@@ -60,14 +62,14 @@ var testLayout2 = [
 	    {"x":4,"y":0,"w":4,"h":6,"i":"1", type:'pie'},
 	    {"x":8,"y":0,"w":4,"h":6,"i":"2", type:'line'},
 	    {"x":0,"y":6,"w":4,"h":6,"i":"3", type:'barline'},
-	    {"x":4,"y":6,"w":4,"h":6,"i":"4", type:'bar'},
+	    {"x":4,"y":6,"w":4,"h":6,"i":"4", type:'raddar'},
 	    {"x":8,"y":6,"w":4,"h":6,"i":"5", type:'map'},
 
 ];
 
 export default {
   name: 'dashboard',
-  components: { GridLayout, GridItem, BarChart, PieChart, LineChart, BarLine, MapChart},
+  components: { GridLayout, GridItem, BarChart, PieChart, LineChart, BarLine, MapChart, RaddarChart},
   data: () => ({
     layout: testLayout2,
     gridRowHeight: 30,//default value

@@ -45,40 +45,33 @@ export default {
   methods:{
     getPie(){
       return {
-        title: {
-            //text: 'pie chart',
-            x: 'center'
-        },
         tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         legend: {
-            orient: 'vertical',
-            left: 'left',
-            data: ['a', 'b', 'c', 'd', 'e']
+          left: 'center',
+          bottom: '10',
+          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
         },
+        calculable: true,
         series: [
-            {
-            name: 'name',
+          {
+            name: 'WEEKLY WRITE ARTICLES',
             type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
+            roseType: 'radius',
+            radius: [15, 95],
+            center: ['50%', '38%'],
             data: [
-                {value: 335, name: 'a'},
-                {value: 310, name: 'b'},
-                {value: 234, name: 'c'},
-                {value: 135, name: 'd'},
-                {value: 1548, name: 'e'}
+              { value: 320, name: 'Industries' },
+              { value: 240, name: 'Technology' },
+              { value: 149, name: 'Forex' },
+              { value: 100, name: 'Gold' },
+              { value: 59, name: 'Forecasts' }
             ],
-            itemStyle: {
-                emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-            }
+            animationEasing: 'cubicInOut',
+            animationDuration: 2600
+          }
         ]
       }
     },

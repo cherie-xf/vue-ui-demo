@@ -17,14 +17,11 @@ import 'echarts/theme/dark'
 // custom theme
 import theme from '@/components/Charts/themes/green.json'
 import ECharts from 'vue-echarts/components/ECharts.vue'
-// Map of China
-import chinaMap from '@/components/Charts/maps/china.json'
 
 // registering custom theme
 ECharts.registerTheme('ovilia-green', theme)
-// registering map data
-ECharts.registerMap('china', chinaMap)
 
+const animationDuration = 6000
 export default {
   name: 'BarChart',
   data(){
@@ -45,26 +42,56 @@ export default {
   methods:{
     getBar(){
           return {
-            legend: {},
-            tooltip: {},
-            dataset: {
-            // Provide data.
-            source: [
-                ['Product', '2015', '2016', '2017'],
-                ['Matcha Latte', ...this.randomize()],
-                ['Milk Tea', ...this.randomize()],
-                ['Cheese Cocoa', ...this.randomize()],
-                ['Walnut Brownie', ...this.randomize()]
-            ]
-            },
-            // Declare X axis, which is a category axis, mapping
-            // to the first column by default.
-            xAxis: { type: 'category' },
-            // Declare Y axis, which is a value axis.
-            yAxis: {},
-            // Declare several series, each of them mapped to a
-            // column of the dataset by default.
-            series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        grid: {
+          top: 10,
+          left: '2%',
+          right: '2%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [{
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          axisTick: {
+            alignWithLabel: true
+          }
+        }],
+        yAxis: [{
+          type: 'value',
+          axisTick: {
+            show: false
+          }
+        }],
+        series: [{
+          name: 'pageA',
+          type: 'bar',
+          stack: 'vistors',
+          barWidth: '60%',
+          data: [79, 52, 200, 334, 390, 330, 220],
+          animationDuration
+        }, {
+          name: 'pageB',
+          type: 'bar',
+          stack: 'vistors',
+          barWidth: '60%',
+          data: [80, 52, 200, 334, 390, 330, 220],
+          animationDuration
+        }, {
+          name: 'pageC',
+          type: 'bar',
+          stack: 'vistors',
+          barWidth: '60%',
+          data: [30, 52, 200, 334, 390, 330, 220],
+          animationDuration
+        }]
+
         }
     },
     randomize(){

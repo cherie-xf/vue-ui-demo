@@ -30,8 +30,8 @@
           @resized="resizedEvent"
           @moved="movedEvent">
           <bar-line v-if="item.type==='barline' && isGridReady"></bar-line>
-          <list-table v-if="item.type==='list_table' && isGridReady" :item="item"></list-table>
-          <dd-table v-if="item.type==='drilldown_table' && isGridReady" :item="item"></dd-table>
+          <list-table v-if="item.type==='list_table' && isGridReady" :height="item.height"></list-table>
+          <dd-table v-if="item.type==='drilldown_table' && isGridReady" :height="item.height"></dd-table>
 
         </grid-item>
     </grid-layout>
@@ -55,14 +55,14 @@ var testLayout2 = [
 	    {"x":0,"y":4,"w":12,"h":3,"i":"0", type:'barline'},
 	    {"x":0,"y":4,"w":12,"h":4,"i":"1", type:'list_table'},
 	    {"x":0,"y":8,"w":12,"h":4,"i":"2", type:'drilldown_table'},
-	    {"x":4,"y":12,"w":12,"h":4,"i":"3", type:'logview_table'},
-	    {"x":8,"y":16,"w":12,"h":4,"i":"4", type:'logview_detail'},
+	    {"x":0,"y":12,"w":8,"h":4,"i":"3", type:'logview_table'},
+	    {"x":8,"y":12,"w":4,"h":4,"i":"4", type:'logview_detail'},
   ];
 export default {
   name: 'dashboard',
   components: { GridLayout, GridItem, ListTable, BarLine, Search, DdTable},
   data: () => ({
-    layout: testLayout,
+    layout: testLayout2,
     gridRowHeight: 30,//default value
     isGridReady: false,
   }),
@@ -109,6 +109,8 @@ export default {
     },
     resizedEvent: function(i, newH, newW, newHPx, newWPx){
         console.log("RESIZED i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
+        this.layout[i].width = newWPx
+        this.layout[i].height = newHPx
     },
     setSearchSize(){
       var listContainerWidth = $(this.$el).width() - 20
@@ -118,10 +120,9 @@ export default {
     setGridItemSize(){
       var items = $(this.$el).find('.vue-grid-item:not(.vue-grid-placeholder)');
       items.toArray().forEach((item, idx) => {
-        console.log('item loop', $(item).width(),$(item).height(),$(item).css('width'), idx);
-        this.layout[idx].width = $(item).width();
+        console.log('index set grid item size', $(item).width(),$(item).height(), idx);
+        this.layout[idx].width = $(item).width(); //width is not correct cause the container size changed after mounted
         this.layout[idx].height = $(item).height();
-        console.log('layout',this.layout);
       });
     }
   }
@@ -134,7 +135,7 @@ export default {
   }
   .list-search{
     position: fixed;
-    z-index: 100;
+    z-index: 1;
     width: 300px;
     padding: 0 10px;
   }
