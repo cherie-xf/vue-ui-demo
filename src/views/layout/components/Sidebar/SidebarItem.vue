@@ -87,9 +87,10 @@ a{
         background-color: @sbarSelectBg2;
       }
       .my-content-subtitle, .my-content-title{
-        color: white;
+        color: white !important;
         .svg-icon{
           box-shadow: initial;
+          color: white !important;
         }
       }
     }

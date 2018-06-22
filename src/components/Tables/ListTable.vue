@@ -38,7 +38,7 @@ export default {
                         title: 'Threat Score',
                         key: 'score',
                         render: (h, params) =>{
-                            return h('div', {attrs:{class: 'flex-center'}},
+                            return h('div', {attrs:{class: 'flex'}},
                                 [
                                     h('div',{attrs:{class: 'grow'}},params.row.score.total),
                                     h('v-progress-linear', {
@@ -58,7 +58,7 @@ export default {
                         title: 'Incidents',
                         key: 'incidents',
                         render: (h, params) =>{
-                            return h('div', {attrs:{class: 'flex-center'}},
+                            return h('div', {attrs:{class: 'flex'}},
                                 [
                                     h('div',{attrs:{class: 'grow'}},params.row.incidents.total),
                                     h('v-progress-linear', {
@@ -76,26 +76,15 @@ export default {
                     }
                 ],
                 data1: [],
-                /*
-                data1: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                ]
-                */
       }
   },
   mounted(){
-      this.data1 = this.fetchThreatData();
-      this.fetchThreatData();
+      this.fetchData();
   },
   updated(){
   },
   methods:{
-      fetchThreatData(){
+      fetchData(){
           threat_get().then(
               res=>{
                   var data = res.data.data.rows
@@ -124,7 +113,7 @@ export default {
 </script>
 
 <style lang="less">
-.flex-center{
+.flex{
     display: flex;
     align-items: center;
     .grow{

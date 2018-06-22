@@ -5,10 +5,10 @@
             <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
         </TabPane>
         <TabPane label="table 2" name="name2">
-            <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
+            <Table :columns="columns1" :data="data2" :height="tableHeight" size="small"></Table>
         </TabPane>
         <TabPane label="table 3" name="name3">
-            <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
+            <Table :columns="columns1" :data="data3" :height="tableHeight" size="small"></Table>
         </TabPane>
     </Tabs>
     </figure>
@@ -16,78 +16,100 @@
 
 <script>
 
+import { source_get } from '@/api/demo'
 export default {
   name: 'DrilldownTable',
   props:['height'],
   data(){
       return {
           columns1: [
-                    {
-                        title: 'Name',
-                        key: 'name'
-                    },
-                    {
-                        title: 'Age',
-                        key: 'age'
-                    },
-                    {
-                        title: 'Address',
-                        key: 'address'
-                    }
-                ],
-                data1: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    },
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    }
-                ]
+            {
+                title: 'Source',
+                key: 'source',
+                render: (h, params) => {
+                    return h('span', {attrs:{class: ''}},
+                        [
+                            h('Avatar', {props:{'src': params.row.avatar}}),
+                            h('span', {attrs:{class: 'icon-text'}},params.row.source)
+                        ],
+
+                    )
+
+                }
+            },
+            {
+                title: 'Device',
+                key: 'device'
+            },
+            {
+                title: 'Threat Score',
+                key: 'score',
+                render: (h, params) =>{
+                    return h('div', {attrs:{class: 'flex'}},
+                        [
+                            h('div',{attrs:{class: 'grow'}},params.row.score.total),
+                            h('v-progress-linear', {
+                                props:{
+                                    value: (params.row.score.in/params.row.score.total) * 100,
+                                    color: "yellow", 
+                                    "background-color": "blue"
+                                }
+                            })
+                        ],
+
+                    )
+
+                }
+            },
+            {
+                title: 'Incidents',
+                key: 'incidents',
+                render: (h, params) =>{
+                    return h('div', {attrs:{class: 'flex'}},
+                        [
+                            h('div',{attrs:{class: 'grow'}},params.row.incidents.total),
+                            h('v-progress-linear', {
+                                props:{
+                                    value: (params.row.incidents.in/params.row.incidents.total) * 100,
+                                    color: "yellow", 
+                                    "background-color": "blue"
+                                }
+                            })
+                        ],
+
+                    )
+
+                }
+            },
+            {
+                title: 'Byte',
+                key: 'bandwidth',
+                render: (h, params) =>{
+                    return h('div', {attrs:{class: 'flex'}},
+                        [
+                            h('div',{attrs:{class: 'grow'}},params.row.bandwidth.total),
+                            h('v-progress-linear', {
+                                props:{
+                                    value: (params.row.bandwidth.in/params.row.bandwidth.total) * 100,
+                                    color: "yellow", 
+                                    "background-color": "blue"
+                                }
+                            })
+                        ],
+
+                    )
+
+                }
+            },
+
+          ],
+        data1:[],
+        data2:[],
+        data3:[],
       }
   },
   mounted(){
+      this.fetchData();
   },
   computed:{
      tableHeight: function(){
@@ -97,6 +119,22 @@ export default {
      }
   },
   methods:{
+      fetchData(){
+          source_get().then(
+              res=>{
+                  var data = res.data.data.rows
+                  this.data1 = data.map(function(row){
+                      var keys = Object.keys(row);
+                      keys.forEach(function(key){
+                          if(key === "score" || key === "incidents" || key==="bandwidth"){
+                              row[key].total = row[key].in + row[key].out
+                          }
+                      });
+                      return row;
+                  })
+              }
+          )
+      },
   }
 }
 </script>
@@ -104,6 +142,17 @@ export default {
 
 <style lang="less">
 /* should not be scoped for overwrite ive style*/
+.icon-text{
+    margin-left: 10px;
+}
+.flex{
+    display: flex;
+    align-items: center;
+    .grow{
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+}
 .table-container{
     height: 100%;
     .ivu-tabs {
