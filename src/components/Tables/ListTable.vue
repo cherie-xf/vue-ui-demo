@@ -6,6 +6,8 @@
 
 <script>
 
+import { threat_get } from '@/api/demo'
+
 export default {
   name: 'ListTable',
   props:['height'],
@@ -13,18 +15,68 @@ export default {
       return {
           columns1: [
                     {
-                        title: 'Name',
-                        key: 'name'
+                        title: 'Threat',
+                        key: 'threat'
                     },
                     {
-                        title: 'Age',
-                        key: 'age'
+                        title: 'Category',
+                        key: 'category',
                     },
                     {
-                        title: 'Address',
-                        key: 'address'
+                        title: 'Threat Level',
+                        key: 'level',
+                        sortable: true,
+                        sortType: 'desc',
+                        render: (h, params) => {
+                            return h('Badge',{
+                                props:{count: params.row.level, "class-name": params.row.level}
+                            })
+
+                        }
+                    },
+                    {
+                        title: 'Threat Score',
+                        key: 'score',
+                        render: (h, params) =>{
+                            return h('div', {attrs:{class: 'flex-center'}},
+                                [
+                                    h('div',{attrs:{class: 'grow'}},params.row.score.total),
+                                    h('v-progress-linear', {
+                                        props:{
+                                            value: (params.row.score.in/params.row.score.total) * 100,
+                                            color: "yellow", 
+                                            "background-color": "blue"
+                                        }
+                                    })
+                                ],
+
+                            )
+
+                        }
+                    },
+                    {
+                        title: 'Incidents',
+                        key: 'incidents',
+                        render: (h, params) =>{
+                            return h('div', {attrs:{class: 'flex-center'}},
+                                [
+                                    h('div',{attrs:{class: 'grow'}},params.row.incidents.total),
+                                    h('v-progress-linear', {
+                                        props:{
+                                            value: (params.row.incidents.in/params.row.incidents.total) * 100,
+                                            color: "yellow", 
+                                            "background-color": "blue"
+                                        }
+                                    })
+                                ],
+
+                            )
+
+                        }
                     }
                 ],
+                data1: [],
+                /*
                 data1: [
                     {
                         name: 'John Brown',
@@ -32,56 +84,33 @@ export default {
                         address: 'New York No. 1 Lake Park',
                         date: '2016-10-03'
                     },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    },
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    }
                 ]
+                */
       }
   },
   mounted(){
+      this.data1 = this.fetchThreatData();
+      this.fetchThreatData();
   },
   updated(){
   },
   methods:{
+      fetchThreatData(){
+          threat_get().then(
+              res=>{
+                  var data = res.data.data.rows
+                  this.data1 = data.map(function(row){
+                      var keys = Object.keys(row);
+                      keys.forEach(function(key){
+                          if(key === "score" || key === "incidents"){
+                              row[key].total = row[key].in + row[key].out
+                          }
+                      });
+                      return row;
+                  })
+              }
+          )
+      }
   },
   computed:{
      tableHeight: function(){
@@ -94,8 +123,36 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+.flex-center{
+    display: flex;
+    align-items: center;
+    .grow{
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+}
 .table-container{
     height: 100%;
 }
+.ivu-badge-count{
+    &.low{
+        background: #5cb85c;
+    }
+    &.high{
+        background: orange;
+    }
+    &.medium{
+        background: yellow;
+        color: #333;
+    }
+
+}
 </style>
+/*
+ * Created Date: Thursday, June 21st 2018, 4:46:20 pm
+ * Author: cheriefu
+ * 
+ * Copyright (c) 2018 Your Company
+ */
+

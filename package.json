@@ -10,11 +10,13 @@
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
     "build:report": "npm_config_report=true node build/build.js",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "mock": "easymock init"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "clipboard": "^2.0.1",
+    "easy-mock-cli": "^0.3.0",
     "iview": "^2.14.1",
     "js-cookie": "^2.2.0",
     "npm": "^6.1.0",
