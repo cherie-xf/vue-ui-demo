@@ -260,7 +260,7 @@ export default {
     border-top-left-radius: 30px;
   }
   .slide-content{
-    padding: 0 16px;
+    padding: 0 30px;
   }
   .myalert{
     color: white;
@@ -268,7 +268,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     margin: 4px 0px;
     &.myrunning{
-      width:268px;
+      width:238px;
       border-left-width: 25px;
       border-top-width: 0px;
       border-bottom-width: 0px;
