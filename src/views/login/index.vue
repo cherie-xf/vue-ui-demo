@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="right">
-                <div class="form-container" v-if="!logined">
+                <div class="form-container teal-lighten1" v-if="!logined">
                     <v-form v-model="valid" lazy-validation >
                         <v-text-field
                             v-model="name"
@@ -33,7 +33,7 @@
                             label="Enter your password"
                             class="my-field input-group--focused"
                             ></v-text-field>
-                        <v-btn :disabled="!valid" @click="login" class="login-btn">Login</v-btn>
+                        <v-btn :disabled="!valid" @click="login" class="login-btn" small round>Login</v-btn>
                     </v-form>
                 </div>
                 <div class="form-container slideInUp" v-if="isSimplePassword">
@@ -52,8 +52,10 @@
                             label="Confirm Password"
                             class="my-field input-group--focused"
                             ></v-text-field>
-                        <v-btn  @click="submit" class="login-btn">Submit</v-btn>
-                        <v-btn @click="skip" class="login-btn">Later</v-btn>
+                        <div class="btn-group">
+                            <v-btn  @click="submit" class="login-btn" small round>Submit</v-btn>
+                            <v-btn @click="skip" class="login-btn" small round>Later</v-btn>
+                        </div>
                     </v-form>
                 </div>
             </div>
@@ -113,15 +115,12 @@ export default {
 @log-color: #4ea397;
 @login-bg-color: #edfaf3;
 .my-field{
+    color: @log-color;
     .input-group__input{
         font-size: 0.8em;
     }
     .input-group--text-field input{
         font-size: 12px;
-        color: red;
-    }
-    .input-group__details:before{
-        background-color: red;
     }
 }
 .flex-center{
@@ -155,7 +154,7 @@ export default {
                 color: white;
                 margin-left: 20px;
                 .main-title{
-                    font-size: 2.5em;
+                    font-size: 2.0em;
                 }
                 .sub-title{
                     font-size: 1.2em;
@@ -164,8 +163,8 @@ export default {
         }
         
         .logo {
-            width: 80px;
-            height: 60px;
+            width: 20%;
+            height: 30%;
         }
         .bg-logo{
             width: 100%;
@@ -198,6 +197,9 @@ export default {
                     margin-bottom: 10px;
                 }
 
+            }
+            .btn-group{
+                .flex-center;
             }
         }
     }

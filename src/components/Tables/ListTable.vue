@@ -1,18 +1,25 @@
 <template>
     <figure class="table-container">
-       <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
+       <Table :columns="columns1" :data="data1" :height="tableHeight" size="small" v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
+       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" v-if="isSimple"></simple>
     </figure>
 </template>
 
 <script>
 
 import { threat_get } from '@/api/demo'
+import Simple from './Simple'
 
 export default {
   name: 'ListTable',
+  components:{Simple},
   props:['height'],
   data(){
       return {
+          isSimple: false,
+          listData: [],
+          chartData:[],
+          avatar: null,
           columns1: [
                     {
                         title: 'Threat',
@@ -99,6 +106,9 @@ export default {
                   })
               }
           )
+      },
+      drilldown(row, index){
+          console.log(row, index);
       }
   },
   computed:{

@@ -1,6 +1,6 @@
 <template>
     <figure class="table-container">
-    <Tabs value="name1">
+    <Tabs value="name1" type="card">
         <TabPane label="table 1" name="name1" class="tab-pane">
             <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
         </TabPane>
