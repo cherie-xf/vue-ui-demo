@@ -9,6 +9,7 @@
 
 import { threat_get } from '@/api/demo'
 import Simple from './Simple'
+const chartSet = new Set(['score', 'incidents', 'bandwidth'])
 
 export default {
   name: 'ListTable',
@@ -17,8 +18,8 @@ export default {
   data(){
       return {
           isSimple: false,
-          listData: [],
-          chartData:[],
+          listData: {},
+          chartData:{},
           avatar: null,
           columns1: [
                     {
@@ -108,7 +109,17 @@ export default {
           )
       },
       drilldown(row, index){
+          this.isSimple = true;
+          var keys = Object.keys(row);
+          keys.forEach((key)=>{
+              if(chartSet.has(key)){
+                  this.chartData[key]= row[key];
+              } else{
+                  this.listData[key] = row[key];
+              }
+          });
           console.log(row, index);
+
       }
   },
   computed:{

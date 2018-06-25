@@ -4,8 +4,8 @@
     <div v-if="avatar" class="avatar"></div>
     <div class="list">
         <div class="row" v-for="(val, key) in listData" :key="key">
-            <div class="title">{{columns}}[key].label</div>
-            <div class="text">val</div>
+            <div class="title" v-html="getCol(key).title"></div>
+            <div class="text" v-html="val"></div>
         </div>
     </div>
     <div class="chart">
@@ -18,6 +18,16 @@
 export default {
     name: 'simple',
     props:['columns','listData', 'chartData', 'avatar'],
+    mounted(){
+        console.log('list Data', this.listData, this.chartData, this.columns);
+    },
+    methods:{
+      getCol(key){
+          console.log('col get',key,this.columns.find(col=>col.key === key))
+          return this.columns.find(col=>col.key === key)
+      }
+
+    }
 }
 </script>
 <style lang="less" scoped>
