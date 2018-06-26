@@ -144,6 +144,11 @@ export default {
       console.log('get drilldown event', args)
       this.level = "dd";
       this.layout = this.viewLayouts[this.level]
+      this.isGridReady= false;
+      this.$nextTick(()=>{
+        this.setGridItemSize();
+        this.isGridReady= true;
+      });
     }
   }
 }
