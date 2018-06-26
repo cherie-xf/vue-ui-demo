@@ -9,6 +9,7 @@ const getters = {
       return `${state.app.gradient.from} 0%, ${state.app.gradient.from} 100%`;
     },
     device: state => state.app.device,
+    layouts: state => state.app.layouts, 
     token: state => state.user.token,
     avatar: state => state.user.avatar,
     name: state => state.user.name,

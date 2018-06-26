@@ -30,7 +30,10 @@
           @resized="resizedEvent"
           @moved="movedEvent">
           <bar-line v-if="item.type==='barline' && isGridReady"></bar-line>
-          <list-table v-if="item.type==='list_table' && isGridReady" :height="item.height"></list-table>
+          <list-table v-if="item.type==='list_table' && isGridReady" 
+            @drilldown="drilldown"
+            :height="item.height">
+            </list-table>
           <dd-table v-if="item.type==='drilldown_table' && isGridReady" :height="item.height"></dd-table>
 
         </grid-item>
@@ -47,6 +50,7 @@ import BarLine from '@/components/Charts/BarLineChart'
 import Search from '@/components/Search'
 const GridLayout = VueGridLayout.GridLayout;
 const GridItem = VueGridLayout.GridItem;
+/*
 var testLayout = [
 	    {"x":0,"y":4,"w":12,"h":3,"i":"0", type:'barline'},
 	    {"x":0,"y":4,"w":12,"h":9,"i":"1", type:'list_table'},
@@ -58,19 +62,31 @@ var testLayout2 = [
 	    {"x":0,"y":12,"w":8,"h":4,"i":"3", type:'logview_table'},
 	    {"x":8,"y":12,"w":4,"h":4,"i":"4", type:'logview_detail'},
   ];
+  */
 export default {
   name: 'dashboard',
   components: { GridLayout, GridItem, ListTable, BarLine, Search, DdTable},
   data: () => ({
-    layout: testLayout2,
+    //layout: testLayout2,
     gridRowHeight: 30,//default value
     isGridReady: false,
+    level: 'list',
+    layout:[],
   }),
   computed: {
     ...mapGetters([
-      'name',
-      'roles'
-    ])
+      'layouts'
+    ]),
+    viewLayouts(){
+      return this.layouts['threat']
+    },
+    testLayout(){
+      console.log('test computed', this.level);
+      return this.viewLayouts[this.level];
+    }
+  },
+  created(){
+    this.layout = this.viewLayouts[this.level]
   },
   mounted(){
     var height = $(this.$el).closest('.app-main').height() - (10 * 5);// suppose 5 row 4 gap(10px)
@@ -92,7 +108,6 @@ export default {
     this.$nextTick(()=>{
       //this.setGridItemSize();
     });
-
   },
   methods:{
     layoutUpdatedEvent: function(newLayout){
@@ -124,6 +139,11 @@ export default {
         this.layout[idx].width = $(item).width(); //width is not correct cause the container size changed after mounted
         this.layout[idx].height = $(item).height();
       });
+    },
+    drilldown(args){
+      console.log('get drilldown event', args)
+      this.level = "dd";
+      this.layout = this.viewLayouts[this.level]
     }
   }
 }

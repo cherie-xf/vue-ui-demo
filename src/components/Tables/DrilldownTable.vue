@@ -17,6 +17,10 @@
 <script>
 
 import { source_get } from '@/api/demo'
+const barColor = {
+    'in': 'teal lighten-2',
+    'out': 'teal lighten-4',
+}
 export default {
   name: 'DrilldownTable',
   props:['height'],
@@ -51,8 +55,8 @@ export default {
                             h('v-progress-linear', {
                                 props:{
                                     value: (params.row.score.in/params.row.score.total) * 100,
-                                    color: "yellow", 
-                                    "background-color": "blue"
+                                    color: barColor.in, 
+                                    "background-color": barColor.out 
                                 }
                             })
                         ],
@@ -71,8 +75,8 @@ export default {
                             h('v-progress-linear', {
                                 props:{
                                     value: (params.row.incidents.in/params.row.incidents.total) * 100,
-                                    color: "yellow", 
-                                    "background-color": "blue"
+                                    color: barColor.in, 
+                                    "background-color": barColor.out 
                                 }
                             })
                         ],
@@ -91,8 +95,8 @@ export default {
                             h('v-progress-linear', {
                                 props:{
                                     value: (params.row.bandwidth.in/params.row.bandwidth.total) * 100,
-                                    color: "yellow", 
-                                    "background-color": "blue"
+                                    color: barColor.in, 
+                                    "background-color": barColor.out 
                                 }
                             })
                         ],

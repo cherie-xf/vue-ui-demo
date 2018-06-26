@@ -10,6 +10,10 @@
 import { threat_get } from '@/api/demo'
 import Simple from './Simple'
 const chartSet = new Set(['score', 'incidents', 'bandwidth'])
+const barColor = {
+    'in': 'teal lighten-2',
+    'out': 'teal lighten-4',
+}
 
 export default {
   name: 'ListTable',
@@ -22,68 +26,68 @@ export default {
           chartData:{},
           avatar: null,
           columns1: [
-                    {
-                        title: 'Threat',
-                        key: 'threat'
-                    },
-                    {
-                        title: 'Category',
-                        key: 'category',
-                    },
-                    {
-                        title: 'Threat Level',
-                        key: 'level',
-                        sortable: true,
-                        sortType: 'desc',
-                        render: (h, params) => {
-                            return h('Badge',{
-                                props:{count: params.row.level, "class-name": params.row.level}
+            {
+                title: 'Threat',
+                key: 'threat'
+            },
+            {
+                title: 'Category',
+                key: 'category',
+            },
+            {
+                title: 'Threat Level',
+                key: 'level',
+                sortable: true,
+                sortType: 'desc',
+                render: (h, params) => {
+                    return h('Badge',{
+                        props:{count: params.row.level, "class-name": params.row.level}
+                    })
+
+                }
+            },
+            {
+                title: 'Threat Score',
+                key: 'score',
+                render: (h, params) =>{
+                    return h('div', {attrs:{class: 'flex'}},
+                        [
+                            h('div',{attrs:{class: 'grow'}},params.row.score.total),
+                            h('v-progress-linear', {
+                                props:{
+                                    value: (params.row.score.in/params.row.score.total) * 100,
+                                    color: barColor.in, 
+                                    "background-color": barColor.out 
+                                }
                             })
+                        ],
 
-                        }
-                    },
-                    {
-                        title: 'Threat Score',
-                        key: 'score',
-                        render: (h, params) =>{
-                            return h('div', {attrs:{class: 'flex'}},
-                                [
-                                    h('div',{attrs:{class: 'grow'}},params.row.score.total),
-                                    h('v-progress-linear', {
-                                        props:{
-                                            value: (params.row.score.in/params.row.score.total) * 100,
-                                            color: "yellow", 
-                                            "background-color": "blue"
-                                        }
-                                    })
-                                ],
+                    )
 
-                            )
+                }
+            },
+            {
+                title: 'Incidents',
+                key: 'incidents',
+                render: (h, params) =>{
+                    return h('div', {attrs:{class: 'flex'}},
+                        [
+                            h('div',{attrs:{class: 'grow'}},params.row.incidents.total),
+                            h('v-progress-linear', {
+                                props:{
+                                    value: (params.row.incidents.in/params.row.incidents.total) * 100,
+                                    color: barColor.in, 
+                                    "background-color": barColor.out 
+                                }
+                            })
+                        ],
 
-                        }
-                    },
-                    {
-                        title: 'Incidents',
-                        key: 'incidents',
-                        render: (h, params) =>{
-                            return h('div', {attrs:{class: 'flex'}},
-                                [
-                                    h('div',{attrs:{class: 'grow'}},params.row.incidents.total),
-                                    h('v-progress-linear', {
-                                        props:{
-                                            value: (params.row.incidents.in/params.row.incidents.total) * 100,
-                                            color: "yellow", 
-                                            "background-color": "blue"
-                                        }
-                                    })
-                                ],
+                    )
 
-                            )
-
-                        }
-                    }
-                ],
-                data1: [],
+                }
+            }
+        ],
+        data1: [],
       }
   },
   mounted(){
@@ -118,9 +122,16 @@ export default {
                   this.listData[key] = row[key];
               }
           });
-          console.log(row, index);
-
-      }
+          this.$emit('drilldown', {action:'dd', row: row, index:index});
+          console.log('click drilldown',row, index );
+      },
+      updateLayout(level, layout){
+          this.$store.dispatch('UpdateLayout', {
+              viewname: 'threat',
+              level: level,
+              layout: layout,
+          })
+      },
   },
   computed:{
      tableHeight: function(){
