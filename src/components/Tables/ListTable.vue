@@ -1,13 +1,20 @@
 <template>
     <figure class="table-container">
-       <Table :columns="columns1" :data="data1" :height="tableHeight" size="small" v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
+       <Table :columns="columns1" 
+            :data="data1" 
+            :height="tableHeight" 
+            size="small" 
+            no-data-text=""
+            v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
        <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" v-if="isSimple"></simple>
+       <spinner :show="showSpinner"></spinner>
     </figure>
 </template>
 
 <script>
 
 import { threat_get } from '@/api/demo'
+import Spinner from '@/components/Spinner'
 import Simple from './Simple'
 const chartSet = new Set(['score', 'incidents', 'bandwidth'])
 const barColor = {
@@ -17,10 +24,11 @@ const barColor = {
 
 export default {
   name: 'ListTable',
-  components:{Simple},
+  components:{Simple, Spinner},
   props:['height'],
   data(){
       return {
+          showSpinner: true,
           isSimple: false,
           listData: {},
           chartData:{},
@@ -91,13 +99,17 @@ export default {
       }
   },
   mounted(){
-      this.fetchData();
+      setTimeout(() => {
+            this.fetchData().then(
+                this.showSpinner = false
+            );
+        }, 3000);
   },
   updated(){
   },
   methods:{
       fetchData(){
-          threat_get().then(
+          return threat_get().then(
               res=>{
                   var data = res.data.data.rows
                   this.data1 = data.map(function(row){
@@ -155,6 +167,7 @@ export default {
 }
 .table-container{
     height: 100%;
+    position: relative;
 }
 .ivu-badge-count{
     &.low{
