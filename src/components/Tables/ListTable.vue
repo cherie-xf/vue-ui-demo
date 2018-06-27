@@ -16,7 +16,6 @@
 import { threat_get } from '@/api/demo'
 import Spinner from '@/components/Spinner'
 import Simple from './Simple'
-const chartSet = new Set(['score', 'incidents', 'bandwidth'])
 const barColor = {
     'in': 'teal lighten-2',
     'out': 'teal lighten-4',
@@ -25,13 +24,10 @@ const barColor = {
 export default {
   name: 'ListTable',
   components:{Simple, Spinner},
-  props:['height'],
+  props:['height','simple', 'simpleData'],
   data(){
       return {
           showSpinner: true,
-          isSimple: false,
-          listData: {},
-          chartData:{},
           avatar: null,
           columns1: [
             {
@@ -99,11 +95,15 @@ export default {
       }
   },
   mounted(){
-      setTimeout(() => {
-            this.fetchData().then(
-                this.showSpinner = false
-            );
-        }, 3000);
+    if(this.isSimple){
+        this.showSpinner = false;
+    } else{
+        setTimeout(() => {
+                this.fetchData().then(
+                    this.showSpinner = false
+                );
+            }, 3000);
+    }
   },
   updated(){
   },
@@ -125,27 +125,24 @@ export default {
           )
       },
       drilldown(row, index){
-          this.isSimple = true;
-          var keys = Object.keys(row);
-          keys.forEach((key)=>{
-              if(chartSet.has(key)){
-                  this.chartData[key]= row[key];
-              } else{
-                  this.listData[key] = row[key];
-              }
-          });
-          this.$emit('drilldown', {action:'dd', row: row, index:index});
+          this.$emit('drilldown', {
+                action:'dd', 
+                row: row, 
+                index:index, 
+                });
           console.log('click drilldown',row, index );
-      },
-      updateLayout(level, layout){
-          this.$store.dispatch('UpdateLayout', {
-              viewname: 'threat',
-              level: level,
-              layout: layout,
-          })
       },
   },
   computed:{
+     listData(){
+         return this.simpleData.list;
+     },
+     chartData(){
+         return this.simpleData.chart;
+     },
+     isSimple(){
+         return this.simple;
+     },
      tableHeight: function(){
           console.log('list table computed item height', this.height);
          return this.height;

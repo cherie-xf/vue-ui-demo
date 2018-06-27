@@ -1,18 +1,5 @@
 import Cookies from 'js-cookie'
-
-const app = {
-  state: {
-    sidebar: {
-      opened: !+Cookies.get('sidebarStatus'),
-      withoutAnimation: false
-    },
-    leftdrawer: false,
-    rightdrawer: false,
-    gradient: {
-      from: '#fffeff',
-      to:'#d7fffe',
-    },
-    layouts:{
+const  defaultLayouts = {
       threat: {
         list:[
           {"x":0,"y":0,"w":12,"h":3,"i":"0", type:'barline'},
@@ -30,7 +17,23 @@ const app = {
           {"x":8,"y":4,"w":4,"h":4,"i":"4", type:'logview_detail'},
         ],
       }
+
+};
+
+const app = {
+  state: {
+    sidebar: {
+      opened: !+Cookies.get('sidebarStatus'),
+      withoutAnimation: false
     },
+    leftdrawer: false,
+    rightdrawer: false,
+    gradient: {
+      from: '#fffeff',
+      to:'#d7fffe',
+    },
+    layouts: JSON.parse(Cookies.get('layouts')) || defaultLayouts,
+    //layouts: defaultLayouts,
     device: 'desktop'
   },
   mutations: {
@@ -53,18 +56,17 @@ const app = {
     },
     TOGGLE_LEFT: (state) => {
       state.leftdrawer = !state.leftdrawer
-      console.log('left ', state.leftdrawer);
     },
     TOGGLE_RIGHT: (state) => {
       state.rightdrawer = !state.rightdrawer
-      console.log('right ', state.rightdrawer);
     },
     UPDATE_GRADIENT:(state,args)=>{
       state.gradient.from = args.from;
       state.gradient.to = args.to;
     },
     UPDATE_LAYOUT:(state, args)=>{
-      state.layouts[arg.viewname][args.level] = args.layout;
+      state.layouts[args.viewname][args.level] = args.layout;
+      Cookies.set('layouts', JSON.stringify(state.layouts))
     },
   },
   actions: {

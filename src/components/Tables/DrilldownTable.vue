@@ -1,14 +1,21 @@
 <template>
     <figure class="table-container">
-    <Tabs value="name1" type="card">
-        <TabPane label="table 1" name="name1" class="tab-pane">
-            <Table :columns="columns1" :data="data1" :height="tableHeight" size="small"></Table>
+    <Tabs value="name1">
+        <TabPane label="Source" name="name1" class="tab-pane">
+            <spinner :show="showSpinner"></spinner>
+            <Table :columns="columns1" :data="data1" :height="tableHeight" 
+            no-data-text=""
+            size="small"></Table>
         </TabPane>
-        <TabPane label="table 2" name="name2">
-            <Table :columns="columns1" :data="data2" :height="tableHeight" size="small"></Table>
+        <TabPane label="Destination" name="name2">
+            <Table :columns="columns1" :data="data2" :height="tableHeight" 
+            no-data-text=""
+            size="small"></Table>
         </TabPane>
-        <TabPane label="table 3" name="name3">
-            <Table :columns="columns1" :data="data3" :height="tableHeight" size="small"></Table>
+        <TabPane label="Country" name="name3">
+            <Table :columns="columns1" :data="data3" :height="tableHeight" 
+            no-data-text=""
+            size="small"></Table>
         </TabPane>
     </Tabs>
     </figure>
@@ -17,15 +24,18 @@
 <script>
 
 import { source_get } from '@/api/demo'
+import Spinner from '@/components/Spinner'
 const barColor = {
     'in': 'teal lighten-2',
     'out': 'teal lighten-4',
 }
 export default {
   name: 'DrilldownTable',
+  components:{Spinner},
   props:['height'],
   data(){
       return {
+          showSpinner: true,
           columns1: [
             {
                 title: 'Source',
@@ -33,7 +43,8 @@ export default {
                 render: (h, params) => {
                     return h('span', {attrs:{class: ''}},
                         [
-                            h('Avatar', {props:{'src': params.row.avatar}}),
+                            //h('Avatar', {props:{'src': params.row.avatar}}),
+                            h('Avatar', {props:{'src': `/static/images/avatar/avatar-${params.row.avatarid}.jpg`}}),
                             h('span', {attrs:{class: 'icon-text'}},params.row.source)
                         ],
 
@@ -113,7 +124,11 @@ export default {
       }
   },
   mounted(){
-      this.fetchData();
+      setTimeout(() => {
+            this.fetchData().then(
+                this.showSpinner = false
+            );
+        }, 3000);
   },
   computed:{
      tableHeight: function(){
@@ -124,7 +139,7 @@ export default {
   },
   methods:{
       fetchData(){
-          source_get().then(
+         return  source_get().then(
               res=>{
                   var data = res.data.data.rows
                   this.data1 = data.map(function(row){
@@ -158,6 +173,7 @@ export default {
     }
 }
 .table-container{
+    position: relative;
     height: 100%;
     .ivu-tabs {
         height: 100%;

@@ -37,6 +37,7 @@ export default {
   }
 }
 .spinner-container{
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
@@ -48,11 +49,11 @@ export default {
 }
   .spinner-inner{
     color:white;
-    height:50px;
-    width:50px;
+    height:40px;
+    width:40px;
     background:transparent;
     border-radius:50%;
-    border:10px solid blue;
+    border:8px solid blue;
     border-color:#1565C0 #26C6DA;
     animation:load1 2s infinite;
     }
