@@ -34,10 +34,15 @@
             @drilldown="drilldown"
             @goback="goback"
             :simple="listSimple"
-            :simple-data="simpleData"
+            :simple-data="simpleData.list"
             :height="item.height">
             </list-table>
-          <dd-table v-if="item.type==='drilldown_table' && isGridReady" :height="item.height"></dd-table>
+          <dd-table v-if="item.type==='drilldown_table' && isGridReady" 
+            @drilldown="drilldown"
+            @goback="goback"
+            :simple="ddSimple"
+            :simple-data="simpleData.dd"
+            :height="item.height"></dd-table>
 
         </grid-item>
     </grid-layout>
@@ -63,9 +68,16 @@ export default {
     level: 'list',
     layout:[],
     listSimple: false,
+    ddSimple: false,
     simpleData: {
-      list:{},
-      chart:{}
+      list:{
+        list:{},
+        chart:{},
+      },
+      dd:{
+        list:{},
+        chart:{},
+      }
     },
   }),
   computed: {
@@ -148,19 +160,40 @@ export default {
     },
     drilldown(args){
       //console.log('get drilldown event', args)
-      this.level = "dd";
+      this.level = args.action;
       this.layout = this.viewLayouts[this.level]
       this.isGridReady= false;
-      this.listSimple = true;
-          var row = args.row;
-          var keys = Object.keys(row);
-          keys.forEach((key)=>{
-              if(!chartSet.has(key)){
-                  this.simpleData.list[key]= row[key];
-              } else{
-                  this.simpleData.chart[key] = row[key];
-              }
-          },this);
+      if(this.level === "dd"){
+        this.listSimple = true;
+        var row = args.row;
+        var keys = Object.keys(row);
+        keys.forEach((key)=>{
+            if(key === "avatar"){
+              this.simpleData.list.avatar = row[key]
+            }
+            else if(!chartSet.has(key)){
+                this.simpleData.list.list[key]= row[key];
+            } else{
+                this.simpleData.list.chart[key] = row[key];
+            }
+        },this);
+
+      }
+      if(this.level === "log"){
+        this.ddSimple = true;
+        var row = args.row;
+        var keys = Object.keys(row);
+        keys.forEach((key)=>{
+            if(key === "avatar"){
+              this.simpleData.dd.avatar = row[key]
+            }
+            else if(!chartSet.has(key)){
+                this.simpleData.dd.list[key]= row[key];
+            } else{
+                this.simpleData.dd.chart[key] = row[key];
+            }
+        },this);
+      }
 
       this.$nextTick(()=>{
         this.setGridItemSize();
@@ -171,7 +204,12 @@ export default {
       var level = args.action
       this.layout = this.viewLayouts[level]
       this.isGridReady= false;
-      this.listSimple = false;
+      if(level === 'list'){
+        this.listSimple = false;
+      }
+      if(level === 'dd'){
+        this.ddSimple = false;
+      }
       this.$nextTick(()=>{
         this.setGridItemSize();
         this.isGridReady= true;

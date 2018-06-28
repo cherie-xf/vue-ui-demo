@@ -6,7 +6,7 @@
             size="small" 
             no-data-text=""
             v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
-       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" v-if="isSimple" :color="barColor" :action="`list`"></simple>
+       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" :title="title" v-if="isSimple" :color="barColor" :action="`list`"></simple>
        <spinner :show="showSpinner"></spinner>
     </figure>
 </template>
@@ -28,7 +28,7 @@ export default {
   data(){
       return {
           showSpinner: true,
-          avatar: null,
+          title:'Top Threat',
           barColor: barColor,
           columns1: [
             {
@@ -135,6 +135,9 @@ export default {
       },
   },
   computed:{
+    avatar(){
+        return this.simpleData.avatar;
+    },
      listData(){
          return this.simpleData.list;
      },

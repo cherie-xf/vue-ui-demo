@@ -1,23 +1,27 @@
 <template>
     <figure class="table-container">
-    <Tabs value="name1">
+    <Tabs value="name1" v-if="!isSimple">
         <TabPane label="Source" name="name1" class="tab-pane">
             <spinner :show="showSpinner"></spinner>
             <Table :columns="columns1" :data="data1" :height="tableHeight" 
             no-data-text=""
+            @on-row-dblclick="drilldown"
             size="small"></Table>
         </TabPane>
         <TabPane label="Destination" name="name2">
             <Table :columns="columns1" :data="data2" :height="tableHeight" 
             no-data-text=""
+            @on-row-dblclick="drilldown"
             size="small"></Table>
         </TabPane>
         <TabPane label="Country" name="name3">
             <Table :columns="columns1" :data="data3" :height="tableHeight" 
             no-data-text=""
+            @on-row-dblclick="drilldown"
             size="small"></Table>
         </TabPane>
     </Tabs>
+    <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" :title="title" v-if="isSimple" :color="barColor" :action="`dd`"></simple>
     </figure>
 </template>
 
@@ -25,17 +29,20 @@
 
 import { source_get } from '@/api/demo'
 import Spinner from '@/components/Spinner'
+import Simple from './Simple'
 const barColor = {
     'in': 'teal lighten-2',
     'out': 'teal lighten-4',
 }
 export default {
   name: 'DrilldownTable',
-  components:{Spinner},
-  props:['height'],
+  components:{Spinner, Simple},
+  props:['height', 'simple', 'simpleData'],
   data(){
       return {
           showSpinner: true,
+          barColor: barColor,
+          title:"Top Threat / Top Source",
           columns1: [
             {
                 title: 'Source',
@@ -43,8 +50,8 @@ export default {
                 render: (h, params) => {
                     return h('span', {attrs:{class: ''}},
                         [
-                            //h('Avatar', {props:{'src': params.row.avatar}}),
-                            h('Avatar', {props:{'src': `/static/images/avatar/avatar-${params.row.avatarid}.jpg`}}),
+                            h('Avatar', {props:{'src': params.row.avatar}}),
+                            //h('Avatar', {props:{'src': `/static/images/avatar/avatar-${params.row.avatarid}.jpg`}}),
                             h('span', {attrs:{class: 'icon-text'}},params.row.source)
                         ],
 
@@ -55,6 +62,10 @@ export default {
             {
                 title: 'Device',
                 key: 'device'
+            },
+            {
+                title: 'Interface',
+                key: 'interface'
             },
             {
                 title: 'Threat Score',
@@ -135,7 +146,19 @@ export default {
         console.log('drilldown computed item height', this.height);
         var tabBarHeight = $(this.$el).find('.ivu-tabs-bar').height() || 37 // only available after mounted
         return this.height - tabBarHeight;
-     }
+     },
+    avatar(){
+        return this.simpleData.avatar;
+    },
+     listData(){
+         return this.simpleData.list;
+     },
+     chartData(){
+         return this.simpleData.chart;
+     },
+     isSimple(){
+         return this.simple;
+     },
   },
   methods:{
       fetchData(){
@@ -148,11 +171,22 @@ export default {
                           if(key === "score" || key === "incidents" || key==="bandwidth"){
                               row[key].total = row[key].in + row[key].out
                           }
+                          if(key === "avatarid"){
+                              row['avatar'] = `/static/images/avatar/avatar-${row.avatarid}.jpg`
+                          }
                       });
                       return row;
                   })
               }
           )
+      },
+      drilldown(row, index){
+          this.$emit('drilldown', {
+                action:'log', 
+                row: row, 
+                index:index, 
+                });
+          console.log('click drilldown to log',row, index );
       },
   }
 }
