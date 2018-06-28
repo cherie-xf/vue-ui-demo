@@ -32,7 +32,7 @@ const app = {
       from: '#fffeff',
       to:'#d7fffe',
     },
-    layouts: JSON.parse(Cookies.get('layouts')) || defaultLayouts,
+    layouts: Cookies.get('layouts') ? JSON.parse(Cookies.get('layouts')) : defaultLayouts,
     //layouts: defaultLayouts,
     device: 'desktop'
   },

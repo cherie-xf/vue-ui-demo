@@ -6,7 +6,7 @@
             size="small" 
             no-data-text=""
             v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
-       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" v-if="isSimple"></simple>
+       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" v-if="isSimple" :color="barColor" :action="`list`"></simple>
        <spinner :show="showSpinner"></spinner>
     </figure>
 </template>
@@ -29,6 +29,7 @@ export default {
       return {
           showSpinner: true,
           avatar: null,
+          barColor: barColor,
           columns1: [
             {
                 title: 'Threat',
@@ -60,8 +61,8 @@ export default {
                             h('v-progress-linear', {
                                 props:{
                                     value: (params.row.score.in/params.row.score.total) * 100,
-                                    color: barColor.in, 
-                                    "background-color": barColor.out 
+                                    color: this.barColor.in, 
+                                    "background-color":this.barColor.out 
                                 }
                             })
                         ],

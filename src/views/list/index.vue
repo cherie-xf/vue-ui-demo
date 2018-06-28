@@ -32,6 +32,7 @@
           <bar-line v-if="item.type==='barline' && isGridReady"></bar-line>
           <list-table v-if="item.type==='list_table' && isGridReady" 
             @drilldown="drilldown"
+            @goback="goback"
             :simple="listSimple"
             :simple-data="simpleData"
             :height="item.height">
@@ -69,6 +70,7 @@ export default {
   }),
   computed: {
     ...mapGetters([
+      'sidebar',
       'layouts'
     ]),
     viewLayouts(){
@@ -77,7 +79,18 @@ export default {
     testLayout(){
       console.log('test computed', this.level);
       return this.viewLayouts[this.level];
+    },
+    isSidebarCollapse(){
+      return !this.sidebar.opened
     }
+  },
+  watch:{
+    isSidebarCollapse(){
+      setTimeout(()=>{
+        this.setSearchSize();
+      }, 500)
+    }
+
   },
   created(){
     this.layout = this.viewLayouts[this.level]
@@ -97,6 +110,7 @@ export default {
   updated(){
     this.$nextTick(()=>{
       //this.setGridItemSize();
+      this.setSearchSize();
     });
   },
   methods:{
@@ -120,8 +134,9 @@ export default {
     },
     setSearchSize(){
       var listContainerWidth = $(this.$el).width() - 20
-      //console.log('list container width', listContainerWidth)
+      console.log('reset search width');
       $(this.$el).find('.list-search').width(listContainerWidth)
+      //$(this.$el).find('.list-search').css('max-width',listContainerWidth)
     },
     setGridItemSize(){
       var items = $(this.$el).find('.vue-grid-item:not(.vue-grid-placeholder)');
@@ -140,13 +155,23 @@ export default {
           var row = args.row;
           var keys = Object.keys(row);
           keys.forEach((key)=>{
-              if(chartSet.has(key)){
+              if(!chartSet.has(key)){
                   this.simpleData.list[key]= row[key];
               } else{
                   this.simpleData.chart[key] = row[key];
               }
           },this);
 
+      this.$nextTick(()=>{
+        this.setGridItemSize();
+        this.isGridReady= true;
+      });
+    },
+    goback(args){
+      var level = args.action
+      this.layout = this.viewLayouts[level]
+      this.isGridReady= false;
+      this.listSimple = false;
       this.$nextTick(()=>{
         this.setGridItemSize();
         this.isGridReady= true;
@@ -170,7 +195,7 @@ export default {
   .list-search{
     position: fixed;
     z-index: 1;
-    width: 300px;
+    width: 100%;
     padding: 0 10px;
   }
   .list-grid{
