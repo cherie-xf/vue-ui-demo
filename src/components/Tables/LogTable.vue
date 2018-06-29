@@ -9,7 +9,7 @@
     </figure>
 </template>
 <script>
-import { log_get } from '@/api/demo'
+import { log_get_srcip } from '@/api/demo'
 import Spinner from '@/components/Spinner'
 const barColor = {
     'in': 'teal lighten-2',
@@ -39,7 +39,7 @@ export default {
             },
             {
                 title: 'Destination',
-                key: 'destip'
+                key: 'desip'
             },
             {
                 title: 'Action',
@@ -51,7 +51,7 @@ export default {
             },
             {
                 title: 'Application',
-                key: 'application'
+                key: 'app'
             },
             {
                 title: 'Byte',
@@ -72,7 +72,7 @@ export default {
   },
   methods:{
       fetchData(){
-          return log_get().then(
+          return log_get_srcip({srcip: '121.121.121.121', avatarid: 3}).then(
               res=>{
                   var data = res.data.data.rows
                   this.data1 = data.map(function(row){
