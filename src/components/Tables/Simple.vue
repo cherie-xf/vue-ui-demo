@@ -100,7 +100,6 @@ export default {
         align-items: center;
         .chart-container{
             height: 100%;
-            padding: 10px;
         }
     }
     .simple-row{

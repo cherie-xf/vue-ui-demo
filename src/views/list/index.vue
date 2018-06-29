@@ -44,6 +44,10 @@
             :simple-data="simpleData.dd"
             :height="item.height"></dd-table>
 
+          <log-table v-if="item.type==='logview_table' && isGridReady" 
+            @toggle-detail="toggleDetail"
+            :height="item.height"></log-table>
+
         </grid-item>
     </grid-layout>
   </div>
@@ -54,6 +58,7 @@ import { mapGetters } from 'vuex'
 import VueGridLayout from 'vue-grid-layout'
 import ListTable from '@/components/Tables/ListTable'
 import DdTable from '@/components/Tables/DrilldownTable'
+import LogTable from '@/components/Tables/LogTable'
 import BarLine from '@/components/Charts/BarLineChart'
 import Search from '@/components/Search'
 const GridLayout = VueGridLayout.GridLayout;
@@ -61,7 +66,7 @@ const GridItem = VueGridLayout.GridItem;
 const chartSet = new Set(['score', 'incidents', 'bandwidth'])
 export default {
   name: 'dashboard',
-  components: { GridLayout, GridItem, ListTable, BarLine, Search, DdTable},
+  components: { GridLayout, GridItem, ListTable, LogTable, BarLine, Search, DdTable},
   data: () => ({
     gridRowHeight: 30,//default value
     isGridReady: false,
@@ -194,6 +199,15 @@ export default {
             }
         },this);
       }
+
+      this.$nextTick(()=>{
+        this.setGridItemSize();
+        this.isGridReady= true;
+      });
+    },
+    toggleDetail(args){
+      this.level = this.level === "log" ? "detail" : "log";
+      this.layout = this.viewLayouts[this.level]
 
       this.$nextTick(()=>{
         this.setGridItemSize();

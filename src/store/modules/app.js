@@ -13,6 +13,11 @@ const  defaultLayouts = {
         log:[
           {"x":0,"y":0,"w":6,"h":3,"i":"0", type:'list_table'},
           {"x":6,"y":0,"w":6,"h":3,"i":"1", type:'drilldown_table'},
+          {"x":0,"y":4,"w":12,"h":9,"i":"3", type:'logview_table'},
+        ],
+        detail:[
+          {"x":0,"y":0,"w":6,"h":3,"i":"0", type:'list_table'},
+          {"x":6,"y":0,"w":6,"h":3,"i":"1", type:'drilldown_table'},
           {"x":0,"y":4,"w":8,"h":9,"i":"3", type:'logview_table'},
           {"x":8,"y":4,"w":4,"h":9,"i":"4", type:'logview_detail'},
         ],
@@ -32,8 +37,8 @@ const app = {
       from: '#fffeff',
       to:'#d7fffe',
     },
-    layouts: Cookies.get('layouts') ? JSON.parse(Cookies.get('layouts')) : defaultLayouts,
-    //layouts: defaultLayouts,
+    //layouts: Cookies.get('layouts') ? JSON.parse(Cookies.get('layouts')) : defaultLayouts,
+    layouts: defaultLayouts,
     device: 'desktop'
   },
   mutations: {
