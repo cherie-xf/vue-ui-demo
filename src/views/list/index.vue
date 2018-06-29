@@ -45,6 +45,7 @@
             :height="item.height"></dd-table>
 
           <log-table v-if="item.type==='logview_table' && isGridReady" 
+            :filter="logfilter"
             @toggle-detail="toggleDetail"
             :height="item.height"></log-table>
 
@@ -74,6 +75,7 @@ export default {
     layout:[],
     listSimple: false,
     ddSimple: false,
+    logfilter:{},
     simpleData: {
       list:{
         list:{},
@@ -198,6 +200,8 @@ export default {
                 this.simpleData.dd.chart[key] = row[key];
             }
         },this);
+        this.logfilter.srcip = row.source
+        this.logfilter.avatarid = row.avatarid
       }
 
       this.$nextTick(()=>{

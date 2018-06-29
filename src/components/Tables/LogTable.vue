@@ -18,7 +18,7 @@ const barColor = {
 export default {
   name: 'LogTable',
   components:{Spinner},
-  props:['height'],
+  props:['height','filter'],
   data(){
       return {
           showSpinner: true,
@@ -35,7 +35,18 @@ export default {
             },
             {
                 title: 'Source',
-                key: 'srcip'
+                key: 'srcip',
+                render: (h, params) => {
+                    return h('span', {attrs:{class: ''}},
+                        [
+                            //h('Avatar', {props:{'src': params.row.avatar}}),
+                            h('Avatar', {props:{'src': `/static/images/avatar/avatar-${params.row.avatarid}.jpg`}}),
+                            h('span', {attrs:{class: 'icon-text'}},params.row.srcip)
+                        ],
+
+                    )
+
+                }
             },
             {
                 title: 'Destination',
@@ -72,7 +83,7 @@ export default {
   },
   methods:{
       fetchData(){
-          return log_get_srcip({srcip: '121.121.121.121', avatarid: 3}).then(
+          return log_get_srcip({srcip: this.filter.srcip, avatarid: this.filter.avatarid}).then(
               res=>{
                   var data = res.data.data.rows
                   this.data1 = data.map(function(row){

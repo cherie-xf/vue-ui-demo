@@ -40,7 +40,6 @@ export default {
     },
     methods:{
       getCol(key){
-          console.log('col get',key,this.columns.find(col=>col.key === key))
           return this.columns.find(col=>col.key === key)
       },
       getPieData(data, title){
@@ -60,7 +59,6 @@ export default {
           if(this.action === 'dd'){
             this.$parent.$emit('goback', { action:'dd', });
           }
-          console.log('goback');
       }
 
     }
