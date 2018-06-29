@@ -206,6 +206,7 @@ export default {
       this.isGridReady= false;
       if(level === 'list'){
         this.listSimple = false;
+        this.ddSimple = false;
       }
       if(level === 'dd'){
         this.ddSimple = false;
