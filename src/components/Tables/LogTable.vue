@@ -96,7 +96,7 @@ export default {
         this.data1 = this.cacheData;
     } else {
         this.fetchData().then(
-            this.hideSpinner()
+            //this.hideSpinner()
         );
     }
   },
@@ -106,7 +106,7 @@ export default {
       hideSpinner(){
         setTimeout(() => {
             this.showSpinner = false
-        }, 2000);
+        }, 1000);
       },
       fetchData(){
           return log_get_srcip({user: this.filter.user,srcip: this.filter.srcip, avatarid: this.filter.avatarid}).then(
@@ -122,6 +122,7 @@ export default {
                       return row;
                   })
                   this.data1 = this.sortData(this.data1);
+                  this.hideSpinner()
               }
           )
       },

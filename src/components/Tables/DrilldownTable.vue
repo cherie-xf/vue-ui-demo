@@ -142,7 +142,7 @@ export default {
         }
     } else{
         this.fetchData().then(
-            this.hideSpinner()
+            //this.hideSpinner()
         );
     }
   },
@@ -171,7 +171,7 @@ export default {
       hideSpinner(){
         setTimeout(() => {
             this.showSpinner = false
-        }, 2000);
+        }, 1000);
       },
       fetchData(){
          return  source_get().then(
@@ -189,6 +189,7 @@ export default {
                       });
                       return row;
                   })
+                  this.hideSpinner();
               }
           )
       },

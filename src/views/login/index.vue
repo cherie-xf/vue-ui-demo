@@ -1,4 +1,5 @@
 <template>
+<v-app>
     <div class="login-container">
         <div class="panel">
             <div class="left">
@@ -61,15 +62,19 @@
             </div>
         </div>
     </div>
+    <select-adom :show-adom="showAdom" @adomselect="adomSelect"></select-adom>
+ </v-app>
 </template>
 
 <script>
 import Logo from '@/components/Logo'
+import SelectAdom from '@/components/SelectAdom'
 export default {
     name: 'login',
-    components: {Logo},
+    components: {Logo, SelectAdom},
     data: () => ({
       isSimplePassword: false,
+      showAdom: false,
       valid: false,
       logined: false,
       name: '',
@@ -101,11 +106,19 @@ export default {
             this.logined = true
       },
       skip(){
-        this.$router.push({ path: '/' })
+        //this.$router.push({ path: '/' })
+        this.showAdom = true
       },
       submit(){
-        this.$router.push({ path: '/' })
+        //this.$router.push({ path: '/' })
+        this.showAdom = true
+      },
+      adomSelect(args){
+          this.showAdom = false;
+          this.$router.push({ path: '/' })
+          console.log('adom selected', args.adom);
       }
+      
 
     }
 }
