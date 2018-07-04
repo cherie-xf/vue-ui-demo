@@ -21,7 +21,7 @@
             size="small"></Table>
         </TabPane>
     </Tabs>
-    <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" :title="title" v-if="isSimple" :color="barColor" :action="`dd`"></simple>
+    <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="barColor" :action="`dd`"></simple>
     </figure>
 </template>
 
@@ -37,7 +37,7 @@ const barColor = {
 export default {
   name: 'DrilldownTable',
   components:{Spinner, Simple},
-  props:['height', 'simple', 'simpleData'],
+  props:['height', 'simple', 'simpleData','cacheData'],
   data(){
       return {
           showSpinner: true,
@@ -52,7 +52,7 @@ export default {
                         [
                             h('Avatar', {props:{'src': params.row.avatar}}),
                             //h('Avatar', {props:{'src': `/static/images/avatar/avatar-${params.row.avatarid}.jpg`}}),
-                            h('span', {attrs:{class: 'icon-text'}},params.row.source)
+                            h('span', {attrs:{class: 'icon-text'}},`${params.row.user} (${params.row.source})`)
                         ],
 
                     )
@@ -135,20 +135,24 @@ export default {
       }
   },
   mounted(){
-      setTimeout(() => {
-            this.fetchData().then(
-                this.showSpinner = false
-            );
-        }, 3000);
+    if(this.isSimple || this.cacheData.length){
+        this.showSpinner = false;
+        if(!this.isSimple && this.cacheData.length){
+            this.data1 = this.cacheData;
+        }
+    } else{
+        this.fetchData().then(
+            this.hideSpinner()
+        );
+    }
   },
   computed:{
      tableHeight: function(){
-        console.log('drilldown computed item height', this.height);
         var tabBarHeight = $(this.$el).find('.ivu-tabs-bar').height() || 37 // only available after mounted
         return this.height - tabBarHeight;
      },
-    avatar(){
-        return this.simpleData.avatar;
+    avatarid(){
+        return this.simpleData.avatarid;
     },
      listData(){
          return this.simpleData.list;
@@ -161,6 +165,11 @@ export default {
      },
   },
   methods:{
+      hideSpinner(){
+        setTimeout(() => {
+            this.showSpinner = false
+        }, 2000);
+      },
       fetchData(){
          return  source_get().then(
               res=>{
@@ -185,8 +194,8 @@ export default {
                 action:'log', 
                 row: row, 
                 index:index, 
+                cacheData: this.data1,
                 });
-          console.log('click drilldown to log',row, index );
       },
   }
 }
@@ -214,6 +223,11 @@ export default {
         .ivu-tabs-bar{
             margin-bottom: 0;
         }
+    }
+    .ivu-table-cell{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
 </style>

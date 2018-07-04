@@ -14,7 +14,7 @@ function log_get(opts) {
 function log_get_srcip(opts){
   return instance({
     method: 'get',
-    url: `/log?srcip=${opts.srcip}&avatarid=${opts.avatarid}`,
+    url: `/log?user=${opts.user}&srcip=${opts.srcip}&avatarid=${opts.avatarid}`,
     opts: opts
   });
 

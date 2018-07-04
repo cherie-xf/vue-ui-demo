@@ -4,7 +4,9 @@
             :data="data1" 
             :height="tableHeight" 
             size="small" 
-            no-data-text="" @on-row-dblclick="toggleDetail"></Table>
+            no-data-text="" 
+            @on-row-click="changeRow"
+            @on-row-dblclick="toggleDetail"></Table>
        <spinner :show="showSpinner"></spinner>
     </figure>
 </template>
@@ -41,7 +43,7 @@ export default {
                         [
                             //h('Avatar', {props:{'src': params.row.avatar}}),
                             h('Avatar', {props:{'src': `/static/images/avatar/avatar-${params.row.avatarid}.jpg`}}),
-                            h('span', {attrs:{class: 'icon-text'}},params.row.srcip)
+                            h('span', {attrs:{class: 'icon-text'}},`${params.row.user} (${params.row.srcip})`)
                         ],
 
                     )
@@ -66,30 +68,49 @@ export default {
             },
             {
                 title: 'Byte',
-                key: 'bandwidth'
+                key: 'bandwidth',
+                render: (h, params) =>{
+                    return h('div', {attrs:{class: 'flex'}},
+                        [
+                            h('div',{attrs:{class: 'grow'}},params.row.bandwidth.total),
+                            h('v-progress-linear', {
+                                props:{
+                                    value: (params.row.bandwidth.in/params.row.bandwidth.total) * 100,
+                                    color: barColor.in, 
+                                    "background-color": barColor.out 
+                                }
+                            })
+                        ],
+
+                    )
+
+                }
             },
           ],
         data1: [],
       }
   },
   mounted(){
-    setTimeout(() => {
-            this.fetchData().then(
-                this.showSpinner = false
-            );
-        }, 3000);
+    this.fetchData().then(
+        this.hideSpinner()
+    );
   },
   updated(){
   },
   methods:{
+      hideSpinner(){
+        setTimeout(() => {
+            this.showSpinner = false
+        }, 2000);
+      },
       fetchData(){
-          return log_get_srcip({srcip: this.filter.srcip, avatarid: this.filter.avatarid}).then(
+          return log_get_srcip({user: this.filter.user,srcip: this.filter.srcip, avatarid: this.filter.avatarid}).then(
               res=>{
                   var data = res.data.data.rows
                   this.data1 = data.map(function(row){
                       var keys = Object.keys(row);
                       keys.forEach(function(key){
-                          if(key === "score" || key === "incidents"){
+                          if(key === "bandwidth"){
                               row[key].total = row[key].in + row[key].out
                           }
                       });
@@ -123,12 +144,19 @@ export default {
                 index:index, 
                 });
       },
+      changeRow(row, index){
+          this.$emit('change-row', {
+                row: row, 
+                index:index, 
+                });
+
+      }
       
   },
   computed:{
      tableHeight: function(){
           console.log('log table computed item height', this.height);
-         return this.height;
+         return this.height || 630;
      }
 
   }

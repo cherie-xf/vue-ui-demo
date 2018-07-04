@@ -6,7 +6,7 @@
             size="small" 
             no-data-text=""
             v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
-       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatar="avatar" :title="title" v-if="isSimple" :color="barColor" :action="`list`"></simple>
+       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="barColor" :action="`list`"></simple>
        <spinner :show="showSpinner"></spinner>
     </figure>
 </template>
@@ -24,7 +24,7 @@ const barColor = {
 export default {
   name: 'ListTable',
   components:{Simple, Spinner},
-  props:['height','simple', 'simpleData'],
+  props:['height','simple', 'simpleData','cacheData'],
   data(){
       return {
           showSpinner: true,
@@ -96,19 +96,25 @@ export default {
       }
   },
   mounted(){
-    if(this.isSimple){
+    if(this.isSimple || this.cacheData.length){
         this.showSpinner = false;
+        if(!this.isSimple && this.cacheData.length){
+            this.data1 = this.cacheData;
+        }
     } else{
-        setTimeout(() => {
-                this.fetchData().then(
-                    this.showSpinner = false
-                );
-            }, 3000);
+        this.fetchData().then(
+            this.hideSpinner()
+        );
     }
   },
   updated(){
   },
   methods:{
+      hideSpinner(){
+        setTimeout(() => {
+            this.showSpinner = false
+        }, 2000);
+      },
       fetchData(){
           return threat_get().then(
               res=>{
@@ -130,13 +136,13 @@ export default {
                 action:'dd', 
                 row: row, 
                 index:index, 
+                cacheData: this.data1,
                 });
-          console.log('click drilldown',row, index );
       },
   },
   computed:{
-    avatar(){
-        return this.simpleData.avatar;
+    avatarid(){
+        return this.simpleData.avatarid;
     },
      listData(){
          return this.simpleData.list;
@@ -148,7 +154,6 @@ export default {
          return this.simple;
      },
      tableHeight: function(){
-          console.log('list table computed item height', this.height);
          return this.height;
      }
   },

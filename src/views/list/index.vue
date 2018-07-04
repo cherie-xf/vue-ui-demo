@@ -35,11 +35,13 @@
             @goback="goback"
             :simple="listSimple"
             :simple-data="simpleData.list"
+            :cache-data="cacheData.list"
             :height="item.height">
             </list-table>
           <dd-table v-if="item.type==='drilldown_table' && isGridReady" 
             @drilldown="drilldown"
             @goback="goback"
+            :cache-data="cacheData.dd"
             :simple="ddSimple"
             :simple-data="simpleData.dd"
             :height="item.height"></dd-table>
@@ -47,7 +49,11 @@
           <log-table v-if="item.type==='logview_table' && isGridReady" 
             :filter="logfilter"
             @toggle-detail="toggleDetail"
+            @change-row="changeRow"
             :height="item.height"></log-table>
+          <log-tree v-if="item.type==='logview_detail' && isGridReady"
+            :tree-data="logTreeData"
+            :height="item.height"></log-tree>
 
         </grid-item>
     </grid-layout>
@@ -60,6 +66,7 @@ import VueGridLayout from 'vue-grid-layout'
 import ListTable from '@/components/Tables/ListTable'
 import DdTable from '@/components/Tables/DrilldownTable'
 import LogTable from '@/components/Tables/LogTable'
+import LogTree from '@/components/Tables/LogTree'
 import BarLine from '@/components/Charts/BarLineChart'
 import Search from '@/components/Search'
 const GridLayout = VueGridLayout.GridLayout;
@@ -67,13 +74,17 @@ const GridItem = VueGridLayout.GridItem;
 const chartSet = new Set(['score', 'incidents', 'bandwidth'])
 export default {
   name: 'dashboard',
-  components: { GridLayout, GridItem, ListTable, LogTable, BarLine, Search, DdTable},
+  components: { GridLayout, GridItem, ListTable, LogTable, LogTree, BarLine, Search, DdTable},
   data: () => ({
     gridRowHeight: 30,//default value
     isGridReady: false,
     level: 'list',
     layout:[],
     listSimple: false,
+    cacheData:{
+      list:[],
+      dd:[],
+    },
     ddSimple: false,
     logfilter:{},
     simpleData: {
@@ -86,6 +97,7 @@ export default {
         chart:{},
       }
     },
+    logTreeData:{},
   }),
   computed: {
     ...mapGetters([
@@ -96,7 +108,6 @@ export default {
       return this.layouts['threat']
     },
     testLayout(){
-      console.log('test computed', this.level);
       return this.viewLayouts[this.level];
     },
     isSidebarCollapse(){
@@ -117,7 +128,6 @@ export default {
   mounted(){
     var height = $(this.$el).closest('.app-main').height() - (10 * 5);// suppose 5 row 4 gap(10px)
     this.gridRowHeight = Math.max(Math.floor(height/(4.5 * 3)), 35); // 3 row of each height 4.5 times of set height px , min-height 35px
-    //console.log('container height', height, 'gride row height', this.gridRowHeight);
 
     this.$nextTick(()=>{
       this.isGridReady = true;
@@ -134,7 +144,6 @@ export default {
   },
   methods:{
     layoutUpdatedEvent: function(newLayout){
-      console.log("Updated layout: ", newLayout)
       this.updateLayout(this.level, newLayout);
     },
     moveEvent: function(i, newX, newY){
@@ -153,7 +162,6 @@ export default {
     },
     setSearchSize(){
       var listContainerWidth = $(this.$el).width() - 20
-      console.log('reset search width');
       $(this.$el).find('.list-search').width(listContainerWidth)
       //$(this.$el).find('.list-search').css('max-width',listContainerWidth)
     },
@@ -171,12 +179,13 @@ export default {
       this.layout = this.viewLayouts[this.level]
       this.isGridReady= false;
       if(this.level === "dd"){
+        this.cacheData.list = args.cacheData;
         this.listSimple = true;
         var row = args.row;
         var keys = Object.keys(row);
         keys.forEach((key)=>{
-            if(key === "avatar"){
-              this.simpleData.list.avatar = row[key]
+            if(key === "avatarid"){
+              this.simpleData.list.avatarid = row[key]
             }
             else if(!chartSet.has(key)){
                 this.simpleData.list.list[key]= row[key];
@@ -187,12 +196,13 @@ export default {
 
       }
       if(this.level === "log"){
+        this.cacheData.dd = args.cacheData;
         this.ddSimple = true;
         var row = args.row;
         var keys = Object.keys(row);
         keys.forEach((key)=>{
-            if(key === "avatar"){
-              this.simpleData.dd.avatar = row[key]
+            if(key === "avatarid"){
+              this.simpleData.dd.avatarid = row[key]
             }
             else if(!chartSet.has(key)){
                 this.simpleData.dd.list[key]= row[key];
@@ -202,6 +212,7 @@ export default {
         },this);
         this.logfilter.srcip = row.source
         this.logfilter.avatarid = row.avatarid
+        this.logfilter.user = row.user
       }
 
       this.$nextTick(()=>{
@@ -212,11 +223,15 @@ export default {
     toggleDetail(args){
       this.level = this.level === "log" ? "detail" : "log";
       this.layout = this.viewLayouts[this.level]
+      this.logTreeData = Object.assign({}, args.row)
 
       this.$nextTick(()=>{
         this.setGridItemSize();
         this.isGridReady= true;
       });
+    },
+    changeRow(args){
+      this.logTreeData = Object.assign({}, args.row)
     },
     goback(args){
       var level = args.action
@@ -225,6 +240,7 @@ export default {
       if(level === 'list'){
         this.listSimple = false;
         this.ddSimple = false;
+        this.cacheData.dd = [];
       }
       if(level === 'dd'){
         this.ddSimple = false;

@@ -9,7 +9,9 @@
         </b>
     </div>
     <div class="simple-content">
-        <div v-if="avatar" class="avatar"></div>
+        <v-avatar v-if="avatarid" class="simple-avatar" :size="avatarSize">
+            <img :src="`/static/images/avatar/avatar-${avatarid}.jpg`" alt="avatar">
+        </v-avatar>
         <div class="simple-list">
             <div class="simple-row" v-for="(val, key) in listData" :key="key" v-if="getCol(key)">
                 <i class="simple-title" v-html="getCol(key).title"></i>
@@ -31,11 +33,13 @@ import SimplePie from '@/components/Charts/SimplePie'
 export default {
     name: 'simple',
     components: {SimplePie},
-    props:['columns','listData', 'chartData', 'avatar', 'color', 'action', 'title'],
+    props:['columns','listData', 'chartData', 'avatarid', 'color', 'action', 'title'],
     mounted(){
-        console.log('list Data', this.listData, this.chartData, this.columns, this.color);
     },
     computed:{
+       avatarSize(){
+           return 96;
+       }
 
     },
     methods:{
@@ -82,6 +86,7 @@ export default {
         height: ~"calc(100% - 30px)";
         display: flex;
         padding-left: 20px;
+        align-items: center;
     }
     .simple-list{
         height: 100%;
@@ -92,6 +97,7 @@ export default {
         flex-basis: 40%;
     }
     .simple-chart{
+        height: 100%;
         flex-basis: 50%;
         flex-shrink: 1;
         display: flex;
@@ -111,6 +117,9 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+    }
+    .simple-avatar{
+        margin-right: 10px;
     }
     .back-btn{
         min-width: 40px;
