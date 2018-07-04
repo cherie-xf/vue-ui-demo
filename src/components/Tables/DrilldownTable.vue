@@ -146,6 +146,9 @@ export default {
         );
     }
   },
+  updated(){
+      console.log('drilldown table updated')
+  },
   computed:{
      tableHeight: function(){
         var tabBarHeight = $(this.$el).find('.ivu-tabs-bar').height() || 37 // only available after mounted

@@ -20,7 +20,7 @@ const barColor = {
 export default {
   name: 'LogTable',
   components:{Spinner},
-  props:['height','filter'],
+  props:['height','filter','cacheData'],
   data(){
       return {
           showSpinner: true,
@@ -91,9 +91,14 @@ export default {
       }
   },
   mounted(){
-    this.fetchData().then(
-        this.hideSpinner()
-    );
+    if(this.cacheData.length){
+        this.showSpinner = false;
+        this.data1 = this.cacheData;
+    } else {
+        this.fetchData().then(
+            this.hideSpinner()
+        );
+    }
   },
   updated(){
   },
@@ -142,6 +147,7 @@ export default {
           this.$emit('toggle-detail', {
                 row: row, 
                 index:index, 
+                cacheData: this.data1,
                 });
       },
       changeRow(row, index){

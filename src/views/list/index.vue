@@ -50,6 +50,7 @@
             :filter="logfilter"
             @toggle-detail="toggleDetail"
             @change-row="changeRow"
+            :cache-data="cacheData.log"
             :height="item.height"></log-table>
           <log-tree v-if="item.type==='logview_detail' && isGridReady"
             :tree-data="logTreeData"
@@ -84,6 +85,7 @@ export default {
     cacheData:{
       list:[],
       dd:[],
+      log:[],
     },
     ddSimple: false,
     logfilter:{},
@@ -168,10 +170,10 @@ export default {
     setGridItemSize(){
       var items = $(this.$el).find('.vue-grid-item:not(.vue-grid-placeholder)');
       items.toArray().forEach((item, idx) => {
-        //console.log('index set grid item size', $(item).width(),$(item).height(), idx);
+        console.log('index set grid item size', $(item).width(),$(item).height(), idx);
         this.layout[idx].width = $(item).width(); //width is not correct cause the container size changed after mounted
         this.layout[idx].height = $(item).height();
-      });
+      }, this);
     },
     drilldown(args){
       //console.log('get drilldown event', args)
@@ -221,6 +223,8 @@ export default {
       });
     },
     toggleDetail(args){
+      this.isGridReady= false;
+      this.cacheData.log = args.cacheData;
       this.level = this.level === "log" ? "detail" : "log";
       this.layout = this.viewLayouts[this.level]
       this.logTreeData = Object.assign({}, args.row)
@@ -241,9 +245,11 @@ export default {
         this.listSimple = false;
         this.ddSimple = false;
         this.cacheData.dd = [];
+        this.cacheData.log = [];
       }
       if(level === 'dd'){
         this.ddSimple = false;
+        this.cacheData.log = [];
       }
       this.$nextTick(()=>{
         this.setGridItemSize();

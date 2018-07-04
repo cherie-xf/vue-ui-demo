@@ -108,6 +108,7 @@ export default {
     }
   },
   updated(){
+      console.log('list table updated')
   },
   methods:{
       hideSpinner(){

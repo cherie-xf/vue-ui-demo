@@ -85,7 +85,7 @@ export default {
     .simple-content{
         height: ~"calc(100% - 30px)";
         display: flex;
-        padding-left: 20px;
+        padding: 0 15px;
         align-items: center;
     }
     .simple-list{
@@ -93,8 +93,8 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        //flex-wrap: wrap;
-        flex-basis: 40%;
+        //flex-basis: 40%;
+        flex-grow: 1;
     }
     .simple-chart{
         height: 100%;
