@@ -14,6 +14,7 @@ import 'iview/dist/styles/iview.css';// index.js or main.js
 import 'vuetify/dist/vuetify.min.css' 
 import '@/styles/index.less' // global css
 import '@/icons' // icon
+import '@/permission' // permission control
 
 Vue.config.productionTip = false
 Vue.use(iView);

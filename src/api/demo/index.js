@@ -1,23 +1,35 @@
 import instance from './instance';
 import { convertRESTAPI } from '../util';
 
-/** logview */
-function log_get(opts) {
-  console.log('log_get', opts)
+/** get user info(name avatar roles) */
+function userinfo_get(opts) {
   return instance({
     method: 'get',
-    url:  '/log',
-    opts: opts,
+    url:  `'/userinfo?username=${opts.token.split('_')[0]}'`,
+    opts: opts
   });
 }
 
-function log_get_srcip(opts){
+/** return a token */
+function login_post(opts) {
+  return instance({
+    method: 'post',
+    url:  '/login',
+    opts: opts,
+    data:{
+      "username": opts.username,
+      "password": opts.password
+    }
+  });
+}
+
+/** logview */
+function log_get(opts) {
   return instance({
     method: 'get',
-    url: `/log?user=${opts.user}&srcip=${opts.srcip}&avatarid=${opts.avatarid}`,
+    url:  '/log',
     opts: opts
   });
-
 }
 
 /** source api */
@@ -38,9 +50,19 @@ function threat_get(opts) {
   });
 }
 
+function log_get_srcip(opts){
+  return instance({
+    method: 'get',
+    url: `/log?user=${opts.user}&srcip=${opts.srcip}&avatarid=${opts.avatarid}`,
+    opts: opts
+  });
+}
+
 export {
-  log_get,
   log_get_srcip,
+  userinfo_get,
+  login_post,
+  log_get,
   source_get,
   threat_get
 };

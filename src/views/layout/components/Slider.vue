@@ -4,7 +4,7 @@
           <v-badge overlap>
             <span slot="badge">3</span>
             <v-avatar color="purple red--after">
-              <img src="https://vuetifyjs.com/static/doc-images/lists/3.jpg" alt="Oui oui">
+              <img :src="avatar" alt="Oui oui">
             </v-avatar>
           </v-badge>
       </div>
@@ -177,7 +177,11 @@ export default {
     ...mapGetters([
       'rightdrawer',
       'gradient',
+      'avatarid',
     ]),
+    avatar(){
+      return "/static/images/avatar/avatar-"+ this.avatarid+".jpg"
+    }
   },
   methods: {
     toggleRightDrawer() {

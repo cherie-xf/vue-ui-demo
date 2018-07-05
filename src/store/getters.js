@@ -11,7 +11,7 @@ const getters = {
     device: state => state.app.device,
     layouts: state => state.app.layouts, 
     token: state => state.user.token,
-    avatar: state => state.user.avatar,
+    avatarid: state => state.user.avatarid,
     name: state => state.user.name,
     roles: state => state.user.roles
   }
