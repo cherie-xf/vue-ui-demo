@@ -107,15 +107,17 @@ export default {
       },
       skip(){
         //this.$router.push({ path: '/' })
+            this.handleLogin()
         this.showAdom = true
       },
       submit(){
         //this.$router.push({ path: '/' })
+            this.handleLogin()
         this.showAdom = true
       },
       adomSelect(args){
           this.showAdom = false;
-          this.$router.push({ path: '/' })
+          //this.$router.push({ path: '/' })
           console.log('adom selected', args.adom);
       },
       handleLogin(){

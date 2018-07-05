@@ -24,6 +24,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
+    console.log('permission', to.path)
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {

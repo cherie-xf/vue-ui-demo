@@ -1,25 +1,26 @@
 import instance from './instance';
+import qs from 'qs';
+
 import { convertRESTAPI } from '../util';
 
 /** get user info(name avatar roles) */
 function userinfo_get(opts) {
   return instance({
     method: 'get',
-    url:  `'/userinfo?username=${opts.token.split('_')[0]}'`,
+    url:  `/userinfo?username=${opts.token.split('_')[0]}`,
     opts: opts
   });
 }
 
 /** return a token */
 function login_post(opts) {
-  return instance({
+  console.log('login post', opts)
+   return instance({
     method: 'post',
     url:  '/login',
     opts: opts,
-    data:{
-      "username": opts.username,
-      "password": opts.password
-    }
+    data: qs.stringify({'username': opts.username, 'password': opts.password}),
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
   });
 }
 
