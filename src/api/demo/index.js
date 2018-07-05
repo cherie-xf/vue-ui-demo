@@ -7,14 +7,13 @@ import { convertRESTAPI } from '../util';
 function userinfo_get(opts) {
   return instance({
     method: 'get',
-    url:  `/userinfo?username=${opts.token.split('_')[0]}`,
+    url:  `/userinfo?username=${opts.split('_')[0]}`,
     opts: opts
   });
 }
 
 /** return a token */
 function login_post(opts) {
-  console.log('login post', opts)
    return instance({
     method: 'post',
     url:  '/login',

@@ -29,13 +29,11 @@ const user = {
   actions: {
     // login
     Login({ commit }, userInfo) {
-      console.log('login', userInfo)
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         login_post({username: username, password:userInfo.password}).then(response => {
           const data = response.data.data
           var token = data.token.split('_')[1]
-          console.log('get response', data)
           setToken(username + '_' +token)
           commit('SET_TOKEN', username + '_' +token)
           resolve()

@@ -9,6 +9,7 @@
           </v-badge>
       </div>
       <v-list class="drawer-container">
+        <div class="welcome-info">Welcome {{name}} !</div>
         <v-subheader class="slider-title">System Information </v-subheader>
         <div class="sys-info slide-content">
           <div class="myrow">
@@ -41,7 +42,7 @@
           </div>
           <div class="myaction">
             <svg-icon :icon-class="'logout-o'" :class-name="'sidebar icon-shadow small'"></svg-icon>
-            <span class="my-text">Logout</span>
+            <span class="my-text" @click="logout">Logout</span>
           </div>
         </div>
 
@@ -178,6 +179,7 @@ export default {
       'rightdrawer',
       'gradient',
       'avatarid',
+      'name',
     ]),
     avatar(){
       return "/static/images/avatar/avatar-"+ this.avatarid+".jpg"
@@ -192,6 +194,11 @@ export default {
     },
     changeEnableAdom(){
       console.log('change enable adom: ', this.enableAdom);
+    },
+    logout(){
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push({ path: '/login' })
+      })
     }
   },
   mounted(){
@@ -310,5 +317,8 @@ export default {
       margin-left: 15px;
       color: #1976d2
     }
+  }
+  .welcome-info{
+    padding-left: 16px;
   }
 </style>
