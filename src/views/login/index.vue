@@ -106,23 +106,20 @@ export default {
             this.logined = true
       },
       skip(){
-        //this.$router.push({ path: '/' })
             this.handleLogin()
-        this.showAdom = true
       },
       submit(){
-        //this.$router.push({ path: '/' })
             this.handleLogin()
-        this.showAdom = true
       },
       adomSelect(args){
           this.showAdom = false;
-          //this.$router.push({ path: '/' })
+          this.$router.push({ path: '/' })
           console.log('adom selected', args.adom);
       },
       handleLogin(){
           this.$store.dispatch('Login', {username: this.name, password: this.password}).then(() => {
-            this.$router.push({ path: '/' })
+            this.showAdom = true
+            //this.$router.push({ path: '/' })
           }).catch(() => {
           })
 
