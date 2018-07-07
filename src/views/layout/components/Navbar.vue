@@ -4,12 +4,12 @@
           <div class="content">
             <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
             <my-breadcrumb></my-breadcrumb>
-            <v-spacer></v-spacer>
             <!--
             <span class="setting-icon" @click.stop="toggleRightDrawer">
               <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
             </span>
             -->
+            <v-chip class="adom-title" @click="$emit('showadom')">{{adom.current}}</v-chip>
           </div>
         </v-jumbotron>
     </v-toolbar>
@@ -35,7 +35,8 @@ export default {
       'sidebar',
       'rightdrawer',
       'topBgColor',
-      'avatar'
+      'avatar',
+      'adom'
     ])
   },
   methods: {

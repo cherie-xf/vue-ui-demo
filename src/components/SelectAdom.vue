@@ -2,10 +2,31 @@
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <div class="dialog-container">
             <div class="toolbar-container">
+                <div class="title">Select an ADOM</div>
                 <v-btn :color="color.in" fab small @click="adomSelect" class="back-btn">
                     <svg-icon :icon-class="`goback`" :class-name="`goback small`"></svg-icon>
                 </v-btn>
             </div>
+            <div class="sub-title">Recently selected ADOM(s)</div>
+            <div class="cards-container">
+                <div class="card-wrapper" v-for="adom in recentAdoms" :key="adom.name">
+                    <Card>
+                      <p slot="title">{{adom.name}} ( {{adom.devices.length}} )</p>
+                      <div class="my-row">
+                          <div class="my-title">Firmware Version</div>
+                          <div class="my-value">{{adom.version}}</div>
+                      </div>
+                      <div class="my-row">
+                          <div class="my-title">Allocated Storage</div>
+                          <div class="my-value">{{adom.storage}}</div>
+                      </div>
+                      <Tree :data="adom.deviceTree" :render="renderContent"></Tree>
+                    </Card>
+                </div>
+            </div>
+            <v-divider></v-divider>
+
+            <div class="sub-title">All ADOM(s)</div>
             <div class="cards-container">
                 <div class="card-wrapper" v-for="adom in adoms" :key="adom.name">
                     <Card>
@@ -183,41 +204,66 @@ const adomData = {
     },
 
 }
+
+import { mapGetters } from 'vuex'
 export default {
     name: 'SelectAdom',
     props: ['showAdom'],
     data(){
         return {
             color: barColor,
-            adoms: adomData,
+            adomData: adomData,
         }
     },
     computed:{
+        ...mapGetters([
+            'adom',
+        ]),
         dialog(){
             return this.showAdom
+        },
+        adoms(){
+            return this.formatAdomData(this.adomData);
+        },
+        recentAdoms(){
+            return  this.adoms.filter(ad=>{
+                //return adom.name === 'csf' ||  adom.name === 'root'
+                console.log('recent adoms', this.adom.recent, ad.name);
+                return this.adom.recent.indexOf(ad.name) > 0;
+            } )
         }
     },
     created(){
-      this.formatAdomData(this.adoms);
+        /*
+      this.adom = this.formatAdomData(this.adomData);
+      this.recentAdoms = Object.values(this.adoms).find(adom =>{
+          return adom.name === 'csf' ||  adom.name === 'root'
+      })
+      */
 
+        console.log('all adoms', this.adoms, 're adoms', this.recentAdoms);
     },
     methods:{
         adomSelect(){
             this.$emit('adomselect', {adom: 'test'})
         },
         formatAdomData(adoms){
-            for ([name, adom] of Object.entries(adoms)){
-                var tree = [{
-                    title: adom.devices.length + '  Devices',
-                    status: 'title',
-                    children:[]
-                }]
-                adom.devices.map(device => {
-                    tree[0].children.push({title: device.name, status: device.status})
-                }, this)
-                console.log('device tree', tree)
-                adom.deviceTree = tree;
-            }
+            var arr = Object.values(adoms);
+
+            //for ([name, adom] of Object.entries(adoms)){
+                arr.map(adom =>{
+                    var tree = [{
+                        title: adom.devices.length + '  Devices',
+                        status: 'title',
+                        children:[]
+                    }]
+                    adom.devices.map(device => {
+                        tree[0].children.push({title: device.name, status: device.status})
+                    }, this)
+                    adom.deviceTree = tree;
+                })
+            //}
+            return arr
         },
       renderContent (h, { root, node, data }) {
         var treeClass = data.parent? 'tree-title' : 'tree-parent tree-title' 
@@ -236,17 +282,27 @@ export default {
 <style lang="less" scoped>
     .dialog-container{
         background-color: white;
-        height: 100%
+        height: 100%;
+        padding: 30px;
     }
     .toolbar-container{
         display: flex;
         justify-content: flex-end;
+        align-items: center;
+        .title{
+            flex-grow: 1;
+        }
     }
     .cards-container{
-      padding: 30px;
       display: grid;
       grid-gap: 20px;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      margin-bottom: 30px;
+    }
+    .sub-title{
+        margin: 20px 0;
+        font-size: 1.1em;
+        color: #333;
     }
     .my-row{
         display: flex;

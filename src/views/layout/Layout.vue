@@ -1,7 +1,7 @@
 <template>
   <v-app class="app">
     <sidebar></sidebar>
-    <navbar></navbar>
+    <navbar @showadom="showAdom = true"></navbar>
     <v-navigation-drawer temporary :value="leftdrawer" fixed></v-navigation-drawer>
     <slider></slider>
     <v-content class="main-content">
@@ -9,6 +9,7 @@
               <app-main></app-main>
         </v-jumbotron>
     </v-content>
+    <select-adom :show-adom="showAdom" @adomselect="adomSelect"></select-adom>
   </v-app>
 </template>
 
@@ -16,13 +17,15 @@
 import { mapGetters } from 'vuex'
 import { Slider, Navbar, Sidebar, AppMain } from './components'
 import SvgIcon from '@/components/SvgIcon.vue'// svg组件
+import SelectAdom from '@/components/SelectAdom'
 
 export default {
   name:'Layout',
-  components: { Slider, Navbar,Sidebar,AppMain,'svg-icon': SvgIcon },
+  components: { Slider, Navbar,Sidebar,AppMain,'svg-icon': SvgIcon, SelectAdom},
   data:() => ({
     //gradient:'to top, #cfd9df 0%, #e2ebf0 100%',
     //gradient:'to top, #a8edea 0%, #fed6e3 100%',
+    showAdom: false,
   }),
   computed: {
     ...mapGetters([
@@ -34,6 +37,10 @@ export default {
     },
   },
   methods: {
+    adomSelect(args){
+        this.showAdom = false;
+        console.log('adom selected', args.adom);
+    },
   }
 }
 </script>

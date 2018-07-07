@@ -24,6 +24,10 @@ const  defaultLayouts = {
       }
 
 };
+const defaultAdom ={
+      current: 'root',
+      recent: ['root','csf'],
+    }
 
 const app = {
   state: {
@@ -37,9 +41,10 @@ const app = {
       from: '#fffeff',
       to:'#d7fffe',
     },
-    //layouts: Cookies.get('layouts') ? JSON.parse(Cookies.get('layouts')) : defaultLayouts,
-    layouts: defaultLayouts,
-    device: 'desktop'
+    layouts: Cookies.get('layouts') ? JSON.parse(Cookies.get('layouts')) : defaultLayouts,
+    //layouts: defaultLayouts,
+    adom:Cookies.get('adom') ? JSON.parse(Cookies.get('adom')) : defaultAdom,
+    device: 'desktop',
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -73,6 +78,12 @@ const app = {
       state.layouts[args.viewname][args.level] = args.layout;
       Cookies.set('layouts', JSON.stringify(state.layouts))
     },
+    SELECT_ADOM:(state, args)=>{
+      state.adom.current = args.selectedAdom
+      state.adom.recent = state.adom.splic(0, 2)
+      state.adom.recent.push(args.selectedAdom)
+      Cookies.set('adom', JSON.stringify(state.adom))
+    }
   },
   actions: {
     ToggleSideBar: ({ commit }) => {
@@ -95,6 +106,9 @@ const app = {
     },
     UpdateLayout({commit}, args) {
       commit('UPDATE_LAYOUT', args)
+    },
+    SelectAdom({commit}, args){
+
     }
   }
 }
