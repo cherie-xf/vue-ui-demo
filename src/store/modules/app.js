@@ -79,9 +79,11 @@ const app = {
       Cookies.set('layouts', JSON.stringify(state.layouts))
     },
     SELECT_ADOM:(state, args)=>{
-      state.adom.current = args.selectedAdom
-      state.adom.recent = state.adom.splic(0, 2)
-      state.adom.recent.push(args.selectedAdom)
+      state.adom.current = args.adom
+      state.adom.recent = state.adom.recent.slice(0, 2)
+      if(state.admo.recent.indexOf(args.adom)<0){
+        state.adom.recent.push(args.adom)
+      }
       Cookies.set('adom', JSON.stringify(state.adom))
     }
   },
@@ -108,7 +110,7 @@ const app = {
       commit('UPDATE_LAYOUT', args)
     },
     SelectAdom({commit}, args){
-
+      commit('SELECT_ADOM', args)
     }
   }
 }

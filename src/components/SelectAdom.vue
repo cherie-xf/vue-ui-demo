@@ -3,24 +3,26 @@
         <div class="dialog-container">
             <div class="toolbar-container">
                 <div class="title">Select an ADOM</div>
-                <v-btn :color="color.in" fab small @click="adomSelect" class="back-btn">
+                <v-btn :color="color.in" fab small @click="cancel" class="back-btn">
                     <svg-icon :icon-class="`goback`" :class-name="`goback small`"></svg-icon>
                 </v-btn>
             </div>
             <div class="sub-title">Recently selected ADOM(s)</div>
             <div class="cards-container">
-                <div class="card-wrapper" v-for="adom in recentAdoms" :key="adom.name">
+                <div class="card-wrapper" v-for="ad in recentAdoms" :key="'re-'+ad.name" 
+                @click="adomSelect(ad.name)"
+                :class="{'current-adom':ad.name === adom.current}">
                     <Card>
-                      <p slot="title">{{adom.name}} ( {{adom.devices.length}} )</p>
+                      <i slot="title">{{ad.name}} ( {{ad.devices.length}} )</i>
                       <div class="my-row">
                           <div class="my-title">Firmware Version</div>
-                          <div class="my-value">{{adom.version}}</div>
+                          <div class="my-value">{{ad.version}}</div>
                       </div>
                       <div class="my-row">
                           <div class="my-title">Allocated Storage</div>
-                          <div class="my-value">{{adom.storage}}</div>
+                          <div class="my-value">{{ad.storage}}</div>
                       </div>
-                      <Tree :data="adom.deviceTree" :render="renderContent"></Tree>
+                      <Tree :data="ad.deviceTree" :render="renderContent"></Tree>
                     </Card>
                 </div>
             </div>
@@ -28,18 +30,20 @@
 
             <div class="sub-title">All ADOM(s)</div>
             <div class="cards-container">
-                <div class="card-wrapper" v-for="adom in adoms" :key="adom.name">
+                <div class="card-wrapper" v-for="ad in adoms" :key="ad.name" 
+                @click="adomSelect(ad.name)"
+                :class="{'current-adom':ad.name === adom.current}">
                     <Card>
-                      <p slot="title">{{adom.name}} ( {{adom.devices.length}} )</p>
+                      <i slot="title">{{ad.name}} ( {{ad.devices.length}} )</i>
                       <div class="my-row">
                           <div class="my-title">Firmware Version</div>
-                          <div class="my-value">{{adom.version}}</div>
+                          <div class="my-value">{{ad.version}}</div>
                       </div>
                       <div class="my-row">
                           <div class="my-title">Allocated Storage</div>
-                          <div class="my-value">{{adom.storage}}</div>
+                          <div class="my-value">{{ad.storage}}</div>
                       </div>
-                      <Tree :data="adom.deviceTree" :render="renderContent"></Tree>
+                      <Tree :data="ad.deviceTree" :render="renderContent"></Tree>
                     </Card>
                 </div>
             </div>
@@ -226,26 +230,32 @@ export default {
             return this.formatAdomData(this.adomData);
         },
         recentAdoms(){
+            /*
             return  this.adoms.filter(ad=>{
-                //return adom.name === 'csf' ||  adom.name === 'root'
                 console.log('recent adoms', this.adom.recent, ad.name);
-                return this.adom.recent.indexOf(ad.name) > 0;
+                return this.adom.recent.indexOf(ad.name) > -1;
             } )
+            */
+            var reAdoms = []
+            this.adom.recent.map(ad=>{
+                 var reAdom = this.adoms.find(adom=>{return adom.name === ad})
+                 if(reAdom){
+                     reAdoms.push(reAdom)
+                 }
+            })
+            return reAdoms
         }
     },
     created(){
-        /*
-      this.adom = this.formatAdomData(this.adomData);
-      this.recentAdoms = Object.values(this.adoms).find(adom =>{
-          return adom.name === 'csf' ||  adom.name === 'root'
-      })
-      */
-
         console.log('all adoms', this.adoms, 're adoms', this.recentAdoms);
     },
     methods:{
-        adomSelect(){
-            this.$emit('adomselect', {adom: 'test'})
+        adomSelect(name){
+            this.$store.dispatch('SelectAdom', {adom: name})
+            this.$emit('adomselect', {adom: name})
+        },
+        cancel(){
+            this.$emit('adomselect')
         },
         formatAdomData(adoms){
             var arr = Object.values(adoms);
@@ -281,9 +291,10 @@ export default {
 </script>
 <style lang="less" scoped>
     .dialog-container{
-        background-color: white;
+        background-color: #fafafa;
         height: 100%;
         padding: 30px;
+        overflow: auto;
     }
     .toolbar-container{
         display: flex;
@@ -298,6 +309,15 @@ export default {
       grid-gap: 20px;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       margin-bottom: 30px;
+    }
+    .card-wrapper{
+        cursor: pointer;
+        &.current-adom{
+            .ivu-card{
+                background-color: #80CBC4;
+                color: white
+            }
+        }
     }
     .sub-title{
         margin: 20px 0;
