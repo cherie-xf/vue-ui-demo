@@ -80,9 +80,9 @@ const app = {
     },
     SELECT_ADOM:(state, args)=>{
       state.adom.current = args.adom
-      state.adom.recent = state.adom.recent.slice(0, 2)
-      if(state.admo.recent.indexOf(args.adom)<0){
-        state.adom.recent.push(args.adom)
+      state.adom.recent = state.adom.recent.slice(0, 3)
+      if(state.adom.recent.indexOf(args.adom)<0){
+        state.adom.recent.unshift(args.adom)
       }
       Cookies.set('adom', JSON.stringify(state.adom))
     }

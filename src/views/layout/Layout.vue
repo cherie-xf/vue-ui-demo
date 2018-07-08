@@ -39,7 +39,6 @@ export default {
   methods: {
     adomSelect(args){
         this.showAdom = false;
-        console.log('adom selected', args.adom);
     },
   }
 }
