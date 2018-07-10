@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Based on Vue.js and use the UI Toolkit -- iView",
   "author": "CherieFu",
+  "homepage": "https://github.com/cherie-xf/vue-ui-demo",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -11,7 +12,9 @@
     "build": "node build/build.js",
     "build:report": "npm_config_report=true node build/build.js",
     "test": "npm run lint",
-    "mock": "easymock init"
+    "mock": "easymock init",
+    "deploy": "node ./node_modules/vue-gh-pages/index.js"
+
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -70,6 +73,7 @@
     "svg-sprite-loader": "^3.8.0",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^1.0.1",
+    "vue-gh-pages": "^1.16.3",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
