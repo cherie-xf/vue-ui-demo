@@ -109,7 +109,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 @sbarFontColor: #495060;
 .flex-center {
   display: inline-flex;

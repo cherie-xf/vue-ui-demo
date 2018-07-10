@@ -1,9 +1,10 @@
-@import './variables.less';
-@import './mixin.less';
-@import './extend.less';
-@import './transition.less';
+@import 'variables.less';
+@import 'mixin.less';
+@import 'extend.less';
+@import 'transition.less';
+@import 'iview/dist/styles/iview.css';
 //@import './sidebar.less';
-@import './grid.less';
+@import 'grid.less';
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
@@ -77,4 +78,25 @@ a:hover {
 
 .app-container {
   padding: 20px;
+}
+// overide lib style
+.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
+  padding:0px;
+}
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
+  color: @sbarFontColor;
+  border: none;
+}
+
+.ivu-menu-submenu.ivu-menu-opened{
+
+}
+.ivu-menu-submenu{
+    border-right: 3px solid ;
+    border-color: transparent;
+
+  &.ivu-menu-opened{
+    border-color: @sbarSelectBg2;
+  }
+
 }

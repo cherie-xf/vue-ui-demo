@@ -10,7 +10,7 @@
     </div>
     <div class="simple-content">
         <v-avatar v-if="avatarid" class="simple-avatar" :size="avatarSize">
-            <img :src="`/static/images/avatar/avatar-${avatarid}.jpg`" alt="avatar">
+            <img :src="`static/images/avatar/avatar-${avatarid}.jpg`" alt="avatar">
         </v-avatar>
         <div class="simple-list">
             <div class="simple-row" v-for="(val, key) in listData" :key="key" v-if="getCol(key)">

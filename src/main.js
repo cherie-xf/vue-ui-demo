@@ -10,7 +10,7 @@ import ECharts from 'vue-echarts/components/ECharts.vue'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
 
-import 'iview/dist/styles/iview.css';// index.js or main.js
+//import 'iview/dist/styles/iview.css';// index.js or main.js
 import 'vuetify/dist/vuetify.min.css' 
 import '@/styles/index.less' // global css
 import '@/icons' // icon

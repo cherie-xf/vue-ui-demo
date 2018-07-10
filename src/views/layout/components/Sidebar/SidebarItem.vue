@@ -65,7 +65,7 @@ export default {
   }
 }
 </script>
-<style lang="less" >
+<style lang="less">
 @sbarSelectBg: #A2D4C1;
 @sbarSelectBg2: #54b896;
 
@@ -101,6 +101,7 @@ a{
   align-items: center;
   justify-content: center;
 }
+/*
 .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
   padding:0px;
 }
@@ -119,6 +120,7 @@ a{
   }
 
 }
+*/
 .menu-wrapper{
   .ivu-icon{
     display: none;

@@ -184,7 +184,7 @@ export default {
                               row[key].total = row[key].in + row[key].out
                           }
                           if(key === "avatarid"){
-                              row['avatar'] = `/static/images/avatar/avatar-${row.avatarid}.jpg`
+                              row['avatar'] = `static/images/avatar/avatar-${row.avatarid}.jpg`
                           }
                       });
                       return row;

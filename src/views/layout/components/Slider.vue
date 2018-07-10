@@ -182,7 +182,7 @@ export default {
       'name',
     ]),
     avatar(){
-      return "/static/images/avatar/avatar-"+ this.avatarid+".jpg"
+      return "static/images/avatar/avatar-"+ this.avatarid+".jpg"
     }
   },
   methods: {

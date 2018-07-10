@@ -42,7 +42,7 @@ export default {
                     return h('span', {attrs:{class: ''}},
                         [
                             //h('Avatar', {props:{'src': params.row.avatar}}),
-                            h('Avatar', {props:{'src': `/static/images/avatar/avatar-${params.row.avatarid}.jpg`}}),
+                            h('Avatar', {props:{'src': `static/images/avatar/avatar-${params.row.avatarid}.jpg`}}),
                             h('span', {attrs:{class: 'icon-text'}},`${params.row.user} (${params.row.srcip})`)
                         ],
 
