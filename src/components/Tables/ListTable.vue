@@ -8,6 +8,10 @@
             v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
        <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="barColor" :action="`list`"></simple>
        <spinner :show="showSpinner"></spinner>
+        <v-btn :color="barColor.in" fab small @click="showSearch = !showSearch" class="search-btn">
+            <svg-icon :icon-class="`search1`" :class-name="`search-icon small`"></svg-icon>
+        </v-btn>
+       <table-search :showSearch="showSearch" class="table-search" color="barColor"></table-search>
     </figure>
 </template>
 
@@ -15,6 +19,7 @@
 
 import { threat_get } from '@/api/demo'
 import Spinner from '@/components/Spinner'
+import TableSearch from '@/components/TableSearch'
 import Simple from './Simple'
 const barColor = {
     'in': 'teal lighten-2',
@@ -23,11 +28,12 @@ const barColor = {
 
 export default {
   name: 'ListTable',
-  components:{Simple, Spinner},
+  components:{Simple, Spinner, TableSearch},
   props:['height','simple', 'simpleData','cacheData'],
   data(){
       return {
           showSpinner: true,
+          showSearch:false,
           title:'Top Threat',
           barColor: barColor,
           columns1: [
@@ -189,6 +195,17 @@ export default {
         color: #333;
     }
 
+}
+.search-btn{
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    z-index: 2;
+    .search-icon{
+        color: white;
+    }
 }
 </style>
 /*

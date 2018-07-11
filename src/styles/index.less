@@ -3,6 +3,7 @@
 @import 'extend.less';
 @import 'transition.less';
 @import 'iview/dist/styles/iview.css';
+@import 'vuetify/dist/vuetify.min.css';
 //@import './sidebar.less';
 @import 'grid.less';
 body {
@@ -88,9 +89,6 @@ a:hover {
   border: none;
 }
 
-.ivu-menu-submenu.ivu-menu-opened{
-
-}
 .ivu-menu-submenu{
     border-right: 3px solid ;
     border-color: transparent;
@@ -98,5 +96,8 @@ a:hover {
   &.ivu-menu-opened{
     border-color: @sbarSelectBg2;
   }
-
+}
+// overide vuetify
+.progress-linear{
+  //z-index: 0;
 }

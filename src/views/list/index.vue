@@ -2,9 +2,11 @@
 <template>
   <div class="list-container">
     <BackTop></BackTop>
+    <!--
       <div class="list-search">
         <search></search>
       </div>
+      -->
       <grid-layout
         class="list-grid"
             :layout="layout"
@@ -278,7 +280,7 @@ export default {
     padding: 0 10px;
   }
   .list-grid{
-    top: 30px;
+    //top: 30px;
   }
 
 </style>

@@ -122,7 +122,8 @@ export default {
         margin-right: 10px;
     }
     .back-btn{
-        min-width: 40px;
+        width: 35px;
+        height: 35px;
         position: absolute;
         right: 5px;
     }

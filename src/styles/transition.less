@@ -30,3 +30,28 @@
 .breadcrumb-leave-active {
   position: absolute;
 }
+
+/*zoom*/
+.zoom-enter-active,
+.zoom-leave-active {
+  animation: zoomInRight 500ms;
+  transform-origin: top right;
+}
+
+.zoom-leave-active {
+  animation-direction: reverse
+}
+
+@keyframes zoomInRight {
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1);
+    //animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1); 
+    //animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
