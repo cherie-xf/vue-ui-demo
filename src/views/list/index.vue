@@ -44,6 +44,7 @@
             @drilldown="drilldown"
             @goback="goback"
             :cache-data="cacheData.dd"
+            :tab-name="ddTab"
             :simple="ddSimple"
             :simple-data="simpleData.dd"
             :height="item.height"></dd-table>
@@ -86,9 +87,10 @@ export default {
     listSimple: false,
     cacheData:{
       list:[],
-      dd:[],
+      dd:{},
       log:[],
     },
+    ddTab:'source',
     ddSimple: false,
     logfilter:{},
     simpleData: {
@@ -201,6 +203,7 @@ export default {
       }
       if(this.level === "log"){
         this.cacheData.dd = args.cacheData;
+        this.ddTab = args.tabName
         this.ddSimple = true;
         var row = args.row;
         var keys = Object.keys(row);
@@ -246,7 +249,8 @@ export default {
       if(level === 'list'){
         this.listSimple = false;
         this.ddSimple = false;
-        this.cacheData.dd = [];
+        this.cacheData.dd = {};
+        this.ddTab = ''
         this.cacheData.log = [];
       }
       if(level === 'dd'){

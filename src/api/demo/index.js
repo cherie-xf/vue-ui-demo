@@ -23,6 +23,15 @@ function login_post(opts) {
   });
 }
 
+/** destination api */
+function destination_get(opts) {
+  return instance({
+    method: 'get',
+    url:  '/destination',
+    opts: opts
+  });
+}
+
 /** logview */
 function log_get(opts) {
   return instance({
@@ -62,6 +71,7 @@ export {
   log_get_srcip,
   userinfo_get,
   login_post,
+  destination_get,
   log_get,
   source_get,
   threat_get
