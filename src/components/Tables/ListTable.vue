@@ -8,10 +8,7 @@
             v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
        <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="barColor" :action="`list`"></simple>
        <spinner :show="showSpinner"></spinner>
-        <v-btn :color="barColor.in" fab small @click="showSearch = !showSearch" class="search-btn">
-            <svg-icon :icon-class="`search1`" :class-name="`search-icon small`"></svg-icon>
-        </v-btn>
-       <table-search :showSearch="showSearch" class="table-search" color="barColor"></table-search>
+       <table-search v-if="!isSimple" class="table-search" :color="barColor" @searchsubmit="reFetchData"></table-search>
     </figure>
 </template>
 
@@ -147,6 +144,12 @@ export default {
                 cacheData: this.data1,
                 });
       },
+      reFetchData(){
+          console.log('re fetch data')
+          this.showSpinner = true;
+          this.data1 = [];
+          this.fetchData();
+      }
   },
   computed:{
     avatarid(){
@@ -195,17 +198,6 @@ export default {
         color: #333;
     }
 
-}
-.search-btn{
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    right: 5px;
-    top: 0px;
-    z-index: 2;
-    .search-icon{
-        color: white;
-    }
 }
 </style>
 /*

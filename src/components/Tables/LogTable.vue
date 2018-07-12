@@ -8,18 +8,20 @@
             @on-row-click="changeRow"
             @on-row-dblclick="toggleDetail"></Table>
        <spinner :show="showSpinner"></spinner>
+       <table-search class="table-search" :color="barColor" @searchsubmit="reFetchData"></table-search>
     </figure>
 </template>
 <script>
 import { log_get_srcip } from '@/api/demo'
 import Spinner from '@/components/Spinner'
+import TableSearch from '@/components/TableSearch'
 const barColor = {
     'in': 'teal lighten-2',
     'out': 'teal lighten-4',
 }
 export default {
   name: 'LogTable',
-  components:{Spinner},
+  components:{Spinner, TableSearch},
   props:['height','filter','cacheData'],
   data(){
       return {
@@ -157,6 +159,12 @@ export default {
                 index:index, 
                 });
 
+      },
+      reFetchData(){
+          console.log('re fetch data')
+          this.showSpinner = true;
+          this.data1 = [];
+          this.fetchData();
       }
       
   },

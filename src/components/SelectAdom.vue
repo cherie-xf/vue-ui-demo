@@ -10,12 +10,15 @@
             <div class="sub-title">Recently selected ADOM(s)</div>
             <div class="cards-container">
                 <div class="card-wrapper" v-for="ad in recentAdoms" :key="'re-'+ad.name" 
+                @click="adomSelect(ad.name, $event)"
                 :class="{'current-adom':ad.name === currentAdom}">
                     <Card>
                       <i slot="title">{{ad.name}} ( {{ad.devices.length}} )</i>
+                      <!--
                         <Button v-show="ad.name !== currentAdom" slot="extra" 
                         type="ghost" shape="circle" size="small" 
                         @click.prevent="adomSelect(ad.name)">Select</Button>
+                        -->
                       <div class="my-row">
                           <div class="my-title">Firmware Version</div>
                           <div class="my-value">{{ad.version}}</div>
@@ -33,13 +36,15 @@
             <div class="sub-title">All ADOM(s)</div>
             <div class="cards-container">
                 <div class="card-wrapper" v-for="ad in adoms" :key="ad.name" 
-                @click="adomSelect(ad.name)"
+                @click="adomSelect(ad.name, $event)"
                 :class="{'current-adom':ad.name === currentAdom}">
                     <Card>
                       <i slot="title">{{ad.name}} ( {{ad.devices.length}} )</i>
+                        <!--
                         <Button v-show="ad.name !== currentAdom" slot="extra" 
                         type="ghost" shape="circle" size="small" 
                         @click.prevent="adomSelect(ad.name)">Select</Button>
+                        -->
                       <div class="my-row">
                           <div class="my-title">Firmware Version</div>
                           <div class="my-value">{{ad.version}}</div>
@@ -256,7 +261,10 @@ export default {
         console.log('all adoms', this.adoms, 're adoms', this.recentAdoms);
     },
     methods:{
-        adomSelect(name){
+        adomSelect(name, e){
+            var el = e.target || e.srcElement
+            console.log('card click' ,el)
+            if($(el).parents().hasClass('ivu-tree')){return}
             this.$store.dispatch('SelectAdom', {adom: name})
             this.$emit('adomselect', {adom: name})
         },

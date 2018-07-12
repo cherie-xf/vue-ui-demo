@@ -20,7 +20,7 @@
         </div>
         <div class="simple-chart">
             <div class="chart-container" v-for="(val, key) in chartData" :key="key" :style="{width: (100/Object.keys(chartData).length) + '%'}">
-                <simple-pie :pie-data="getPieData(val, key)"></simple-pie>
+                <simple-pie :pie-data="getPieData(val, getCol(key).title )"></simple-pie>
             </div>
         </div>
 

@@ -22,6 +22,7 @@
         </TabPane>
     </Tabs>
     <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="barColor" :action="`dd`"></simple>
+    <table-search v-if="!isSimple" class="table-search" :color="barColor" @searchsubmit="reFetchData"></table-search>
     </figure>
 </template>
 
@@ -30,13 +31,14 @@
 import { source_get } from '@/api/demo'
 import Spinner from '@/components/Spinner'
 import Simple from './Simple'
+import TableSearch from '@/components/TableSearch'
 const barColor = {
     'in': 'teal lighten-2',
     'out': 'teal lighten-4',
 }
 export default {
   name: 'DrilldownTable',
-  components:{Spinner, Simple},
+  components:{Spinner, Simple, TableSearch},
   props:['height', 'simple', 'simpleData','cacheData'],
   data(){
       return {
@@ -68,7 +70,7 @@ export default {
                 key: 'interface'
             },
             {
-                title: 'Threat Score',
+                title: 'Session',
                 key: 'score',
                 render: (h, params) =>{
                     return h('div', {attrs:{class: 'flex'}},
@@ -88,7 +90,7 @@ export default {
                 }
             },
             {
-                title: 'Incidents',
+                title: 'Events',
                 key: 'incidents',
                 render: (h, params) =>{
                     return h('div', {attrs:{class: 'flex'}},
@@ -201,6 +203,12 @@ export default {
                 cacheData: this.data1,
                 });
       },
+      reFetchData(){
+          console.log('re fetch data')
+          this.showSpinner = true;
+          this.data1 = [];
+          this.fetchData();
+      }
   }
 }
 </script>

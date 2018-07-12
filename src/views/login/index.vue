@@ -114,7 +114,6 @@ export default {
       adomSelect(args){
           this.showAdom = false;
           this.$router.push({ path: '/' })
-          console.log('adom selected', args.adom);
       },
       handleLogin(){
           this.$store.dispatch('Login', {username: this.name, password: this.password}).then(() => {
