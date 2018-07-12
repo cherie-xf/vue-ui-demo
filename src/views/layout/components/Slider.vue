@@ -9,7 +9,10 @@
           </v-badge>
       </div>
       <v-list class="drawer-container">
-        <div class="welcome-info">Welcome {{name}} !</div>
+        <div class="welcome-info">
+          <span>Welcome {{name}} !</span>
+          <Icon type="log-out"  @click="logout" :size="40" color="#4DB6AC" class="logout"/>
+        </div>
         <v-subheader class="slider-title">System Information </v-subheader>
         <div class="sys-info slide-content">
           <div class="myrow">
@@ -319,6 +322,13 @@ export default {
     }
   }
   .welcome-info{
-    padding-left: 16px;
+    padding: 0 16px;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .logout{
+      cursor: pointer;
+    }
   }
 </style>
