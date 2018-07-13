@@ -1,6 +1,6 @@
 <template>
 <div class="simple-container">
-    <v-btn :color="color.in" fab small @click="goBack" class="back-btn">
+    <v-btn :color="color.level2.name" fab small @click="goBack" class="back-btn">
         <svg-icon :icon-class="`goback1`" :class-name="`goback small`"></svg-icon>
     </v-btn>
     <div class="simple-top">

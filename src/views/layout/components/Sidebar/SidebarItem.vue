@@ -101,26 +101,6 @@ a{
   align-items: center;
   justify-content: center;
 }
-/*
-.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
-  padding:0px;
-}
-  .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-    color: @sbarFontColor;
-    border: none;
-  }
-
-.ivu-menu-submenu{
-    border-right: 3px solid ;
-    border-color: transparent;
-
-  &.ivu-menu-opened{
-    background-color: @sbarOpenBg;
-    border-color: @sbarSelectBg2;
-  }
-
-}
-*/
 .menu-wrapper{
   .ivu-icon{
     display: none;
@@ -156,7 +136,6 @@ a{
     height: 18px;
     background-color: @sbarSelectBg3;
     color:white;
-    //border: 1px solid @sbarFontColor;
     border-radius: 50%;
     box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
   }

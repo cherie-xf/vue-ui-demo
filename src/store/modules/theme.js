@@ -13,11 +13,11 @@ const Themes = [
   chartTheme:'ovilia-green',
   colors: {
       level2:{
-          name: 'teal lightem-2',
+          name: 'teal lighten-2',
           value: '#4DB6AC'
       },
       level4:{
-          name: 'teal lightem-4',
+          name: 'teal lighten-4',
           value: '#B2DFDB'
       }
   } 

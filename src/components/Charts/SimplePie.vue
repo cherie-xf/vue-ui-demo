@@ -4,7 +4,7 @@
           :options="pie"
           :init-options="initOptions"
           ref="pie"
-          theme="ovilia-green"
+          :theme="chartTheme"
           auto-resize
           class="mychart"
         />
@@ -13,12 +13,20 @@
 
 <script>
 import qs from 'qs'
-// custom theme
-import theme from '@/components/Charts/themes/green.json'
+import { mapGetters } from 'vuex'
 import ECharts from 'vue-echarts/components/ECharts.vue'
+import 'echarts/lib/chart/pie'
+// custom theme
+import greenTheme from '@/components/Charts/themes/green.json'
+import purpleTheme from '@/components/Charts/themes/purple.json'
+import amberTheme from '@/components/Charts/themes/amber.json'
+import blueTheme from '@/components/Charts/themes/blue.json'
 
 // registering custom theme
-ECharts.registerTheme('ovilia-green', theme)
+ECharts.registerTheme('ovilia-green', greenTheme)
+ECharts.registerTheme('purple', purpleTheme)
+ECharts.registerTheme('amber', amberTheme)
+ECharts.registerTheme('blue', blueTheme)
 
 export default {
   name: 'SimplePie',
@@ -32,6 +40,11 @@ export default {
         },
         pie: null,
       }
+  },
+  computed: {
+    ...mapGetters([
+      'chartTheme'
+    ]),
   },
   mounted(){
       this.$nextTick(()=>{
@@ -64,7 +77,7 @@ export default {
           data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
           */
         },
-        color:['#b2dfdb','#009688' ],
+        //color:['#b2dfdb','#009688' ],
         calculable: true,
         series: [
           {

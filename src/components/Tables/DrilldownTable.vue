@@ -21,14 +21,15 @@
             size="small"></Table>
         </TabPane>
     </Tabs>
-    <simple :columns="currentCols" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="barColor" :action="`dd`"></simple>
-    <table-search v-if="!isSimple" class="table-search" :color="barColor" @searchsubmit="reFetchData"></table-search>
+    <simple :columns="currentCols" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="colors" :action="`dd`"></simple>
+    <table-search v-if="!isSimple" class="table-search" :color="colors" @searchsubmit="reFetchData"></table-search>
     </figure>
 </template>
 
 <script>
 
 import { source_get, destination_get } from '@/api/demo'
+import { mapGetters } from 'vuex'
 import Spinner from '@/components/Spinner'
 import Simple from './Simple'
 import TableSearch from '@/components/TableSearch'
@@ -43,7 +44,6 @@ export default {
   data(){
       return {
           showSpinner: true,
-          barColor: barColor,
           title:"Top Threat / Top Source",
           cols:{
               source: [
@@ -78,8 +78,8 @@ export default {
                                 h('v-progress-linear', {
                                     props:{
                                         value: (params.row.score.in/params.row.score.total) * 100,
-                                        color: barColor.in, 
-                                        "background-color": barColor.out 
+                                        color: this.colors.level2.name, 
+                                        "background-color":this.colors.level4.name 
                                     }
                                 })
                             ],
@@ -96,8 +96,8 @@ export default {
                                 h('v-progress-linear', {
                                     props:{
                                         value: (params.row.incidents.in/params.row.incidents.total) * 100,
-                                        color: barColor.in, 
-                                        "background-color": barColor.out 
+                                        color: this.colors.level2.name, 
+                                        "background-color":this.colors.level4.name 
                                     }
                                 })
                             ],
@@ -114,8 +114,8 @@ export default {
                                 h('v-progress-linear', {
                                     props:{
                                         value: (params.row.bandwidth.in/params.row.bandwidth.total) * 100,
-                                        color: barColor.in, 
-                                        "background-color": barColor.out 
+                                        color: this.colors.level2.name, 
+                                        "background-color":this.colors.level4.name 
                                     }
                                 })
                             ],
@@ -147,8 +147,8 @@ export default {
                                 h('v-progress-linear', {
                                     props:{
                                         value: (params.row.score.in/params.row.score.total) * 100,
-                                        color: barColor.in, 
-                                        "background-color": barColor.out 
+                                        color: this.colors.level2.name, 
+                                        "background-color":this.colors.level4.name 
                                     }
                                 })
                             ],
@@ -165,8 +165,8 @@ export default {
                                 h('v-progress-linear', {
                                     props:{
                                         value: (params.row.incidents.in/params.row.incidents.total) * 100,
-                                        color: barColor.in, 
-                                        "background-color": barColor.out 
+                                        color: this.colors.level2.name, 
+                                        "background-color":this.colors.level4.name 
                                     }
                                 })
                             ],
@@ -183,8 +183,8 @@ export default {
                                 h('v-progress-linear', {
                                     props:{
                                         value: (params.row.bandwidth.in/params.row.bandwidth.total) * 100,
-                                        color: barColor.in, 
-                                        "background-color": barColor.out 
+                                        color: this.colors.level2.name, 
+                                        "background-color":this.colors.level4.name 
                                     }
                                 })
                             ],
@@ -217,6 +217,9 @@ export default {
       console.log('drilldown table updated')
   },
   computed:{
+    ...mapGetters([
+      'colors'
+    ]),
     tableHeight(){
        var tabBarHeight = $(this.$el).find('.ivu-tabs-bar').height() || 37 // only available after mounted
        return this.height - tabBarHeight;

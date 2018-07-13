@@ -6,15 +6,16 @@
             size="small" 
             no-data-text=""
             v-if="!isSimple" @on-row-dblclick="drilldown"></Table>
-       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="barColor" :action="`list`"></simple>
+       <simple :columns="columns1" :list-data="listData" :chart-data="chartData" :avatarid="avatarid" :title="title" v-if="isSimple" :color="colors" :action="`list`"></simple>
        <spinner :show="showSpinner"></spinner>
-       <table-search v-if="!isSimple" class="table-search" :color="barColor" @searchsubmit="reFetchData"></table-search>
+       <table-search v-if="!isSimple" class="table-search" :color="colors" @searchsubmit="reFetchData"></table-search>
     </figure>
 </template>
 
 <script>
 
 import { threat_get } from '@/api/demo'
+import { mapGetters } from 'vuex'
 import Spinner from '@/components/Spinner'
 import TableSearch from '@/components/TableSearch'
 import Simple from './Simple'
@@ -32,7 +33,6 @@ export default {
           showSpinner: true,
           showSearch:false,
           title:'Top Threat',
-          barColor: barColor,
           columns1: [
             {
                 title: 'Threat',
@@ -64,8 +64,8 @@ export default {
                             h('v-progress-linear', {
                                 props:{
                                     value: (params.row.score.in/params.row.score.total) * 100,
-                                    color: this.barColor.in, 
-                                    "background-color":this.barColor.out 
+                                    color: this.colors.level2.name, 
+                                    "background-color":this.colors.level4.name 
                                 }
                             })
                         ],
@@ -84,8 +84,8 @@ export default {
                             h('v-progress-linear', {
                                 props:{
                                     value: (params.row.incidents.in/params.row.incidents.total) * 100,
-                                    color: barColor.in, 
-                                    "background-color": barColor.out 
+                                    color: this.colors.level2.name, 
+                                    "background-color":this.colors.level4.name 
                                 }
                             })
                         ],
@@ -152,6 +152,9 @@ export default {
       }
   },
   computed:{
+    ...mapGetters([
+      'colors'
+    ]),
     avatarid(){
         return this.simpleData.avatarid;
     },
