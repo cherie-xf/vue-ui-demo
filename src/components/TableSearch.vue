@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-btn :color="color.in" fab small @click="showSearch = !showSearch" class="search-btn">
+    <v-btn :color="color.level2.name" fab small @click="showSearch = !showSearch" class="search-btn">
         <svg-icon :icon-class="`search1`" :class-name="`search-icon small`"></svg-icon>
     </v-btn>
     <transition name="zoom">

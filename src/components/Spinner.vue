@@ -6,19 +6,17 @@
     </div>
 </template>
 <script>
-const loaderColor = {
-    loader1:{
-        light: '#B2DFDB',
-        dark: '#4DB6AC',
-    }
-}
+import { mapGetters } from 'vuex'
 export default {
     name: 'Spinner',
     props: ['show'],
     mounted(){
-        $(this.$el).find('.loader1').children('.spinner-inner').css('border-color',  `${loaderColor.loader1.light} ${loaderColor.loader1.dark}`);
+        $(this.$el).find('.loader1').children('.spinner-inner').css('border-color',  `${this.colors.level2.value} ${this.colors.level4.value}`);
     },
     computed:{
+        ...mapGetters([
+        'colors'
+        ]),
         visiable(){
             return this.show
         }

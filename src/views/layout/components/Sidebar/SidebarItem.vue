@@ -66,36 +66,6 @@ export default {
 }
 </script>
 <style lang="less">
-@sbarSelectBg: #A2D4C1;
-@sbarSelectBg2: #54b896;
-
-@sbarSelectBg4: #5897a5;
-@sbarSelectBg5: #3b7a89;
-
-@sbarSelectBg3: #00bcd4;
-
-
-//@sbarOpenBg: #e8eaed;
-@sbarOpenBg: inherit;
-@sbarFontColor: #495060;
-a{
-  color: @sbarFontColor;
-  &.router-link-active{
-    li{
-      background-color: @sbarSelectBg2;
-      &.ivu-menu-item:hover, &.ivu-menu-submenu-title:hover{
-        background-color: @sbarSelectBg2;
-      }
-      .my-content-subtitle, .my-content-title{
-        color: white !important;
-        .svg-icon{
-          box-shadow: initial;
-          color: white !important;
-        }
-      }
-    }
-  }
-}
 .flex-center {
   display: inline-flex;
   align-items: center;
@@ -115,7 +85,7 @@ a{
     width: 100%;
     padding: 0 6%;
     .selected{
-      background-color: @sbarOpenBg
+      //background-color: @sbarOpenBg
     }
     &:hover{
       //background-color: #f1f3f4;
@@ -134,7 +104,6 @@ a{
     font-size: 0.9em;
     width: 18px;
     height: 18px;
-    background-color: @sbarSelectBg3;
     color:white;
     border-radius: 50%;
     box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);

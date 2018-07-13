@@ -1,5 +1,6 @@
 <template>
       <figure class="chart-container">
+        <div class="simple-chart-title">{{pieData.title}}</div>
         <chart 
           :options="pie"
           :init-options="initOptions"
@@ -56,13 +57,16 @@ export default {
       var legendData = this.pieData.legendData;
       var seriesData = this.pieData.seriesData;
       var title  = this.pieData.title;
+      console.log('simple pie title', title)
       return {
           title:{
+            show:true,
               text: title,
               x: 'center',
               textStyle:{
                   fontWeight: 'lighter',
-                  fontStyle:'italic'
+                  fontStyle:'italic',
+                  color: '#333',
               }
           }, 
         tooltip: {
@@ -116,9 +120,15 @@ export default {
 <style lang="less" scoped>
 .chart-container{
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .echarts {
-  height: 100%;
-  width: auto;
+  height: 70%;
+  width: 100%;
+}
+.simple-chart-title{
+  //font-size: 0.8em;
 }
 </style>

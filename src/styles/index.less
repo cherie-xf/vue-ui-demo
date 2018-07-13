@@ -2,6 +2,7 @@
 @import 'mixin.less';
 @import 'extend.less';
 @import 'transition.less';
+@import 'theme.less';
 @import 'iview/dist/styles/iview.css';
 @import 'vuetify/dist/vuetify.min.css';
 //@import './sidebar.less';
@@ -79,25 +80,4 @@ a:hover {
 
 .app-container {
   padding: 20px;
-}
-// overide lib style
-.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
-  padding:0px;
-}
-.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-  color: @sbarFontColor;
-  border: none;
-}
-
-.ivu-menu-submenu{
-    border-right: 3px solid ;
-    border-color: transparent;
-
-  &.ivu-menu-opened{
-    border-color: @sbarSelectBg2;
-  }
-}
-// overide vuetify
-.progress-linear{
-  //z-index: 0;
 }

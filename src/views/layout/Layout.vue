@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app class="app" :class="`theme-${chartTheme}`">
     <sidebar></sidebar>
     <navbar @showadom="showAdom = true"></navbar>
     <v-navigation-drawer temporary :value="leftdrawer" fixed></v-navigation-drawer>
@@ -30,7 +30,8 @@ export default {
   computed: {
     ...mapGetters([
       'leftdrawer',
-      'gradient'
+      'gradient',
+      'chartTheme'
     ]),
     routes() {
       return this.$router.options.routes
