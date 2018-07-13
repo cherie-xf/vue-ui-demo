@@ -44,7 +44,6 @@ export default {
     },
     methods:{
       getCol(key){
-          console.log('simple view', this.columns, key)
           return this.columns.find(col=>col.key === key)
       },
       getPieData(data, title){

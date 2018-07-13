@@ -11,7 +11,7 @@
       <v-list class="drawer-container">
         <div class="welcome-info">
           <span>Welcome {{name}} !</span>
-          <Icon type="log-out"  @click="logout" :size="40" color="#4DB6AC" class="logout"/>
+          <Icon type="log-out"  @click="logout" :size="40" :color="colors.level2.value" class="logout"/>
         </div>
         <v-subheader class="slider-title">System Information </v-subheader>
         <div class="sys-info slide-content">
@@ -83,7 +83,7 @@
           </v-btn>
         </v-subheader>
         <div class="text-xs-center theme-btns">
-          <v-btn fab small v-for="theme in themes" :key="theme.text" @click="changeTheme(theme.value)" :title="theme.name">
+          <v-btn fab small v-for="(theme, index) in themes" :key="index" @click="changeTheme(theme.value, index)" :title="theme.name">
             <v-jumbotron :gradient="theme.text" :height="`100%`">
             </v-jumbotron>
           </v-btn>
@@ -93,87 +93,9 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-const Themes = [
-{
-  value: {from:'#fdfbfb', to:'#ebedee'},
-  text: '#fdfbfb 0%, #ebedee 100%',
-  name: 'Cloudy Knoxville' 
-},
-{
-  value: {from:'#FFFEFF', to:'#D7FFFE'},
-  text: '#FFFEFF 0%, #D7FFFE 100%',
-  name: 'Salt Mountain - default' 
-},
-{
-  value: {from:'#f5efef', to:'#feada6'},
-  text: '#f5efef 0%, #feada6 100%',
-  name: 'Fresh Milk'
-},
-{
-  value: {from:'#e6dee9', to:'#bdc2e8'},
-  text: '#e6dee9 0%, #bdc2e8 100%',
-  name: 'Frozen Dreams'
-},
-{
-  value: {from: '#ffecd2', to: '#fcb69f'},
-  text: '#ffecd2 0%, #fcb69f 100%',
-  name: 'Juicy Peach'
-},
-{
-  value: {from: '#FFE6FA', to: '#E3FDF5'},
-  text: '#FFE6FA 0%, #E3FDF5 100%',
-  name: 'Perfect White'
-},
-{
-  value: {from:'#fed6e3', to:'#a8edea'},
-  text: '#fed6e3 0%, #a8edea 100%',
-  name: 'Rare Wind'
-},
-{
-  value: {from:'#fff1eb', to:'#ace0f9'},
-  text: '#fff1eb 0%, #ace0f9 100%',
-  name: 'New York'
-},
-{
-  value: {from:'#e4efe9', to:'#93a5cf'},
-  text: '#e4efe9 0%, #93a5cf 100%',
-  name: 'Cochiti Lake'
-},
-{
-  value: {from:'#8baaaa', to:'#ae8b9c'},
-  text: '#8baaaa 0%, #ae8b9c 100%',
-  name: 'Jungle Day',
-  dark:true,
-},
-{
-  value: {from:'#517fa4', to:'#243949'},
-  text: '#517fa4 0%, #243949 100%',
-  name: 'Solid Stone',
-  dark:true,
-},
-{
-  value: {from:'#267985', to:'#0f384b'},
-  text: '#267985 0%, #0f384b 100%',
-  name: "Arielle's Smile",
-  dark:true,
-},
-{
-  value: {from:'#282a4a', to:'#05060f'},
-  text: '#282a4a 0%, #05060f 100%',
-  name: 'Eternal Constanc',
-  dark:true,
-},
-{
-  value: {from:'#20282a', to:'#0d0d0d'},
-  text: '#20282a 0%, #0d0d0d 100%',
-  name: 'night',
-  dark:true,
-},
-]
 export default {
   data(){
     return{
-      themes: Themes,
       enableAdom: true,
     }
   },
@@ -182,7 +104,9 @@ export default {
       'rightdrawer',
       'gradient',
       'avatarid',
+      'themes',
       'name',
+      'colors'
     ]),
     avatar(){
       return "static/images/avatar/avatar-"+ this.avatarid+".jpg"
@@ -192,8 +116,8 @@ export default {
     toggleRightDrawer() {
       this.$store.dispatch('ToggleRight')
     },
-    changeTheme(value){
-      this.$store.dispatch('UpdateGradient', value)
+    changeTheme(value, index){
+      this.$store.dispatch('UpdateTheme', {value: value, index: index})
     },
     changeEnableAdom(){
       console.log('change enable adom: ', this.enableAdom);
@@ -205,6 +129,7 @@ export default {
     }
   },
   mounted(){
+    console.log('themes', this.themes)
 
   }
 }

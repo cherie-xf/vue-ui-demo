@@ -4,7 +4,7 @@
           :options="bar"
           :init-options="initOptions"
           ref="bar"
-          theme="ovilia-green"
+          :theme="chartTheme"
           auto-resize
           class="mychart"
         />
@@ -13,17 +13,19 @@
 
 <script>
 import qs from 'qs'
-import 'echarts/theme/dark'
-// custom theme
-import theme from '@/components/Charts/themes/green.json'
+import { mapGetters } from 'vuex'
 import ECharts from 'vue-echarts/components/ECharts.vue'
-// Map of China
-import chinaMap from '@/components/Charts/maps/china.json'
+// custom theme
+import greenTheme from '@/components/Charts/themes/green.json'
+import purpleTheme from '@/components/Charts/themes/purple.json'
+import amberTheme from '@/components/Charts/themes/amber.json'
+import blueTheme from '@/components/Charts/themes/blue.json'
 
 // registering custom theme
-ECharts.registerTheme('ovilia-green', theme)
-// registering map data
-ECharts.registerMap('china', chinaMap)
+ECharts.registerTheme('ovilia-green', greenTheme)
+ECharts.registerTheme('purple', purpleTheme)
+ECharts.registerTheme('amber', amberTheme)
+ECharts.registerTheme('blue', blueTheme)
 
 export default {
   name: 'BarLineChart',
@@ -36,6 +38,11 @@ export default {
         },
         bar: null,
       }
+  },
+  computed: {
+    ...mapGetters([
+      'chartTheme'
+    ]),
   },
   mounted(){
       this.$nextTick(()=>{

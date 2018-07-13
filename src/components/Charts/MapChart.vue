@@ -4,7 +4,7 @@
           :options="map"
           :init-options="initOptions"
           ref="map"
-          theme="ovilia-green"
+          :theme="chartTheme"
           auto-resize
           class="mychart"
         />
@@ -13,15 +13,23 @@
 
 <script>
 import qs from 'qs'
-import 'echarts/theme/dark'
-// custom theme
-import theme from '@/components/Charts/themes/green.json'
+import { mapGetters } from 'vuex'
 import ECharts from 'vue-echarts/components/ECharts.vue'
-// Map of China
-import USAmap from '@/components/Charts/maps/USA.json'
+import 'echarts/lib/chart/map'
+// custom theme
+import greenTheme from '@/components/Charts/themes/green.json'
+import purpleTheme from '@/components/Charts/themes/purple.json'
+import amberTheme from '@/components/Charts/themes/amber.json'
+import blueTheme from '@/components/Charts/themes/blue.json'
 
 // registering custom theme
-ECharts.registerTheme('ovilia-green', theme)
+ECharts.registerTheme('ovilia-green', greenTheme)
+ECharts.registerTheme('purple', purpleTheme)
+ECharts.registerTheme('amber', amberTheme)
+ECharts.registerTheme('blue', blueTheme)
+// Map of USA
+import USAmap from '@/components/Charts/maps/USA.json'
+
 // registering map data
 ECharts.registerMap('USA', USAmap, {
         Alaska: {              // 把阿拉斯加移到美国主大陆左下方
@@ -52,6 +60,11 @@ export default {
         },
         map: null,
       }
+  },
+  computed: {
+    ...mapGetters([
+      'chartTheme'
+    ]),
   },
   mounted(){
       this.$nextTick(()=>{

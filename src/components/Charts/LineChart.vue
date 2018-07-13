@@ -4,7 +4,7 @@
           :options="line"
           :init-options="initOptions"
           ref="line"
-          theme="ovilia-green"
+          :theme="chartTheme"
           auto-resize
           class="mychart"
         />
@@ -13,17 +13,20 @@
 
 <script>
 import qs from 'qs'
-import 'echarts/theme/dark'
-// custom theme
-import theme from '@/components/Charts/themes/green.json'
+import { mapGetters } from 'vuex'
 import ECharts from 'vue-echarts/components/ECharts.vue'
-// Map of China
-import chinaMap from '@/components/Charts/maps/china.json'
+import 'echarts/lib/chart/line'
+// custom theme
+import greenTheme from '@/components/Charts/themes/green.json'
+import purpleTheme from '@/components/Charts/themes/purple.json'
+import amberTheme from '@/components/Charts/themes/amber.json'
+import blueTheme from '@/components/Charts/themes/blue.json'
 
 // registering custom theme
-ECharts.registerTheme('ovilia-green', theme)
-// registering map data
-ECharts.registerMap('china', chinaMap)
+ECharts.registerTheme('ovilia-green', greenTheme)
+ECharts.registerTheme('purple', purpleTheme)
+ECharts.registerTheme('amber', amberTheme)
+ECharts.registerTheme('blue', blueTheme)
 
 const lineChartData = {
   newVisitis: {
@@ -55,6 +58,11 @@ export default {
         },
         line: null,
       }
+  },
+  computed: {
+    ...mapGetters([
+      'chartTheme'
+    ]),
   },
   mounted(){
       this.$nextTick(()=>{

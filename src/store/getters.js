@@ -3,11 +3,14 @@ const getters = {
     leftdrawer: state => state.app.leftdrawer,
     rightdrawer: state => state.app.rightdrawer,
     gradient: state => {
-      return `${state.app.gradient.from} 0%, ${state.app.gradient.to} 100%`;
+      return `${state.theme.gradient.from} 0%, ${state.theme.gradient.to} 100%`;
     },
     topBgColor: state => {
-      return `${state.app.gradient.from} 0%, ${state.app.gradient.from} 100%`;
+      return `${state.theme.gradient.from} 0%, ${state.theme.gradient.from} 100%`;
     },
+    themes: state => state.theme.opts,
+    colors: state => state.theme.colors,
+    chartTheme: state => state.theme.chartTheme,
     device: state => state.app.device,
     layouts: state => state.app.layouts, 
     adom: state => state.app.adom, 
