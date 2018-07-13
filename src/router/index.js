@@ -53,7 +53,7 @@ export const constantRouterMap = [
       {
         path: 'threat_map',
         name: 'threat_map',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/list/index'),
         meta: { title: 'Threat Map', icon: 'international-o' }
       },
       {

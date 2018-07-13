@@ -15,6 +15,8 @@ const getters = {
     token: state => state.user.token,
     avatarid: state => state.user.avatarid,
     name: state => state.user.name,
-    roles: state => state.user.roles
+    roles: state => state.user.roles,
+    cachedViews: state => state.tagsView.cachedViews,
+    visitedViews: state => state.tagsView.visitedViews
   }
   export default getters
