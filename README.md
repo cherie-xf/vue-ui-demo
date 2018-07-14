@@ -18,20 +18,18 @@ npm run build
 npm run build --report
 ```
 ## Build With
-vuex, vue-router, axios
-[iview](https://github.com/iview/iview)
-[vuetify](https://github.com/vuetifyjs/vuetify)
-[vue-echarts](https://github.com/ecomfe/vue-echarts)
-[vue-grid-layout](https://github.com/jbaysolutions/vue-grid-layout)
-[easy-mock-cli](https://github.com/easy-mock/easy-mock-cli)
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+vuex,<br> vue-router,<br> axios,<br>
+[iview](https://github.com/iview/iview),<br>
+[vuetify](https://github.com/vuetifyjs/vuetify),<br>
+[vue-echarts](https://github.com/ecomfe/vue-echarts),<br>
+[vue-grid-layout](https://github.com/jbaysolutions/vue-grid-layout),<br>
+[easy-mock-cli](https://github.com/easy-mock/easy-mock-cli),<br>
 
 ## Mock up
 mock up data coming from Easy Mock online service
 [easy-mock](https:easy-mock.com)
 
-##Online Demo
+## Online Demo
 [demo](https://cherie-xf.github.io/vue-ui-demo)
 
 <p align="center">
