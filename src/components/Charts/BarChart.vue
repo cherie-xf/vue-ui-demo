@@ -15,11 +15,15 @@
 import qs from 'qs'
 import { mapGetters } from 'vuex'
 import ECharts from 'vue-echarts/components/ECharts.vue'
+// built-in theme (must import once for the style not include in custom theme)
+import 'echarts/theme/dark' 
 // custom theme
 import greenTheme from '@/components/Charts/themes/green.json'
 import purpleTheme from '@/components/Charts/themes/purple.json'
 import amberTheme from '@/components/Charts/themes/amber.json'
 import blueTheme from '@/components/Charts/themes/blue.json'
+//data
+import barData from '@/components/Charts/data/bar.json'
 
 // registering custom theme
 ECharts.registerTheme('ovilia-green', greenTheme)
@@ -52,8 +56,18 @@ export default {
   },
   methods:{
     getBar(){
-          return {
-
+        var chartData = barData
+        var xData = chartData.map(o =>{return o.srcip})
+        var legendData = xData
+      return {
+        title:{
+          text:'Top 10 Source',
+          textStyle:{
+            fontSize: 12
+          },
+          top: 10,
+          left: 10
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: { // 坐标轴指示器，坐标轴触发有效
@@ -61,15 +75,16 @@ export default {
           }
         },
         grid: {
-          top: 10,
-          left: '2%',
-          right: '2%',
-          bottom: '3%',
+          top: 50,
+          left: '5%',
+          right: '5%',
+          bottom: '5%',
           containLabel: true
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          //data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: xData,
           axisTick: {
             alignWithLabel: true
           }
@@ -81,35 +96,23 @@ export default {
           }
         }],
         series: [{
-          name: 'pageA',
+          name: 'Sent',
           type: 'bar',
           stack: 'vistors',
-          barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
+          barWidth: '50%',
+          data: chartData.map(o=>{return o.traffic_out}),
           animationDuration
         }, {
-          name: 'pageB',
+          name: 'Recived',
           type: 'bar',
           stack: 'vistors',
-          barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageC',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
+          barWidth: '50%',
+          data: chartData.map(o=>{return o.traffic_in}),
           animationDuration
         }]
 
         }
     },
-    randomize(){
-        return [0, 0, 0].map(v => {
-            return Math.round(300 + Math.random() * 700) / 10
-        })
-    }
   }
 }
 </script>

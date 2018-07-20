@@ -20,6 +20,11 @@ import greenTheme from '@/components/Charts/themes/green.json'
 import purpleTheme from '@/components/Charts/themes/purple.json'
 import amberTheme from '@/components/Charts/themes/amber.json'
 import blueTheme from '@/components/Charts/themes/blue.json'
+//data
+import dayData from '@/components/Charts/data/day.json'
+import hourData from '@/components/Charts/data/hour.json'
+//util
+import {customFormat} from '@/utils/date' 
 
 // registering custom theme
 ECharts.registerTheme('ovilia-green', greenTheme)
@@ -46,10 +51,89 @@ export default {
   },
   mounted(){
       this.$nextTick(()=>{
-        this.bar = this.getBarLine();
+        //this.bar = this.getBarLine();
+        this.bar = this.getDayData();
       });
   },
   methods:{
+    getDayData(){
+        var chartData = hourData
+        var xAxisData = chartData.time
+        var series = []
+        var legendData = []
+        Object.keys(chartData).forEach( key =>{
+            if(key !== 'time'){
+                legendData.push(key)
+                series.push({
+                    name: key,
+                    type:'bar',
+                    data: chartData[key],
+                    animationDelay: function (idx) {
+                        return idx * 10;
+                    }
+                })
+            }
+        })
+          return {
+            grid:{
+                left: '5%',
+                right: '5%',
+                top: '15%',
+                bottom: '18%',
+                show: false,
+            },
+            title: {
+                text: ''
+            },
+            legend: { data: legendData, top: 15 },
+            tooltip: {
+              trigger: 'axis',
+              formatter: function(params){
+                var mTime = new Date(Number(params[0].axisValue) * 1000)
+                var formatTime = customFormat(mTime, '#MMM# #DD# #hh#:#mm#')
+                var html = "<div>"+formatTime+"</div>";
+                params.forEach(function(param){
+                    var data = param.data;
+                    var subHtml = "<div>"+
+                        param.marker +
+                        param.seriesName +": " + data +
+                        "</div>"
+                    html +=subHtml;
+                });
+                return html;
+              }
+            },
+            xAxis: {
+                data: xAxisData,
+                silent: false,
+                splitLine: {
+                    show: false
+                },
+                axisLabel:{
+                    formatter: function(d){
+                        /*
+                        var mTime = moment(Number(d) * 1000);
+                        var formatTime = mTime.format("MMM DD HH:mm");
+                        return formatTime;
+                        */
+                       var mTime = new Date(Number(d) * 1000)
+                       return customFormat(mTime, '#MMM# #DD# #hh#:#mm#')
+                    }
+                }
+            },
+            yAxis: {
+                splitLine:{
+                    show: false
+                }
+            },
+            series:series,
+            animationEasing: 'elasticOut',
+            animationDelayUpdate: function (idx) {
+                return idx * 5;
+            }
+        }
+
+    },
     getBarLine(){
         var xAxisData = [];
         var data1 = [];
@@ -108,11 +192,6 @@ export default {
             }
         }
     },
-    randomize(){
-        return [0, 0, 0].map(v => {
-            return Math.round(300 + Math.random() * 700) / 10
-        })
-    }
   }
 }
 </script>

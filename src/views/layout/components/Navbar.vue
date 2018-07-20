@@ -10,7 +10,7 @@
               <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
             </span>
             -->
-            <v-chip class="adom-title" @click="$emit('showadom')">ADOM: {{adom.current}}</v-chip>
+            <v-chip :color="colors.level2.name" text-color="white" class="adom-title" @click="$emit('showadom')">ADOM: {{adom.current}}</v-chip>
           </div>
         </v-jumbotron>
     </v-toolbar>
@@ -39,7 +39,9 @@ export default {
       'rightdrawer',
       'topBgColor',
       'avatar',
-      'adom'
+      'adom',
+      'colors'
+
     ])
   },
   methods: {

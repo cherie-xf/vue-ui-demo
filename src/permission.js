@@ -11,9 +11,10 @@ router.beforeEach((to, from, next) => {
       //NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
       if (store.getters.roles.length === 0) {
+        next()
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
           console.log('get info permission')
-          next()
+          //next()
         }).catch((err) => {
           store.dispatch('LogOut').then(() => {
             console.log('get info error')

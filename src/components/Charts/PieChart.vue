@@ -21,6 +21,8 @@ import greenTheme from '@/components/Charts/themes/green.json'
 import purpleTheme from '@/components/Charts/themes/purple.json'
 import amberTheme from '@/components/Charts/themes/amber.json'
 import blueTheme from '@/components/Charts/themes/blue.json'
+//data
+import pieData from '@/components/Charts/data/pie.json'
 
 // registering custom theme
 ECharts.registerTheme('ovilia-green', greenTheme)
@@ -52,7 +54,16 @@ export default {
   },
   methods:{
     getPie(){
+        var chartData = pieData.map(o=>{return {name: o.dstip, value: o.sessions}})
       return {
+        title:{
+          text:'Top 10 Destination',
+          textStyle:{
+            fontSize: 12
+          },
+          top: 10,
+          left: 10
+        },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -60,7 +71,7 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          data: pieData.map(o=>{return o.dstip})
         },
         calculable: true,
         series: [
@@ -70,13 +81,7 @@ export default {
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
-            data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
-            ],
+            data: chartData,
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }

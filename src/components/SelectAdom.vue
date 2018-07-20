@@ -331,6 +331,7 @@ export default {
                 color: white
             }
         }
+        cursor: pointer;
     }
     .sub-title{
         margin: 20px 0;

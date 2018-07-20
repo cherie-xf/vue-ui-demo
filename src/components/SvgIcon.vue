@@ -36,14 +36,14 @@ export default {
   box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
 }
 .svg-icon {
-  width: 2.1em;
-  height: 2.1em;
+  width: 1.8em;
+  height: 1.8em;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
   &.small{
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.3em;
+    height: 1.3em;
   }
   &.big{
     width:2.5em;
