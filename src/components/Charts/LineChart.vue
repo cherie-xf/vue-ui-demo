@@ -72,6 +72,14 @@ export default {
   methods:{
     getLine({expectedData, actualData}={}){
           return {
+        title:{
+          text:'Sandbox Scan statistics',
+          textStyle:{
+            fontSize: 12
+          },
+          top: 10,
+          left: 10
+        },
         xAxis: {
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           boundaryGap: false,
@@ -80,10 +88,10 @@ export default {
           }
         },
         grid: {
-          left: 10,
-          right: 10,
-          bottom: 20,
-          top: 30,
+          top: 80,
+          left: '5%',
+          right: '5%',
+          bottom: '5%',
           containLabel: true
         },
         tooltip: {
@@ -99,10 +107,11 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['Malicious', 'Suspicious'],
+          top: 35
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: 'Malicious', itemStyle: {
             normal: {
               //color: '#FF005A',
               lineStyle: {
@@ -118,7 +127,7 @@ export default {
           animationEasing: 'cubicInOut'
         },
         {
-          name: 'actual',
+          name: 'Suspicious',
           smooth: true,
           type: 'line',
           itemStyle: {

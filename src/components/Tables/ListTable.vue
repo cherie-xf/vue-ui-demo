@@ -47,9 +47,10 @@ export default {
                 key: 'level',
                 sortable: true,
                 sortType: 'desc',
+                sortMethod: (a, b, type)=>{ return b.value - a.value},
                 render: (h, params) => {
                     return h('Badge',{
-                        props:{count: params.row.level, "class-name": params.row.level}
+                        props:{count: params.row.level.text, "class-name": params.row.level.text}
                     })
 
                 }
@@ -123,7 +124,20 @@ export default {
           return threat_get().then(
               res=>{
                   var data = res.data.data.rows
-                  this.data1 = data.map(function(row){
+                  var theatName = []
+                  this.data1 = data.filter((elem, pos, arr) => {
+                      if(theatName.indexOf(elem.threat) <0 ){
+                        theatName.push(elem.threat)
+                        return true
+                      } else{
+                        return false
+                      }
+                  })
+                  .sort((row1, row2) => {
+                      console.log('sort data', row1.level.value, row2.level.value)
+                      return row1.level.value - row2.level.value
+                  })
+                  .map(row => {
                       var keys = Object.keys(row);
                       keys.forEach(function(key){
                           if(key === "score" || key === "incidents"){
@@ -132,6 +146,7 @@ export default {
                       });
                       return row;
                   })
+                  console.log(this.data1)
                   this.hideSpinner()
               }
           )

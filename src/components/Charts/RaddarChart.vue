@@ -54,6 +54,14 @@ export default {
   methods:{
     getRaddar(){
       return {
+        title:{
+          text:'Last 3 days Policy Hits',
+          textStyle:{
+            fontSize: 12
+          },
+          top: 10,
+          left: 10
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: { // 坐标轴指示器，坐标轴触发有效
@@ -75,18 +83,18 @@ export default {
             }
           },
           indicator: [
-            { name: 'Sales', max: 10000 },
-            { name: 'Administration', max: 20000 },
-            { name: 'Information Techology', max: 20000 },
-            { name: 'Customer Support', max: 20000 },
-            { name: 'Development', max: 20000 },
-            { name: 'Marketing', max: 20000 }
+            { name: 'destop_server1', max: 10000 },
+            { name: 'destop_server2', max: 20000 },
+            { name: 'destop_server3', max: 20000 },
+            { name: 'for-fgt101e1', max: 20000 },
+            { name: 'for-fgt102e2', max: 20000 },
+            { name: 'for-fgt103e3', max: 20000 }
           ]
         },
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Allocated Budget', 'Expected Spending', 'Actual Spending']
+          data: ['Jul 28', 'Jul 29', 'Jul 30']
         },
         series: [{
           type: 'radar',
@@ -103,15 +111,15 @@ export default {
           data: [
             {
               value: [5000, 7000, 12000, 11000, 15000, 14000],
-              name: 'Allocated Budget'
+              name: 'Jul 28'
             },
             {
               value: [4000, 9000, 15000, 15000, 13000, 11000],
-              name: 'Expected Spending'
+              name: 'Jul 29'
             },
             {
               value: [5500, 11000, 12000, 15000, 12000, 12000],
-              name: 'Actual Spending'
+              name: 'Jul 30'
             }
           ],
           animationDuration: animationDuration
