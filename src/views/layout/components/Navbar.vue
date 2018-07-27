@@ -10,6 +10,16 @@
               <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
             </span>
             -->
+            <Dropdown class="layout-dd">
+                <a href="javascript:void(0)">
+                   Layout 
+                    <Icon type="arrow-down-b"></Icon>
+                </a>
+                <DropdownMenu slot="list">
+                    <DropdownItem>reset</DropdownItem>
+                    <DropdownItem>lock</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
             <v-chip :color="colors.level2.name" text-color="white" class="adom-title" @click="$emit('showadom')">ADOM: {{adom.current}}</v-chip>
           </div>
         </v-jumbotron>
@@ -74,5 +84,8 @@ export default {
   cursor: pointer;
   min-width: 80px;
   margin-right: 100px;
+}
+.layout-dd{
+  margin-right: 8px;
 }
 </style>
