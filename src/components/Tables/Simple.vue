@@ -15,7 +15,7 @@
         <div class="simple-list">
             <div class="simple-row" v-for="(val, key) in listData" :key="key" v-if="getCol(key)">
                 <i class="simple-title" v-html="getCol(key).title"></i>
-                <div class="simple-text" v-html="val"></div>
+                <div class="simple-text" v-html="val.html || val"></div>
             </div>
         </div>
         <div class="simple-chart">

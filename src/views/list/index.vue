@@ -125,6 +125,9 @@ export default {
       setTimeout(()=>{
         this.setSearchSize();
       }, 500)
+    },
+    viewLayouts(){
+      this.layout = this.viewLayouts[this.level]
     }
 
   },

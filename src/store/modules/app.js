@@ -78,6 +78,10 @@ const app = {
       state.layouts[args.viewname][args.level] = args.layout;
       Cookies.set('layouts', JSON.stringify(state.layouts))
     },
+    RESET_LAYOUT:(state)=>{
+      state.layouts = defaultLayouts;
+      Cookies.set('layouts', JSON.stringify(state.layouts))
+    },
     SELECT_ADOM:(state, args)=>{
       state.adom.current = args.adom
       state.adom.recent = state.adom.recent.slice(0, 3)
@@ -108,6 +112,9 @@ const app = {
     },
     UpdateLayout({commit}, args) {
       commit('UPDATE_LAYOUT', args)
+    },
+    ResetLayout: ({ commit }) => {
+      commit('RESET_LAYOUT')
     },
     SelectAdom({commit}, args){
       commit('SELECT_ADOM', args)

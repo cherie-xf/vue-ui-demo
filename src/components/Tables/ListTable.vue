@@ -43,6 +43,10 @@ export default {
                 key: 'category',
             },
             {
+                title: 'CVE-ID',
+                key: 'cveid',
+            },
+            {
                 title: 'Threat Level',
                 key: 'level',
                 sortable: true,
@@ -134,7 +138,6 @@ export default {
                       }
                   })
                   .sort((row1, row2) => {
-                      console.log('sort data', row1.level.value, row2.level.value)
                       return row1.level.value - row2.level.value
                   })
                   .map(row => {
@@ -143,10 +146,12 @@ export default {
                           if(key === "score" || key === "incidents"){
                               row[key].total = row[key].in + row[key].out
                           }
+                          if(key === "level"){
+                              row[key].html = `<span class="ivu-badge"> <sup class="ivu-badge-count ${row[key].text} ivu-badge-count-alone">${row[key].text}</sup></span>`
+                          }
                       });
                       return row;
                   })
-                  console.log(this.data1)
                   this.hideSpinner()
               }
           )

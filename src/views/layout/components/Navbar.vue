@@ -10,14 +10,14 @@
               <svg-icon :icon-class="`settings`" :class-name="'settings'" ></svg-icon>
             </span>
             -->
-            <Dropdown class="layout-dd">
+            <Dropdown class="layout-dd" @on-click="layoutHandle">
                 <a href="javascript:void(0)">
                    Layout 
                     <Icon type="arrow-down-b"></Icon>
                 </a>
-                <DropdownMenu slot="list">
-                    <DropdownItem>reset</DropdownItem>
-                    <DropdownItem>lock</DropdownItem>
+                <DropdownMenu slot="list" >
+                    <DropdownItem name="reset">reset</DropdownItem>
+                    <DropdownItem name="lock" disabled>lock</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
             <v-chip :color="colors.level2.name" text-color="white" class="adom-title" @click="$emit('showadom')">ADOM: {{adom.current}}</v-chip>
@@ -55,6 +55,14 @@ export default {
     ])
   },
   methods: {
+    layoutHandle(name){
+      if(name === 'reset'){
+        this.resetLayout()
+      }
+    },
+    resetLayout(){
+      this.$store.dispatch('ResetLayout')
+    },
     toggleSideBar() {
       this.$store.dispatch('ToggleSideBar')
     },
