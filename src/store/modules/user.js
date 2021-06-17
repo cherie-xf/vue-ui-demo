@@ -30,17 +30,18 @@ const user = {
     // login
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
-      return new Promise((resolve, reject) => {
-        login_post({username: username, password:userInfo.password}).then(response => {
-          const data = response.data.data
-          var token = data.token.split('_')[1]
-          setToken(username + '_' +token)
-          commit('SET_TOKEN', username + '_' +token)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
+      // return new Promise((resolve, reject) => {
+      //   login_post({username: username, password:userInfo.password}).then(response => {
+      //     const data = response.data.data
+      //     var token = data.token.split('_')[1]
+      //     setToken(username + '_' +token)
+      //     commit('SET_TOKEN', username + '_' +token)
+      //     resolve()
+      //   }).catch(error => {
+      //     reject(error)
+      //   })
+      // })
+      setToken(username + '_' + Math.random(10))
     },
 
     // get user info

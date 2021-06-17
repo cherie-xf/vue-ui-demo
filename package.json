@@ -14,7 +14,6 @@
     "test": "npm run lint",
     "mock": "easymock init",
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
-
   },
   "dependencies": {
     "axios": "^0.18.0",

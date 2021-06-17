@@ -118,12 +118,12 @@ export default {
       handleLogin(){
           this.$store.dispatch('Login', {username: this.name, password: this.password}).then(() => {
             this.showAdom = true
-            //this.$router.push({ path: '/' })
+            this.$router.push({ path: '/' })
           }).catch(() => {
           })
 
       }
-      
+
 
     }
 }
@@ -179,7 +179,7 @@ export default {
                 }
             }
         }
-        
+
         .logo {
             width: 20%;
             height: 30%;
@@ -221,7 +221,7 @@ export default {
             }
         }
     }
-    
+
 }
 
 @keyframes slideInUp {
@@ -253,6 +253,6 @@ export default {
 /*
  * Created Date: Friday, June 22nd 2018, 10:54:22 am
  * Author: cheriefu
- * 
+ *
  * Copyright (c) 2018 Your Company
  */
